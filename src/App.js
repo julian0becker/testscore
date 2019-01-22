@@ -86,8 +86,17 @@ class App extends Component {
     this.setState({ students: students });
   };
 
-  handleEditSingleTest = () => {
-    console.log("hello");
+  handleEditSingleTest = (idTest, idStudent) => {
+    const students = [...this.state.students];
+    const indexStudent = students.findIndex(
+      student => student.studentId === idStudent
+    );
+    const indexTest = students[indexStudent].results.findIndex(
+      test => test.testId === idTest
+    );
+    console.log(students[indexStudent].results[indexTest]);
+    students[indexStudent].results[indexTest].testName = <input type="text" />;
+    this.setState({ students: students });
   };
 
   render() {
@@ -109,7 +118,7 @@ class App extends Component {
 export default App;
 
 const Display = props => (
-  <div className="d-flex flex-wrap">
+  <div className="d-flex flex-wrap justify-content-center">
     {props.students.map(student => (
       <Student
         key={student.studentId}
@@ -123,10 +132,7 @@ const Display = props => (
 );
 
 const Student = props => (
-  <div
-    className="card text-white bg-primary mb-3"
-    style={{ minWidth: "14rem", margin: "1rem" }}
-  >
+  <div className="card text-white bg-primary mb-3 m-2">
     <div className="card-header">DaF 187</div>
     <div className="card-body">
       <h4 className="card-title">{props.student.name}</h4>
@@ -176,7 +182,15 @@ const Result = props => (
       <span className="badge badge-primary badge-pill">
         {props.result.reachedPoints}
       </span>
-      <span onClick={props.handleEditSingleTest} className="far fa-edit ml-4" />
+      <span
+        onClick={() =>
+          props.handleEditSingleTest(
+            props.result.testId,
+            props.student.studentId
+          )
+        }
+        className="far fa-edit ml-4"
+      />
       <span
         onClick={() =>
           props.handleDeleteSingleTest(
