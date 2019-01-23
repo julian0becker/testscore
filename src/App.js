@@ -29,7 +29,7 @@ class App extends Component {
         name: "Claudio",
         results: [
           {
-            testName: "Javescript",
+            testName: "JavaScript",
             maxPoints: 100,
             passMark: "50%",
             reachedPoints: "Failed",
@@ -88,15 +88,59 @@ class App extends Component {
 
   handleEditSingleTest = (idTest, idStudent) => {
     const students = [...this.state.students];
+
     const indexStudent = students.findIndex(
       student => student.studentId === idStudent
     );
     const indexTest = students[indexStudent].results.findIndex(
       test => test.testId === idTest
     );
-    console.log(students[indexStudent].results[indexTest]);
-    students[indexStudent].results[indexTest].testName = <input type="text" />;
+
+    students[indexStudent].results[indexTest].testName = (
+      <form
+        onSubmit={event =>
+          this.handleEditCurrentSingleTest(event, idTest, idStudent)
+        }
+      >
+        <div className="form-group mb-0">
+          <fieldset className="container-fluid">
+            <div className="row">
+              <input
+                className="btn btn-sm mr-1"
+                type="submit"
+                value="change :"
+              />
+              <input
+                name="editInputField"
+                className="form-control col form-control-sm"
+                placeholder="new name"
+              />
+            </div>
+          </fieldset>
+        </div>
+      </form>
+    );
     this.setState({ students: students });
+  };
+
+  handleEditCurrentSingleTest = (event, idTest, idStudent) => {
+    event.preventDefault();
+
+    if (!event.target.editInputField.value.trim()) {
+      alert("enter a name");
+    } else {
+      const students = [...this.state.students];
+      const indexStudent = students.findIndex(
+        student => student.studentId === idStudent
+      );
+      const indexTest = students[indexStudent].results.findIndex(
+        test => test.testId === idTest
+      );
+
+      students[indexStudent].results[indexTest].testName =
+        event.target.editInputField.value;
+      this.setState({ students: students });
+    }
   };
 
   render() {
@@ -134,9 +178,9 @@ const Display = props => (
 const Student = props => (
   <div className="card text-white bg-primary mb-3 m-2">
     <div className="card-header">DaF 187</div>
-    <div className="card-body">
+    <div className="card-body d-flex flex-column justify-content-between">
       <h4 className="card-title">{props.student.name}</h4>
-      <div className="card-text d-flex flex-column ">
+      <div className="card-text  ">
         <ul className="list-group">
           {props.student.results.map(result => (
             <Result
@@ -148,26 +192,24 @@ const Student = props => (
             />
           ))}
         </ul>
-        <form
-          className="mt-3 "
-          onSubmit={event =>
-            props.handleAddTest(event, props.student.studentId)
-          }
-        >
-          <div className="form-group">
-            <fieldset className="container-fluid">
-              <div className="row">
-                <input name="inputField" className="form-control col" />
-                <input
-                  type="submit"
-                  value="create"
-                  className="btn btn-outline-secondary"
-                />
-              </div>
-            </fieldset>
-          </div>
-        </form>
       </div>
+      <form
+        className="mt-3 "
+        onSubmit={event => props.handleAddTest(event, props.student.studentId)}
+      >
+        <div className="form-group">
+          <fieldset className="container-fluid">
+            <div className="row">
+              <input name="inputField" className="form-control col" />
+              <input
+                type="submit"
+                value="create"
+                className="btn btn-outline-secondary"
+              />
+            </div>
+          </fieldset>
+        </div>
+      </form>
     </div>
   </div>
 );
@@ -177,7 +219,14 @@ const Result = props => (
     style={{ color: "black" }}
     className="list-group-item d-flex justify-content-between align-items-center "
   >
-    {props.result.testName}
+    <div
+      id="editName"
+      onClick={() =>
+        props.handleEditSingleTest(props.result.testId, props.student.studentId)
+      }
+    >
+      {props.result.testName}
+    </div>
     <div>
       <span className="badge badge-primary badge-pill">
         {props.result.reachedPoints}

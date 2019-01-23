@@ -1,9 +1,16 @@
 .fa-trash-alt:hover {
   color: red;
   transform: scale(1.4);
+  cursor: pointer;
 }
 
 .fa-edit:hover {
   color: green;
   transform: scale(1.5);
+  cursor: pointer;
+}
+
+#editName:hover {
+  color: green;
+  cursor: pointer;
 }
