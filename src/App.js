@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import uuid from "uuid";
+import Modal from "react-modal";
 import "./App.css";
 
 class App extends Component {
@@ -12,14 +13,14 @@ class App extends Component {
             testName: "test 1",
             maxPoints: 100,
             passMark: "50%",
-            reachedPoints: 76,
+            reachedPoints: "Please Edit",
             testId: uuid.v4()
           },
           {
             testName: "test 2",
             maxPoints: 100,
             passMark: "50%",
-            reachedPoints: 83,
+            reachedPoints: "Please Edit",
             testId: uuid.v4()
           }
         ],
@@ -32,20 +33,23 @@ class App extends Component {
             testName: "JavaScript",
             maxPoints: 100,
             passMark: "50%",
-            reachedPoints: "Failed",
+            reachedPoints: "Please Edit",
             testId: uuid.v4()
           },
           {
             testName: "React.js",
             maxPoints: 100,
             passMark: "50%",
-            reachedPoints: "Failed",
+            reachedPoints: "Please Edit",
             testId: uuid.v4()
           }
         ],
         studentId: uuid.v4()
       }
-    ]
+    ],
+    isModalOn: null,
+    forModalTestId: null,
+    forModalStudentId: null
   };
 
   handleAddTest = (event, idStudent) => {
@@ -62,7 +66,7 @@ class App extends Component {
         testName: event.target.inputField.value,
         maxPoints: null,
         passMark: null,
-        reachedPoints: null,
+        reachedPoints: "Please Edit",
         testId: uuid.v4()
       });
       this.setState({
@@ -80,22 +84,18 @@ class App extends Component {
     const indexTest = students[indexStudent].results.findIndex(
       test => test.testId === idTest
     );
-
     students[indexStudent].results.splice(indexTest, 1);
-
     this.setState({ students: students });
   };
 
   handleEditSingleTest = (idTest, idStudent) => {
     const students = [...this.state.students];
-
     const indexStudent = students.findIndex(
       student => student.studentId === idStudent
     );
     const indexTest = students[indexStudent].results.findIndex(
       test => test.testId === idTest
     );
-
     students[indexStudent].results[indexTest].testName = (
       <form
         onSubmit={event =>
@@ -143,6 +143,36 @@ class App extends Component {
     }
   };
 
+  handleOpenEditModal = (idTest, idStudent) => {
+    this.setState({
+      isModalOn: true,
+      forModalTestId: idTest,
+      forModalStudentId: idStudent
+    });
+  };
+
+  handleCloseModal = () => {
+    this.setState({ isModalOn: false });
+  };
+
+  handleTestEditMulti = (event, idTest, idStudent) => {
+    event.preventDefault();
+    const students = [...this.state.students];
+    const indexStudent = students.findIndex(
+      student => student.studentId === idStudent
+    );
+    const indexTest = students[indexStudent].results.findIndex(
+      test => test.testId === idTest
+    );
+
+    students[indexStudent].results[indexTest].testName =
+      event.target.editNameSingle.value;
+    students[indexStudent].results[indexTest].reachedPoints =
+      event.target.editPointsSingle.value;
+
+    this.setState({ students: students, isModalOn: false });
+  };
+
   render() {
     return (
       <div>
@@ -152,8 +182,16 @@ class App extends Component {
           handleAddTest={this.handleAddTest}
           handleDeleteSingleTest={this.handleDeleteSingleTest}
           handleEditSingleTest={this.handleEditSingleTest}
+          handleOpenEditModal={this.handleOpenEditModal}
         />
         <div>form</div>
+        <EditModal
+          isModalOn={this.state.isModalOn}
+          handleCloseModal={this.handleCloseModal}
+          forModalTestId={this.state.forModalTestId}
+          forModalStudentId={this.state.forModalStudentId}
+          handleTestEditMulti={this.handleTestEditMulti}
+        />
       </div>
     );
   }
@@ -170,6 +208,7 @@ const Display = props => (
         handleAddTest={props.handleAddTest}
         handleDeleteSingleTest={props.handleDeleteSingleTest}
         handleEditSingleTest={props.handleEditSingleTest}
+        handleOpenEditModal={props.handleOpenEditModal}
       />
     ))}
   </div>
@@ -189,6 +228,7 @@ const Student = props => (
               result={result}
               handleDeleteSingleTest={props.handleDeleteSingleTest}
               handleEditSingleTest={props.handleEditSingleTest}
+              handleOpenEditModal={props.handleOpenEditModal}
             />
           ))}
         </ul>
@@ -233,7 +273,7 @@ const Result = props => (
       </span>
       <span
         onClick={() =>
-          props.handleEditSingleTest(
+          props.handleOpenEditModal(
             props.result.testId,
             props.student.studentId
           )
@@ -251,4 +291,26 @@ const Result = props => (
       />
     </div>
   </li>
+);
+
+const EditModal = props => (
+  <Modal
+    isOpen={!!props.isModalOn}
+    contentLabel={"test this modal"}
+    onRequestClose={props.handleCloseModal}
+  >
+    <form
+      onSubmit={event =>
+        props.handleTestEditMulti(
+          event,
+          props.forModalTestId,
+          props.forModalStudentId
+        )
+      }
+    >
+      <input type="text" name="editNameSingle" />
+      <input type="number" name="editPointsSingle" />
+      <input type="submit" />
+    </form>
+  </Modal>
 );
