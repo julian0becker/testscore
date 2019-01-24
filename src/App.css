@@ -34,9 +34,20 @@
   opacity: 0;
 }
 
-.modal {
-  background-color: blueviolet;
-  color: whitesmoke;
-  padding: 1.5rem;
-  text-align: center;
+.modalStyle {
+}
+
+#modalForm {
+  background-color: black;
+  min-width: 200px;
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  border: 2px solid whitesmoke;
+}
+
+#modalForm form {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
 }

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import uuid from "uuid";
 import Modal from "react-modal";
 import "./App.css";
+import * as utils from "./utils";
 
 class App extends Component {
   state = {
@@ -59,9 +60,7 @@ class App extends Component {
       alert("enter a name");
     } else {
       const students = [...this.state.students];
-      const index = students.findIndex(
-        student => student.studentId === idStudent
-      );
+      const index = utils.findIndexStudent(students, idStudent);
       students[index].results.push({
         testName: event.target.inputField.value,
         maxPoints: null,
@@ -78,24 +77,17 @@ class App extends Component {
 
   handleDeleteSingleTest = (idTest, idStudent) => {
     const students = [...this.state.students];
-    const indexStudent = students.findIndex(
-      student => student.studentId === idStudent
-    );
-    const indexTest = students[indexStudent].results.findIndex(
-      test => test.testId === idTest
-    );
+    const indexStudent = utils.findIndexStudent(students, idStudent);
+    const indexTest = utils.findIndexTest(students, indexStudent, idTest);
     students[indexStudent].results.splice(indexTest, 1);
     this.setState({ students: students });
   };
 
   handleEditSingleTest = (idTest, idStudent) => {
     const students = [...this.state.students];
-    const indexStudent = students.findIndex(
-      student => student.studentId === idStudent
-    );
-    const indexTest = students[indexStudent].results.findIndex(
-      test => test.testId === idTest
-    );
+    const indexStudent = utils.findIndexStudent(students, idStudent);
+    const indexTest = utils.findIndexTest(students, indexStudent, idTest);
+
     students[indexStudent].results[indexTest].testName = (
       <form
         onSubmit={event =>
@@ -130,15 +122,12 @@ class App extends Component {
       alert("enter a name");
     } else {
       const students = [...this.state.students];
-      const indexStudent = students.findIndex(
-        student => student.studentId === idStudent
-      );
-      const indexTest = students[indexStudent].results.findIndex(
-        test => test.testId === idTest
-      );
+      const indexStudent = utils.findIndexStudent(students, idStudent);
+      const indexTest = utils.findIndexTest(students, indexStudent, idTest);
 
       students[indexStudent].results[indexTest].testName =
         event.target.editInputField.value;
+
       this.setState({ students: students });
     }
   };
@@ -158,12 +147,8 @@ class App extends Component {
   handleTestEditMulti = (event, idTest, idStudent) => {
     event.preventDefault();
     const students = [...this.state.students];
-    const indexStudent = students.findIndex(
-      student => student.studentId === idStudent
-    );
-    const indexTest = students[indexStudent].results.findIndex(
-      test => test.testId === idTest
-    );
+    const indexStudent = utils.findIndexStudent(students, idStudent);
+    const indexTest = utils.findIndexTest(students, indexStudent, idTest);
 
     students[indexStudent].results[indexTest].testName =
       event.target.editNameSingle.value;
@@ -298,19 +283,29 @@ const EditModal = props => (
     isOpen={!!props.isModalOn}
     contentLabel={"test this modal"}
     onRequestClose={props.handleCloseModal}
+    className="modalStyle"
   >
-    <form
-      onSubmit={event =>
-        props.handleTestEditMulti(
-          event,
-          props.forModalTestId,
-          props.forModalStudentId
-        )
-      }
-    >
-      <input type="text" name="editNameSingle" />
-      <input type="number" name="editPointsSingle" />
-      <input type="submit" />
-    </form>
+    <div id="modalForm">
+      <form
+        onSubmit={event =>
+          props.handleTestEditMulti(
+            event,
+            props.forModalTestId,
+            props.forModalStudentId
+          )
+        }
+      >
+        <input type="text" name="editNameSingle" placeholder="Test Name" />
+        <input
+          type="number"
+          name="editPointsSingle"
+          placeholder="Achieved Points"
+        />
+        <input
+          type="submit"
+          className="btn btn-sm btn-outline-secondary mt-3"
+        />
+      </form>
+    </div>
   </Modal>
 );
