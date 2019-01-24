@@ -469,6 +469,7 @@ const EditModal = props => (
           handleTestEditMulti={props.handleTestEditMulti}
           forModalTestId={props.forModalTestId}
           forModalStudentId={props.forModalStudentId}
+          students={props.students}
         />
       ) : (
         <ModalDisplayForTestInfo
@@ -481,63 +482,110 @@ const EditModal = props => (
   </Modal>
 );
 
-const ModalDisplayForEditInput = props => (
-  <div>
-    <form
-      onSubmit={event =>
-        props.handleTestEditMulti(
-          event,
-          props.forModalTestId,
-          props.forModalStudentId
-        )
-      }
-    >
-      <input type="text" name="editNameSingle" placeholder="Test Name" />
-      <input
-        type="number"
-        name="editPointsSingle"
-        placeholder="Achieved Points"
-      />
-      <input
-        type="number"
-        name="editMaxPointsSingle"
-        placeholder="Max Points"
-      />
-      <fieldset>
-        <p className="small mb-0 mt-2">Passmark</p>
-        <div className="d-flex">
-          <div className="form-check">
-            <label className="form-check-label">
+class ModalDisplayForEditInput extends Component {
+  render() {
+    const students = [...this.props.students];
+    const studentIndex = utils.findIndexStudent(
+      students,
+      this.props.forModalStudentId
+    );
+    const testIndex = utils.findIndexTest(
+      students,
+      studentIndex,
+      this.props.forModalTestId
+    );
+
+    return (
+      <div
+        className="card text-white bg-primary "
+        style={{ maxWidth: "20rem" }}
+      >
+        <div className="card-header">
+          {this.props.students[studentIndex].name}
+        </div>
+        <div className="card-body">
+          <h4 className="card-title">
+            {"Edit "}
+            {this.props.students[studentIndex].results[testIndex].testName}
+          </h4>
+          <div className="card-text">
+            <form
+              onSubmit={event =>
+                this.props.handleTestEditMulti(
+                  event,
+                  this.props.forModalTestId,
+                  this.props.forModalStudentId
+                )
+              }
+            >
+              <table className="table table-hover m-0">
+                <tbody>
+                  <tr className="table-active">
+                    <td>
+                      <p className="small mb-0 mt-0">Test Name</p>
+                      <input type="text" name="editNameSingle" />
+                    </td>
+                  </tr>
+                  <tr className="table-active">
+                    <td>
+                      <p className="small mb-0 mt-0">Achieved Points</p>
+                      <input type="number" name="editPointsSingle" />
+                    </td>
+                  </tr>
+                  <tr className="table-active">
+                    <td>
+                      <p className="small mb-0 mt-0">Max Points</p>
+                      <input type="number" name="editMaxPointsSingle" />
+                    </td>
+                  </tr>
+                  <tr className="table-active">
+                    <td>
+                      <fieldset>
+                        <p className="small mb-0 mt-0">Passmark</p>
+                        <div className="d-flex">
+                          <div className="form-check">
+                            <label className="form-check-label">
+                              <input
+                                type="radio"
+                                className="form-check-input"
+                                name="editPassMark"
+                                id="optionsRadios1"
+                                value="50%"
+                                checked
+                                readOnly={true}
+                              />
+                              50%
+                            </label>
+                          </div>
+                          <div className="form-check ml-2">
+                            <label className="form-check-label">
+                              <input
+                                type="radio"
+                                className="form-check-input"
+                                name="editPassMark"
+                                id="optionsRadios2"
+                                value="60%"
+                              />
+                              60%
+                            </label>
+                          </div>
+                        </div>
+                      </fieldset>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
               <input
-                type="radio"
-                className="form-check-input"
-                name="editPassMark"
-                id="optionsRadios1"
-                value="50%"
-                checked
-                readOnly={true}
+                type="submit"
+                className="btn btn-sm btn-outline-secondary mt-3"
               />
-              50%
-            </label>
-          </div>
-          <div className="form-check ml-2">
-            <label className="form-check-label">
-              <input
-                type="radio"
-                className="form-check-input"
-                name="editPassMark"
-                id="optionsRadios2"
-                value="60%"
-              />
-              60%
-            </label>
+            </form>
           </div>
         </div>
-      </fieldset>
-      <input type="submit" className="btn btn-sm btn-outline-secondary mt-3" />
-    </form>
-  </div>
-);
+      </div>
+    );
+  }
+}
 
 class ModalDisplayForTestInfo extends Component {
   render() {
