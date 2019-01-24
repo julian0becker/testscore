@@ -14,16 +14,16 @@ class App extends Component {
             testName: "test 1",
             maxPoints: 100,
             passMark: "50%",
-            reachedPoints: "Please Edit",
-            grade: null,
-            gradeUniStyle: null,
+            reachedPoints: 80,
+            grade: 0.8,
+            gradeUniStyle: "2,0",
             testId: uuid.v4(),
-            badgeStyle: null
+            badgeStyle: "#238823"
           },
           {
             testName: "test 2",
             maxPoints: 100,
-            passMark: "50%",
+            passMark: "60%",
             reachedPoints: "Please Edit",
             grade: null,
             gradeUniStyle: null,
@@ -153,8 +153,13 @@ class App extends Component {
     });
   };
 
-  handleOpenInfoModal = () => {
-    this.setState({ isModalOn: true, typeOfModal: "info" });
+  handleOpenInfoModal = (idTest, idStudent) => {
+    this.setState({
+      isModalOn: true,
+      typeOfModal: "info",
+      forModalTestId: idTest,
+      forModalStudentId: idStudent
+    });
   };
 
   handleCloseModal = () => {
@@ -327,6 +332,7 @@ class App extends Component {
         />
         <div>form</div>
         <EditModal
+          students={this.state.students}
           isModalOn={this.state.isModalOn}
           typeOfModal={this.state.typeOfModal}
           handleCloseModal={this.handleCloseModal}
@@ -465,7 +471,11 @@ const EditModal = props => (
           forModalStudentId={props.forModalStudentId}
         />
       ) : (
-        <ModalDisplayForTestInfo />
+        <ModalDisplayForTestInfo
+          students={props.students}
+          forModalTestId={props.forModalTestId}
+          forModalStudentId={props.forModalStudentId}
+        />
       )}
     </div>
   </Modal>
@@ -529,4 +539,86 @@ const ModalDisplayForEditInput = props => (
   </div>
 );
 
-const ModalDisplayForTestInfo = props => <div>Test</div>;
+class ModalDisplayForTestInfo extends Component {
+  render() {
+    const students = [...this.props.students];
+    const studentIndex = utils.findIndexStudent(
+      students,
+      this.props.forModalStudentId
+    );
+    const testIndex = utils.findIndexTest(
+      students,
+      studentIndex,
+      this.props.forModalTestId
+    );
+    const percentRounded = Math.round(
+      this.props.students[studentIndex].results[testIndex].grade * 100
+    );
+    const percentNotRounded = (
+      this.props.students[studentIndex].results[testIndex].grade * 100
+    ).toFixed(2);
+
+    return (
+      <div
+        className="card text-white bg-primary "
+        style={{ maxWidth: "20rem" }}
+      >
+        <div className="card-header">
+          {this.props.students[studentIndex].name}
+        </div>
+        <div className="card-body">
+          <h4 className="card-title">
+            {this.props.students[studentIndex].results[testIndex].testName}
+          </h4>
+          <div className="card-text">
+            <table className="table table-hover">
+              <tbody>
+                <tr className="table-active">
+                  <th scope="row">Points</th>
+                  <td>
+                    {
+                      this.props.students[studentIndex].results[testIndex]
+                        .reachedPoints
+                    }{" "}
+                    /{" "}
+                    {
+                      this.props.students[studentIndex].results[testIndex]
+                        .maxPoints
+                    }
+                  </td>
+                </tr>
+                <tr className="table-active">
+                  <th scope="row">Passmark</th>
+                  <td>
+                    {
+                      this.props.students[studentIndex].results[testIndex]
+                        .passMark
+                    }
+                  </td>
+                </tr>
+                <tr className="table-active">
+                  <th scope="row">Percent</th>
+                  <td>
+                    {percentRounded}
+                    {"% ("}
+                    {percentNotRounded}
+                    {"%)"}
+                  </td>
+                </tr>
+                <tr className="table-active">
+                  <th scope="row">Grade</th>
+                  <td>
+                    {
+                      this.props.students[studentIndex].results[testIndex]
+                        .gradeUniStyle
+                    }
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    );
+  }
+}
