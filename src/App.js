@@ -15,13 +15,18 @@ class App extends Component {
             maxPoints: 100,
             passMark: "50%",
             reachedPoints: "Please Edit",
-            testId: uuid.v4()
+            grade: null,
+            gradeUniStyle: null,
+            testId: uuid.v4(),
+            badgeStyle: null
           },
           {
             testName: "test 2",
             maxPoints: 100,
             passMark: "50%",
             reachedPoints: "Please Edit",
+            grade: null,
+            gradeUniStyle: null,
             testId: uuid.v4()
           }
         ],
@@ -35,6 +40,8 @@ class App extends Component {
             maxPoints: 100,
             passMark: "50%",
             reachedPoints: "Please Edit",
+            grade: null,
+            gradeUniStyle: null,
             testId: uuid.v4()
           },
           {
@@ -42,6 +49,8 @@ class App extends Component {
             maxPoints: 100,
             passMark: "50%",
             reachedPoints: "Please Edit",
+            grade: null,
+            gradeUniStyle: null,
             testId: uuid.v4()
           }
         ],
@@ -66,6 +75,8 @@ class App extends Component {
         maxPoints: null,
         passMark: null,
         reachedPoints: "Please Edit",
+        grade: null,
+        gradeUniStyle: null,
         testId: uuid.v4()
       });
       this.setState({
@@ -154,8 +165,147 @@ class App extends Component {
       event.target.editNameSingle.value;
     students[indexStudent].results[indexTest].reachedPoints =
       event.target.editPointsSingle.value;
+    students[indexStudent].results[indexTest].maxPoints =
+      event.target.editMaxPointsSingle.value;
+    students[indexStudent].results[indexTest].passMark =
+      event.target.editPassMark.value;
+
+    const grade =
+      event.target.editPointsSingle.value /
+      event.target.editMaxPointsSingle.value;
+    students[indexStudent].results[indexTest].grade = grade;
+    const passMark = event.target.editPassMark.value;
 
     this.setState({ students: students, isModalOn: false });
+    this.calculateGrade(grade, passMark, indexStudent, indexTest);
+  };
+
+  calculateGrade = (grade, passMark, indexStudent, indexTest) => {
+    const students = [...this.state.students];
+    const x = grade;
+    console.log(passMark);
+
+    if (passMark === "50%") {
+      switch (true) {
+        case x < 0.5:
+          students[indexStudent].results[indexTest].gradeUniStyle = "5,0";
+          students[indexStudent].results[indexTest].badgeStyle = "#D2222D";
+          this.setState({ students: students });
+          break;
+        case x < 0.55:
+          students[indexStudent].results[indexTest].gradeUniStyle = "4,0";
+          students[indexStudent].results[indexTest].badgeStyle = "#EEB462";
+          this.setState({ students: students });
+          break;
+        case x < 0.6:
+          students[indexStudent].results[indexTest].gradeUniStyle = "3,7";
+          students[indexStudent].results[indexTest].badgeStyle = "#EEB462";
+          this.setState({ students: students });
+          break;
+        case x < 0.65:
+          students[indexStudent].results[indexTest].gradeUniStyle = "3,3";
+          students[indexStudent].results[indexTest].badgeStyle = "#FFBF00";
+          this.setState({ students: students });
+          break;
+        case x < 0.7:
+          students[indexStudent].results[indexTest].gradeUniStyle = "3,0";
+          students[indexStudent].results[indexTest].badgeStyle = "#FFBF00";
+          this.setState({ students: students });
+          break;
+        case x < 0.75:
+          students[indexStudent].results[indexTest].gradeUniStyle = "2,7";
+          students[indexStudent].results[indexTest].badgeStyle = "#FFBF00";
+          this.setState({ students: students });
+          break;
+        case x < 0.8:
+          students[indexStudent].results[indexTest].gradeUniStyle = "2,3";
+          students[indexStudent].results[indexTest].badgeStyle = "#238823";
+          this.setState({ students: students });
+          break;
+        case x < 0.85:
+          students[indexStudent].results[indexTest].gradeUniStyle = "2,0";
+          students[indexStudent].results[indexTest].badgeStyle = "#238823";
+          this.setState({ students: students });
+          break;
+        case x < 0.9:
+          students[indexStudent].results[indexTest].gradeUniStyle = "1,7";
+          students[indexStudent].results[indexTest].badgeStyle = "#238823";
+          this.setState({ students: students });
+          break;
+        case x < 0.95:
+          students[indexStudent].results[indexTest].gradeUniStyle = "1,3";
+          students[indexStudent].results[indexTest].badgeStyle = "#20B2AA";
+          this.setState({ students: students });
+          break;
+        case x <= 1:
+          students[indexStudent].results[indexTest].gradeUniStyle = "1,0";
+          students[indexStudent].results[indexTest].badgeStyle = "#20B2AA";
+          this.setState({ students: students });
+          break;
+        default:
+          break;
+      }
+    } else {
+      switch (true) {
+        case x < 0.6:
+          students[indexStudent].results[indexTest].gradeUniStyle = "5,0";
+          students[indexStudent].results[indexTest].badgeStyle = "#D2222D";
+          this.setState({ students: students });
+          break;
+        case x < 0.64:
+          students[indexStudent].results[indexTest].gradeUniStyle = "4,0";
+          students[indexStudent].results[indexTest].badgeStyle = "#EEB462";
+          this.setState({ students: students });
+          break;
+        case x < 0.68:
+          students[indexStudent].results[indexTest].gradeUniStyle = "3,7";
+          students[indexStudent].results[indexTest].badgeStyle = "#EEB462";
+          this.setState({ students: students });
+          break;
+        case x < 0.72:
+          students[indexStudent].results[indexTest].gradeUniStyle = "3,3";
+          students[indexStudent].results[indexTest].badgeStyle = "#FFBF00";
+          this.setState({ students: students });
+          break;
+        case x < 0.76:
+          students[indexStudent].results[indexTest].gradeUniStyle = "3,0";
+          students[indexStudent].results[indexTest].badgeStyle = "#FFBF00";
+          this.setState({ students: students });
+          break;
+        case x < 0.8:
+          students[indexStudent].results[indexTest].gradeUniStyle = "2,7";
+          students[indexStudent].results[indexTest].badgeStyle = "#FFBF00";
+          this.setState({ students: students });
+          break;
+        case x < 0.84:
+          students[indexStudent].results[indexTest].gradeUniStyle = "2,3";
+          students[indexStudent].results[indexTest].badgeStyle = "#238823";
+          this.setState({ students: students });
+          break;
+        case x < 0.88:
+          students[indexStudent].results[indexTest].gradeUniStyle = "2,0";
+          students[indexStudent].results[indexTest].badgeStyle = "#238823";
+          this.setState({ students: students });
+          break;
+        case x < 0.92:
+          students[indexStudent].results[indexTest].gradeUniStyle = "1,7";
+          students[indexStudent].results[indexTest].badgeStyle = "#238823";
+          this.setState({ students: students });
+          break;
+        case x < 0.96:
+          students[indexStudent].results[indexTest].gradeUniStyle = "1,3";
+          students[indexStudent].results[indexTest].badgeStyle = "#20B2AA";
+          this.setState({ students: students });
+          break;
+        case x <= 1:
+          students[indexStudent].results[indexTest].gradeUniStyle = "1,0";
+          students[indexStudent].results[indexTest].badgeStyle = "#20B2AA";
+          this.setState({ students: students });
+          break;
+        default:
+          break;
+      }
+    }
   };
 
   render() {
@@ -253,8 +403,11 @@ const Result = props => (
       {props.result.testName}
     </div>
     <div>
-      <span className="badge badge-primary badge-pill">
-        {props.result.reachedPoints}
+      <span
+        className="badge badge-primary badge-pill"
+        style={{ backgroundColor: props.result.badgeStyle }}
+      >
+        {props.result.gradeUniStyle}
       </span>
       <span
         onClick={() =>
@@ -284,6 +437,7 @@ const EditModal = props => (
     contentLabel={"test this modal"}
     onRequestClose={props.handleCloseModal}
     className="modalStyle"
+    ariaHideApp={false}
   >
     <div id="modalForm">
       <form
@@ -301,6 +455,42 @@ const EditModal = props => (
           name="editPointsSingle"
           placeholder="Achieved Points"
         />
+        <input
+          type="number"
+          name="editMaxPointsSingle"
+          placeholder="Max Points"
+        />
+        <fieldset>
+          <p className="small mb-0 mt-2">Passmark</p>
+          <div className="d-flex">
+            <div className="form-check">
+              <label className="form-check-label">
+                <input
+                  type="radio"
+                  className="form-check-input"
+                  name="editPassMark"
+                  id="optionsRadios1"
+                  value="50%"
+                  checked
+                  readOnly={true}
+                />
+                50%
+              </label>
+            </div>
+            <div className="form-check ml-2">
+              <label className="form-check-label">
+                <input
+                  type="radio"
+                  className="form-check-input"
+                  name="editPassMark"
+                  id="optionsRadios2"
+                  value="60%"
+                />
+                60%
+              </label>
+            </div>
+          </div>
+        </fieldset>
         <input
           type="submit"
           className="btn btn-sm btn-outline-secondary mt-3"
