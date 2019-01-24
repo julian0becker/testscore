@@ -1,17 +1,23 @@
 .fa-trash-alt:hover {
-  color: red;
+  color: #d2222d;
   transform: scale(1.4);
   cursor: pointer;
 }
 
 .fa-edit:hover {
-  color: green;
+  color: #238823;
+  transform: scale(1.5);
+  cursor: pointer;
+}
+
+.fa-info-circle:hover {
+  color: #20b2aa;
   transform: scale(1.5);
   cursor: pointer;
 }
 
 #editName:hover {
-  color: green;
+  color: #238823;
   cursor: pointer;
 }
 

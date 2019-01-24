@@ -58,6 +58,7 @@ class App extends Component {
       }
     ],
     isModalOn: null,
+    typeOfModal: null,
     forModalTestId: null,
     forModalStudentId: null
   };
@@ -146,9 +147,14 @@ class App extends Component {
   handleOpenEditModal = (idTest, idStudent) => {
     this.setState({
       isModalOn: true,
+      typeOfModal: "edit",
       forModalTestId: idTest,
       forModalStudentId: idStudent
     });
+  };
+
+  handleOpenInfoModal = () => {
+    this.setState({ isModalOn: true, typeOfModal: "info" });
   };
 
   handleCloseModal = () => {
@@ -183,7 +189,6 @@ class App extends Component {
   calculateGrade = (grade, passMark, indexStudent, indexTest) => {
     const students = [...this.state.students];
     const x = grade;
-    console.log(passMark);
 
     if (passMark === "50%") {
       switch (true) {
@@ -318,10 +323,12 @@ class App extends Component {
           handleDeleteSingleTest={this.handleDeleteSingleTest}
           handleEditSingleTest={this.handleEditSingleTest}
           handleOpenEditModal={this.handleOpenEditModal}
+          handleOpenInfoModal={this.handleOpenInfoModal}
         />
         <div>form</div>
         <EditModal
           isModalOn={this.state.isModalOn}
+          typeOfModal={this.state.typeOfModal}
           handleCloseModal={this.handleCloseModal}
           forModalTestId={this.state.forModalTestId}
           forModalStudentId={this.state.forModalStudentId}
@@ -344,6 +351,7 @@ const Display = props => (
         handleDeleteSingleTest={props.handleDeleteSingleTest}
         handleEditSingleTest={props.handleEditSingleTest}
         handleOpenEditModal={props.handleOpenEditModal}
+        handleOpenInfoModal={props.handleOpenInfoModal}
       />
     ))}
   </div>
@@ -364,6 +372,7 @@ const Student = props => (
               handleDeleteSingleTest={props.handleDeleteSingleTest}
               handleEditSingleTest={props.handleEditSingleTest}
               handleOpenEditModal={props.handleOpenEditModal}
+              handleOpenInfoModal={props.handleOpenInfoModal}
             />
           ))}
         </ul>
@@ -411,6 +420,15 @@ const Result = props => (
       </span>
       <span
         onClick={() =>
+          props.handleOpenInfoModal(
+            props.result.testId,
+            props.student.studentId
+          )
+        }
+        className="fas fa-info-circle"
+      />
+      <span
+        onClick={() =>
           props.handleOpenEditModal(
             props.result.testId,
             props.student.studentId
@@ -440,62 +458,75 @@ const EditModal = props => (
     ariaHideApp={false}
   >
     <div id="modalForm">
-      <form
-        onSubmit={event =>
-          props.handleTestEditMulti(
-            event,
-            props.forModalTestId,
-            props.forModalStudentId
-          )
-        }
-      >
-        <input type="text" name="editNameSingle" placeholder="Test Name" />
-        <input
-          type="number"
-          name="editPointsSingle"
-          placeholder="Achieved Points"
+      {props.typeOfModal === "edit" ? (
+        <ModalDisplayForEditInput
+          handleTestEditMulti={props.handleTestEditMulti}
+          forModalTestId={props.forModalTestId}
+          forModalStudentId={props.forModalStudentId}
         />
-        <input
-          type="number"
-          name="editMaxPointsSingle"
-          placeholder="Max Points"
-        />
-        <fieldset>
-          <p className="small mb-0 mt-2">Passmark</p>
-          <div className="d-flex">
-            <div className="form-check">
-              <label className="form-check-label">
-                <input
-                  type="radio"
-                  className="form-check-input"
-                  name="editPassMark"
-                  id="optionsRadios1"
-                  value="50%"
-                  checked
-                  readOnly={true}
-                />
-                50%
-              </label>
-            </div>
-            <div className="form-check ml-2">
-              <label className="form-check-label">
-                <input
-                  type="radio"
-                  className="form-check-input"
-                  name="editPassMark"
-                  id="optionsRadios2"
-                  value="60%"
-                />
-                60%
-              </label>
-            </div>
-          </div>
-        </fieldset>
-        <input
-          type="submit"
-          className="btn btn-sm btn-outline-secondary mt-3"
-        />
-      </form>
+      ) : (
+        <ModalDisplayForTestInfo />
+      )}
     </div>
   </Modal>
 );
+
+const ModalDisplayForEditInput = props => (
+  <div>
+    <form
+      onSubmit={event =>
+        props.handleTestEditMulti(
+          event,
+          props.forModalTestId,
+          props.forModalStudentId
+        )
+      }
+    >
+      <input type="text" name="editNameSingle" placeholder="Test Name" />
+      <input
+        type="number"
+        name="editPointsSingle"
+        placeholder="Achieved Points"
+      />
+      <input
+        type="number"
+        name="editMaxPointsSingle"
+        placeholder="Max Points"
+      />
+      <fieldset>
+        <p className="small mb-0 mt-2">Passmark</p>
+        <div className="d-flex">
+          <div className="form-check">
+            <label className="form-check-label">
+              <input
+                type="radio"
+                className="form-check-input"
+                name="editPassMark"
+                id="optionsRadios1"
+                value="50%"
+                checked
+                readOnly={true}
+              />
+              50%
+            </label>
+          </div>
+          <div className="form-check ml-2">
+            <label className="form-check-label">
+              <input
+                type="radio"
+                className="form-check-input"
+                name="editPassMark"
+                id="optionsRadios2"
+                value="60%"
+              />
+              60%
+            </label>
+          </div>
+        </div>
+      </fieldset>
+      <input type="submit" className="btn btn-sm btn-outline-secondary mt-3" />
+    </form>
+  </div>
+);
+
+const ModalDisplayForTestInfo = props => <div>Test</div>;
