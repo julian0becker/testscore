@@ -16,6 +16,10 @@
   cursor: pointer;
 }
 
+.icon-container {
+  width: 50%;
+}
+
 #editName:hover {
   color: #238823;
   cursor: pointer;

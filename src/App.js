@@ -24,10 +24,11 @@ class App extends Component {
             testName: "test 2",
             maxPoints: 100,
             passMark: "60%",
-            reachedPoints: "Please Edit",
-            grade: null,
-            gradeUniStyle: null,
-            testId: uuid.v4()
+            reachedPoints: 95,
+            grade: 0.95,
+            gradeUniStyle: "1,3",
+            testId: uuid.v4(),
+            badgeStyle: "#20B2AA"
           }
         ],
         studentId: uuid.v4()
@@ -39,19 +40,21 @@ class App extends Component {
             testName: "JavaScript",
             maxPoints: 100,
             passMark: "50%",
-            reachedPoints: "Please Edit",
-            grade: null,
-            gradeUniStyle: null,
-            testId: uuid.v4()
+            reachedPoints: 50,
+            grade: 0.5,
+            gradeUniStyle: "4,0",
+            testId: uuid.v4(),
+            badgeStyle: "#EEB462"
           },
           {
             testName: "React.js",
             maxPoints: 100,
             passMark: "50%",
-            reachedPoints: "Please Edit",
-            grade: null,
-            gradeUniStyle: null,
-            testId: uuid.v4()
+            reachedPoints: 1,
+            grade: 0.01,
+            gradeUniStyle: "5,0",
+            testId: uuid.v4(),
+            badgeStyle: "#D2222D"
           }
         ],
         studentId: uuid.v4()
@@ -390,11 +393,15 @@ const Student = props => (
         <div className="form-group">
           <fieldset className="container-fluid">
             <div className="row">
-              <input name="inputField" className="form-control col" />
+              <input
+                type="text"
+                name="inputField"
+                className="form-control col "
+              />
               <input
                 type="submit"
                 value="create"
-                className="btn btn-outline-secondary"
+                className="btn btn-outline-secondary btn-sm"
               />
             </div>
           </fieldset>
@@ -417,40 +424,48 @@ const Result = props => (
     >
       {props.result.testName}
     </div>
-    <div>
-      <span
-        className="badge badge-primary badge-pill"
+    <div className="d-flex justify-content-between icon-container">
+      <div
+        className="badge badge-primary badge-pill align-self-center"
         style={{ backgroundColor: props.result.badgeStyle }}
       >
         {props.result.gradeUniStyle}
-      </span>
-      <span
-        onClick={() =>
-          props.handleOpenInfoModal(
-            props.result.testId,
-            props.student.studentId
-          )
-        }
-        className="fas fa-info-circle"
-      />
-      <span
-        onClick={() =>
-          props.handleOpenEditModal(
-            props.result.testId,
-            props.student.studentId
-          )
-        }
-        className="far fa-edit ml-4"
-      />
-      <span
-        onClick={() =>
-          props.handleDeleteSingleTest(
-            props.result.testId,
-            props.student.studentId
-          )
-        }
-        className="fas fa-trash-alt ml-4"
-      />
+      </div>
+      <div className="d-flex">
+        <div>
+          <span
+            onClick={() =>
+              props.handleOpenInfoModal(
+                props.result.testId,
+                props.student.studentId
+              )
+            }
+            className="fas fa-info-circle"
+          />
+        </div>
+        <div>
+          <span
+            onClick={() =>
+              props.handleOpenEditModal(
+                props.result.testId,
+                props.student.studentId
+              )
+            }
+            className="far fa-edit ml-4"
+          />
+        </div>
+        <div>
+          <span
+            onClick={() =>
+              props.handleDeleteSingleTest(
+                props.result.testId,
+                props.student.studentId
+              )
+            }
+            className="fas fa-trash-alt ml-4"
+          />
+        </div>
+      </div>
     </div>
   </li>
 );
