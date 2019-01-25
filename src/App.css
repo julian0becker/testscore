@@ -2,7 +2,8 @@ body {
   background-color: #222;
 }
 
-.fa-trash-alt:hover {
+.fa-trash-alt:hover,
+.fa-times:hover {
   color: #d2222d;
   transform: scale(1.4);
   cursor: pointer;

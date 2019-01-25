@@ -4,6 +4,14 @@ import Modal from "react-modal";
 import "./App.css";
 import * as utils from "./utils";
 
+class CreateStudent {
+  constructor(name = "Edit Name", results = []) {
+    this.name = name;
+    this.results = results;
+    this.studentId = uuid.v4();
+  }
+}
+
 class App extends Component {
   state = {
     students: [
@@ -158,6 +166,13 @@ class App extends Component {
       this.setState({ students: students });
       event.target.addStudent.value = "";
     }
+  };
+
+  handleDeleteStudent = idStudent => {
+    const students = [...this.state.students];
+    const studentIndex = utils.findIndexStudent(students, idStudent);
+    students.splice(studentIndex, 1);
+    this.setState({ students: students });
   };
 
   handleOpenEditModal = (idTest, idStudent) => {
@@ -345,6 +360,7 @@ class App extends Component {
           handleEditSingleTest={this.handleEditSingleTest}
           handleOpenEditModal={this.handleOpenEditModal}
           handleOpenInfoModal={this.handleOpenInfoModal}
+          handleDeleteStudent={this.handleDeleteStudent}
         />
         <ControlForm handleAddStudent={this.handleAddStudent} />
         <EditModal
@@ -377,6 +393,7 @@ const Display = props => (
         handleEditSingleTest={props.handleEditSingleTest}
         handleOpenEditModal={props.handleOpenEditModal}
         handleOpenInfoModal={props.handleOpenInfoModal}
+        handleDeleteStudent={props.handleDeleteStudent}
       />
     ))}
   </div>
@@ -384,7 +401,15 @@ const Display = props => (
 
 const Student = props => (
   <div className="card text-white bg-primary mb-3 m-2">
-    <div className="card-header">DaF 187</div>
+    <div className="card-header d-flex justify-content-between">
+      <div>DaF 187</div>
+      <div>
+        <i
+          onClick={() => props.handleDeleteStudent(props.student.studentId)}
+          className="fas fa-times"
+        />
+      </div>
+    </div>
     <div className="card-body d-flex flex-column justify-content-between">
       <h4 className="card-title">{props.student.name}</h4>
       <div className="card-text  ">
@@ -699,14 +724,6 @@ class ModalDisplayForTestInfo extends Component {
         </div>
       </div>
     );
-  }
-}
-
-class CreateStudent {
-  constructor(name, results = []) {
-    this.name = name;
-    this.results = results;
-    this.studentId = uuid.v4();
   }
 }
 
