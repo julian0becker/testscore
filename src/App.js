@@ -147,6 +147,19 @@ class App extends Component {
     }
   };
 
+  handleAddStudent = event => {
+    event.preventDefault();
+    if (!event.target.addStudent.value.trim()) {
+      alert("enter a name");
+    } else {
+      const student = new CreateStudent(event.target.addStudent.value.trim());
+      const students = [...this.state.students];
+      students.push(student);
+      this.setState({ students: students });
+      event.target.addStudent.value = "";
+    }
+  };
+
   handleOpenEditModal = (idTest, idStudent) => {
     this.setState({
       isModalOn: true,
@@ -333,7 +346,7 @@ class App extends Component {
           handleOpenEditModal={this.handleOpenEditModal}
           handleOpenInfoModal={this.handleOpenInfoModal}
         />
-        <div>form</div>
+        <ControlForm handleAddStudent={this.handleAddStudent} />
         <EditModal
           students={this.state.students}
           isModalOn={this.state.isModalOn}
@@ -351,7 +364,10 @@ class App extends Component {
 export default App;
 
 const Display = props => (
-  <div className="d-flex flex-wrap justify-content-center">
+  <div
+    className="d-flex flex-wrap justify-content-center"
+    style={{ backgroundColor: "#DDDDDD" }}
+  >
     {props.students.map(student => (
       <Student
         key={student.studentId}
@@ -682,6 +698,29 @@ class ModalDisplayForTestInfo extends Component {
           </div>
         </div>
       </div>
+    );
+  }
+}
+
+class CreateStudent {
+  constructor(name, results = []) {
+    this.name = name;
+    this.results = results;
+    this.studentId = uuid.v4();
+  }
+}
+
+class ControlForm extends Component {
+  render() {
+    return (
+      <form onSubmit={event => this.props.handleAddStudent(event)}>
+        <input
+          placeholder="enter new student's name"
+          type="text"
+          name="addStudent"
+        />
+        <input type="submit" value="New Student" />
+      </form>
     );
   }
 }

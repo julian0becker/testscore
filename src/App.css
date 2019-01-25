@@ -1,3 +1,7 @@
+body {
+  background-color: #222;
+}
+
 .fa-trash-alt:hover {
   color: #d2222d;
   transform: scale(1.4);
