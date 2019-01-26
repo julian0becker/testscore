@@ -595,26 +595,28 @@ class Result extends Component {
               : { width: "50%" }
           }
         >
-          <div
-            onClick={() =>
-              this.props.handleEditSingleScore(
-                this.props.result.testId,
-                this.props.student.studentId
-              )
-            }
-            className={
-              this.props.result.isEditingPoints
-                ? "is-editing-score-false"
-                : "editScore badge badge-primary badge-pill align-self-center"
-            }
-            style={
-              this.props.result.isEditingPoints
-                ? { backgroundColor: "white" }
-                : { backgroundColor: this.props.result.badgeStyle }
-            }
-          >
-            {this.props.result.gradeUniStyle}
-          </div>
+          {this.props.result.maxPoints !== "Please Edit" && (
+            <div
+              onClick={() =>
+                this.props.handleEditSingleScore(
+                  this.props.result.testId,
+                  this.props.student.studentId
+                )
+              }
+              className={
+                this.props.result.isEditingPoints
+                  ? "is-editing-score-false"
+                  : "editScore badge badge-primary badge-pill align-self-center"
+              }
+              style={
+                this.props.result.isEditingPoints
+                  ? { backgroundColor: "white" }
+                  : { backgroundColor: this.props.result.badgeStyle }
+              }
+            >
+              {this.props.result.gradeUniStyle}
+            </div>
+          )}
           <div className="d-flex">
             <div>
               <span
