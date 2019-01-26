@@ -122,23 +122,6 @@ class App extends Component {
     this.setState({ students: students });
   };
 
-  handleEditCurrentSingleTest = (event, idTest, idStudent) => {
-    event.preventDefault();
-
-    if (!event.target.editInputField.value.trim()) {
-      alert("enter a name");
-    } else {
-      const students = [...this.state.students];
-      const indexStudent = utils.findIndexStudent(students, idStudent);
-      const indexTest = utils.findIndexTest(students, indexStudent, idTest);
-
-      students[indexStudent].results[indexTest].testName =
-        event.target.editInputField.value;
-
-      this.setState({ students: students });
-    }
-  };
-
   handleEditSingleScore = (idTest, idStudent, node) => {
     const students = [...this.state.students];
     const indexStudent = utils.findIndexStudent(students, idStudent);
@@ -221,7 +204,7 @@ class App extends Component {
     const students = [...this.state.students];
     const studentIndex = utils.findIndexStudent(students, idStudent);
     students.splice(studentIndex, 1);
-    this.setState({ students: students });
+    this.setState({ students: students, isModalOn: false });
   };
 
   handleAddTestAll = event => {
@@ -236,8 +219,7 @@ class App extends Component {
         )
       )
     );
-    this.setState({ students: students });
-    console.log(this.state.students[0].results);
+    this.setState({ students: students, isModalOn: false });
   };
 
   handleOpenEditModal = (idTest, idStudent) => {
@@ -254,6 +236,14 @@ class App extends Component {
       isModalOn: true,
       typeOfModal: "info",
       forModalTestId: idTest,
+      forModalStudentId: idStudent
+    });
+  };
+
+  handleOpenDeleteModal = idStudent => {
+    this.setState({
+      isModalOn: true,
+      typeOfModal: "delete",
       forModalStudentId: idStudent
     });
   };
@@ -433,10 +423,10 @@ class App extends Component {
         <Display
           students={this.state.students}
           handleAddTest={this.handleAddTest}
-          handleEditSingleTest={this.handleEditSingleTest}
           handleOpenEditModal={this.handleOpenEditModal}
           handleOpenInfoModal={this.handleOpenInfoModal}
-          handleDeleteStudent={this.handleDeleteStudent}
+          handleOpenDeleteModal={this.handleOpenDeleteModal}
+          handleDeleteSingleTest={this.handleDeleteSingleTest}
           handleEditSingleScore={this.handleEditSingleScore}
         />
         <ControlForm
@@ -452,6 +442,7 @@ class App extends Component {
           forModalStudentId={this.state.forModalStudentId}
           handleTestEditMulti={this.handleTestEditMulti}
           handleAddTestAll={this.handleAddTestAll}
+          handleDeleteStudent={this.handleDeleteStudent}
         />
       </div>
     );
@@ -473,8 +464,8 @@ const Display = props => (
         handleDeleteSingleTest={props.handleDeleteSingleTest}
         handleOpenEditModal={props.handleOpenEditModal}
         handleOpenInfoModal={props.handleOpenInfoModal}
-        handleDeleteStudent={props.handleDeleteStudent}
         handleEditSingleScore={props.handleEditSingleScore}
+        handleOpenDeleteModal={props.handleOpenDeleteModal}
       />
     ))}
   </div>
@@ -486,7 +477,7 @@ const Student = props => (
       <div>DaF 187</div>
       <div>
         <i
-          onClick={() => props.handleDeleteStudent(props.student.studentId)}
+          onClick={() => props.handleOpenDeleteModal(props.student.studentId)}
           className="fas fa-times"
         />
       </div>
@@ -632,15 +623,27 @@ const EditModal = props => (
           forModalTestId={props.forModalTestId}
           forModalStudentId={props.forModalStudentId}
           students={props.students}
+          handleCloseModal={props.handleCloseModal}
         />
       ) : props.typeOfModal === "info" ? (
         <ModalDisplayForTestInfo
           students={props.students}
           forModalTestId={props.forModalTestId}
           forModalStudentId={props.forModalStudentId}
+          handleCloseModal={props.handleCloseModal}
+        />
+      ) : props.typeOfModal === "addTestAll" ? (
+        <ModalDisplayForAddTestAll
+          handleAddTestAll={props.handleAddTestAll}
+          handleCloseModal={props.handleCloseModal}
         />
       ) : (
-        <ModalDisplayForAddTestAll handleAddTestAll={props.handleAddTestAll} />
+        <ModalDelete
+          handleDeleteStudent={props.handleDeleteStudent}
+          forModalStudentId={props.forModalStudentId}
+          students={props.students}
+          handleCloseModal={props.handleCloseModal}
+        />
       )}
     </div>
   </Modal>
@@ -664,8 +667,11 @@ class ModalDisplayForEditInput extends Component {
         className="card text-white bg-primary "
         style={{ maxWidth: "20rem" }}
       >
-        <div className="card-header">
-          {this.props.students[studentIndex].name}
+        <div className="card-header d-flex justify-content-between">
+          <div>{this.props.students[studentIndex].name}</div>
+          <div>
+            <i onClick={this.props.handleCloseModal} className="fas fa-times" />
+          </div>
         </div>
         <div className="card-body">
           <h4 className="card-title">
@@ -799,8 +805,11 @@ class ModalDisplayForTestInfo extends Component {
         className="card text-white bg-primary "
         style={{ maxWidth: "20rem" }}
       >
-        <div className="card-header">
-          {this.props.students[studentIndex].name}
+        <div className="card-header d-flex justify-content-between">
+          <div> {this.props.students[studentIndex].name}</div>{" "}
+          <div>
+            <i onClick={this.props.handleCloseModal} className="fas fa-times" />
+          </div>
         </div>
         <div className="card-body">
           <h4 className="card-title">
@@ -866,7 +875,12 @@ class ModalDisplayForAddTestAll extends Component {
         className="card text-white bg-primary "
         style={{ maxWidth: "20rem" }}
       >
-        <div className="card-header">DaF 187</div>
+        <div className="card-header d-flex justify-content-between">
+          <div>DaF 187</div>
+          <div>
+            <i onClick={this.props.handleCloseModal} className="fas fa-times" />
+          </div>
+        </div>
         <div className="card-body">
           <h4 className="card-title">{"Add New Test "}</h4>
           <div className="card-text">
@@ -934,6 +948,23 @@ class ModalDisplayForAddTestAll extends Component {
     );
   }
 }
+
+const ModalDelete = props => (
+  <div>
+    <h5 className="text-danger ml-2 mr-2">Do you want to delete?</h5>
+    <div className="d-flex justify-content-around w-100">
+      <button
+        className="btn btn-secondary"
+        onClick={() => props.handleDeleteStudent(props.forModalStudentId)}
+      >
+        Yes
+      </button>
+      <button className="btn btn-secondary" onClick={props.handleCloseModal}>
+        No
+      </button>
+    </div>
+  </div>
+);
 
 const ControlForm = props => (
   <div>
