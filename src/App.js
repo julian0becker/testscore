@@ -212,7 +212,7 @@ class App extends Component {
     const indexTest = utils.findIndexTest(students, indexStudent, idTest);
 
     if (
-      event.target.editInputSingleScore.value >
+      parseInt(event.target.editInputSingleScore.value) >
       this.state.students[indexStudent].results[indexTest].maxPoints
     ) {
       alert("achieved points must be lower than max points");
@@ -300,27 +300,35 @@ class App extends Component {
 
   handleTestEditMulti = (event, idTest, idStudent) => {
     event.preventDefault();
-    const students = [...this.state.students];
-    const indexStudent = utils.findIndexStudent(students, idStudent);
-    const indexTest = utils.findIndexTest(students, indexStudent, idTest);
 
-    students[indexStudent].results[indexTest].testName =
-      event.target.editNameSingle.value;
-    students[indexStudent].results[indexTest].reachedPoints =
-      event.target.editPointsSingle.value;
-    students[indexStudent].results[indexTest].maxPoints =
-      event.target.editMaxPointsSingle.value;
-    students[indexStudent].results[indexTest].passMark =
-      event.target.editPassMark.value;
+    if (
+      parseInt(event.target.editPointsSingle.value) >
+      parseInt(event.target.editMaxPointsSingle.value)
+    ) {
+      alert("achieved points must be lower than max points");
+    } else {
+      const students = [...this.state.students];
+      const indexStudent = utils.findIndexStudent(students, idStudent);
+      const indexTest = utils.findIndexTest(students, indexStudent, idTest);
 
-    const grade =
-      event.target.editPointsSingle.value /
-      event.target.editMaxPointsSingle.value;
-    students[indexStudent].results[indexTest].grade = grade;
-    const passMark = event.target.editPassMark.value;
+      students[indexStudent].results[indexTest].testName =
+        event.target.editNameSingle.value;
+      students[indexStudent].results[indexTest].reachedPoints =
+        event.target.editPointsSingle.value;
+      students[indexStudent].results[indexTest].maxPoints =
+        event.target.editMaxPointsSingle.value;
+      students[indexStudent].results[indexTest].passMark =
+        event.target.editPassMark.value;
 
-    this.setState({ students: students, isModalOn: false });
-    this.calculateGrade(grade, passMark, indexStudent, indexTest);
+      const grade =
+        event.target.editPointsSingle.value /
+        event.target.editMaxPointsSingle.value;
+      students[indexStudent].results[indexTest].grade = grade;
+      const passMark = event.target.editPassMark.value;
+
+      this.setState({ students: students, isModalOn: false });
+      this.calculateGrade(grade, passMark, indexStudent, indexTest);
+    }
   };
 
   calculateGrade = (grade, passMark, indexStudent, indexTest) => {
@@ -731,13 +739,27 @@ class ModalDisplayForEditInput extends Component {
                   <tr className="table-active">
                     <td>
                       <p className="small mb-0 mt-0">Achieved Points</p>
-                      <input type="number" name="editPointsSingle" />
+                      <input
+                        type="number"
+                        name="editPointsSingle"
+                        defaultValue={
+                          this.props.students[studentIndex].results[testIndex]
+                            .reachedPoints
+                        }
+                      />
                     </td>
                   </tr>
                   <tr className="table-active">
                     <td>
                       <p className="small mb-0 mt-0">Max Points</p>
-                      <input type="number" name="editMaxPointsSingle" />
+                      <input
+                        type="number"
+                        name="editMaxPointsSingle"
+                        defaultValue={
+                          this.props.students[studentIndex].results[testIndex]
+                            .maxPoints
+                        }
+                      />
                     </td>
                   </tr>
                   <tr className="table-active">
