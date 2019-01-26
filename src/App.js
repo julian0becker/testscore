@@ -597,12 +597,16 @@ class Result extends Component {
         >
           {this.props.result.maxPoints !== "Please Edit" && (
             <div
-              onClick={() =>
-                this.props.handleEditSingleScore(
-                  this.props.result.testId,
-                  this.props.student.studentId
-                )
-              }
+              onClick={() => {
+                if (this.props.result.gradeUniStyle === "edit") {
+                  return this.props.handleEditSingleScore(
+                    this.props.result.testId,
+                    this.props.student.studentId
+                  );
+                } else {
+                  return null;
+                }
+              }}
               className={
                 this.props.result.isEditingPoints
                   ? "is-editing-score-false"
