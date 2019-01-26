@@ -207,14 +207,16 @@ class App extends Component {
 
   handleEditCurrentSingleScore = (event, idTest, idStudent) => {
     event.preventDefault();
+    const students = [...this.state.students];
+    const indexStudent = utils.findIndexStudent(students, idStudent);
+    const indexTest = utils.findIndexTest(students, indexStudent, idTest);
 
-    if (!event.target.editInputSingleScore.value.trim()) {
-      alert("enter ooints");
+    if (
+      event.target.editInputSingleScore.value >
+      this.state.students[indexStudent].results[indexTest].maxPoints
+    ) {
+      alert("achieved points must be lower than max points");
     } else {
-      const students = [...this.state.students];
-      const indexStudent = utils.findIndexStudent(students, idStudent);
-      const indexTest = utils.findIndexTest(students, indexStudent, idTest);
-
       students[indexStudent].results[indexTest].reachedPoints = parseInt(
         event.target.editInputSingleScore.value
       );
