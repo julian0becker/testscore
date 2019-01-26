@@ -182,27 +182,23 @@ class App extends Component {
           this.handleEditCurrentSingleScore(event, idTest, idStudent, node)
         }
       >
-        <div className="form-group mb-0">
-          <fieldset className="container-fluid">
-            <div className="row">
-              <input
-                className="btn btn-sm mr-1"
-                type="submit"
-                value="change"
-                id="button-single-score"
-              />
-              <input
-                name="editInputSingleScore"
-                type="number"
-                className="form-control col form-control-sm"
-                placeholder={
-                  "Pts. / " + students[indexStudent].results[indexTest].maxPoints
-                }
-                id="input-single-score"
-                required
-              />
-            </div>
-          </fieldset>
+        <div className="form-group mb-0 d-flex">
+          <input
+            className="btn btn-primary btn-sm mr-1"
+            type="submit"
+            value="edit"
+            id="button-single-score"
+          />
+          <input
+            name="editInputSingleScore"
+            type="number"
+            className="form-control col form-control-sm"
+            placeholder={
+              "Pts. / " + students[indexStudent].results[indexTest].maxPoints
+            }
+            id="input-single-score"
+            required
+          />
         </div>
       </form>
     );
@@ -585,7 +581,7 @@ class Result extends Component {
           className="d-flex justify-content-between icon-container"
           style={
             this.props.result.isEditingPoints
-              ? { width: "70%" }
+              ? { width: "80%" }
               : { width: "50%" }
           }
         >
@@ -596,9 +592,16 @@ class Result extends Component {
                 this.props.student.studentId
               )
             }
-            className="editScore badge badge-primary badge-pill align-self-center"
-            style={{ backgroundColor: this.props.result.badgeStyle }}
-            ref={this.myRef}
+            className={
+              this.props.result.isEditingPoints
+                ? "is-editing-score-false"
+                : "editScore badge badge-primary badge-pill align-self-center"
+            }
+            style={
+              this.props.result.isEditingPoints
+                ? { backgroundColor: "white" }
+                : { backgroundColor: this.props.result.badgeStyle }
+            }
           >
             {this.props.result.gradeUniStyle}
           </div>

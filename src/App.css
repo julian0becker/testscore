@@ -35,14 +35,12 @@ body {
 }
 
 #input-single-score {
-  border-radius: 1rem;
-  width: 2rem;
+  width: 6.3rem;
 }
 
 #button-single-score {
-  color: whitesmoke;
+  width: 3rem;
 }
-
 .ReactModalPortal > div {
   opacity: 0;
 }
