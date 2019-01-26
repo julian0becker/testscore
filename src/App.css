@@ -37,11 +37,10 @@ body {
 #input-single-score {
   border-radius: 1rem;
   width: 2rem;
-  border: 1px solid black;
 }
 
 #button-single-score {
-  color: black;
+  color: whitesmoke;
 }
 
 .ReactModalPortal > div {
@@ -64,6 +63,7 @@ body {
 }
 
 .modalStyle {
+  /* stays empty */
 }
 
 #modalForm {

@@ -22,6 +22,7 @@ class CreateTestAll {
     this.gradeUniStyle = "edit";
     this.testId = uuid.v4();
     this.badgeStyle = null;
+    this.isEditingPoints = null;
   }
 }
 
@@ -39,7 +40,8 @@ class App extends Component {
             grade: 0.8,
             gradeUniStyle: "2,0",
             testId: uuid.v4(),
-            badgeStyle: "#238823"
+            badgeStyle: "#238823",
+            isEditingPoints: null
           },
           {
             testName: "test 2",
@@ -49,7 +51,8 @@ class App extends Component {
             grade: 0.95,
             gradeUniStyle: "1,3",
             testId: uuid.v4(),
-            badgeStyle: "#20B2AA"
+            badgeStyle: "#20B2AA",
+            isEditingPoints: null
           }
         ],
         studentId: uuid.v4()
@@ -65,7 +68,8 @@ class App extends Component {
             grade: 0.5,
             gradeUniStyle: "4,0",
             testId: uuid.v4(),
-            badgeStyle: "#EEB462"
+            badgeStyle: "#EEB462",
+            isEditingPoints: null
           },
           {
             testName: "React.js",
@@ -75,7 +79,8 @@ class App extends Component {
             grade: 0.01,
             gradeUniStyle: "5,0",
             testId: uuid.v4(),
-            badgeStyle: "#D2222D"
+            badgeStyle: "#D2222D",
+            isEditingPoints: null
           }
         ],
         studentId: uuid.v4()
@@ -170,6 +175,7 @@ class App extends Component {
     const students = [...this.state.students];
     const indexStudent = utils.findIndexStudent(students, idStudent);
     const indexTest = utils.findIndexTest(students, indexStudent, idTest);
+    students[indexStudent].results[indexTest].isEditingPoints = true;
     students[indexStudent].results[indexTest].gradeUniStyle = (
       <form
         onSubmit={event =>
@@ -191,6 +197,7 @@ class App extends Component {
                 className="form-control col form-control-sm"
                 placeholder="Pts."
                 id="input-single-score"
+                required
               />
             </div>
           </fieldset>
@@ -204,7 +211,7 @@ class App extends Component {
     event.preventDefault();
 
     if (!event.target.editInputSingleScore.value.trim()) {
-      alert("enter a name");
+      alert("enter ooints");
     } else {
       const students = [...this.state.students];
       const indexStudent = utils.findIndexStudent(students, idStudent);
@@ -222,6 +229,7 @@ class App extends Component {
 
       this.calculateGrade(grade, passMark, indexStudent, indexTest);
       students[indexStudent].results[indexTest].grade = grade;
+      students[indexStudent].results[indexTest].isEditingPoints = false;
       this.setState({
         students: students
       });
@@ -523,6 +531,7 @@ const Student = props => (
               handleOpenEditModal={props.handleOpenEditModal}
               handleOpenInfoModal={props.handleOpenInfoModal}
               handleEditSingleScore={props.handleEditSingleScore}
+              isEditingPoints={props.isEditingPoints}
             />
           ))}
         </ul>
@@ -570,7 +579,14 @@ class Result extends Component {
         >
           {this.props.result.testName}
         </div>
-        <div className="d-flex justify-content-between icon-container">
+        <div
+          className="d-flex justify-content-between icon-container"
+          style={
+            this.props.result.isEditingPoints
+              ? { width: "70%" }
+              : { width: "50%" }
+          }
+        >
           <div
             onClick={() =>
               this.props.handleEditSingleScore(
