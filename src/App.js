@@ -166,14 +166,14 @@ class App extends Component {
     }
   };
 
-  handleEditSingleScore = (idTest, idStudent) => {
+  handleEditSingleScore = (idTest, idStudent, node) => {
     const students = [...this.state.students];
     const indexStudent = utils.findIndexStudent(students, idStudent);
     const indexTest = utils.findIndexTest(students, indexStudent, idTest);
     students[indexStudent].results[indexTest].gradeUniStyle = (
       <form
         onSubmit={event =>
-          this.handleEditCurrentSingleScore(event, idTest, idStudent)
+          this.handleEditCurrentSingleScore(event, idTest, idStudent, node)
         }
       >
         <div className="form-group mb-0">
@@ -186,6 +186,7 @@ class App extends Component {
               />
               <input
                 name="editInputSingleScore"
+                type="number"
                 className="form-control col form-control-sm"
                 placeholder="new name"
               />
@@ -200,16 +201,25 @@ class App extends Component {
   handleEditCurrentSingleScore = (event, idTest, idStudent) => {
     event.preventDefault();
 
-    if (!event.target.editInputField.value.trim()) {
+    if (!event.target.editInputSingleScore.value.trim()) {
       alert("enter a name");
     } else {
       const students = [...this.state.students];
       const indexStudent = utils.findIndexStudent(students, idStudent);
       const indexTest = utils.findIndexTest(students, indexStudent, idTest);
 
-      students[indexStudent].results[indexTest].reachedPoints =
-        event.target.editInputSingleScore.value;
+      students[indexStudent].results[indexTest].reachedPoints = parseInt(
+        event.target.editInputSingleScore.value
+      );
 
+      const grade =
+        this.state.students[indexStudent].results[indexTest].reachedPoints /
+        this.state.students[indexStudent].results[indexTest].maxPoints;
+      const passMark = this.state.students[indexStudent].results[indexTest]
+        .passMark;
+
+      this.calculateGrade(grade, passMark, indexStudent, indexTest);
+      students[indexStudent].results[indexTest].grade = grade;
       this.setState({
         students: students
       });
@@ -540,70 +550,78 @@ const Student = props => (
   </div>
 );
 
-const Result = props => (
-  <li
-    style={{ color: "black" }}
-    className="list-group-item d-flex justify-content-between align-items-center "
-  >
-    <div
-      id="editName"
-      onClick={() =>
-        props.handleEditSingleTest(props.result.testId, props.student.studentId)
-      }
-    >
-      {props.result.testName}
-    </div>
-    <div className="d-flex justify-content-between icon-container">
-      <div
-        onClick={() =>
-          props.handleEditSingleScore(
-            props.result.testId,
-            props.student.studentId
-          )
-        }
-        className="editScore badge badge-primary badge-pill align-self-center"
-        style={{ backgroundColor: props.result.badgeStyle }}
+class Result extends Component {
+  render() {
+    return (
+      <li
+        style={{ color: "black" }}
+        className="list-group-item d-flex justify-content-between align-items-center "
       >
-        {props.result.gradeUniStyle}
-      </div>
-      <div className="d-flex">
-        <div>
-          <span
+        <div
+          id="editName"
+          onClick={() =>
+            this.props.handleEditSingleTest(
+              this.props.result.testId,
+              this.props.student.studentId
+            )
+          }
+        >
+          {this.props.result.testName}
+        </div>
+        <div className="d-flex justify-content-between icon-container">
+          <div
             onClick={() =>
-              props.handleOpenInfoModal(
-                props.result.testId,
-                props.student.studentId
+              this.props.handleEditSingleScore(
+                this.props.result.testId,
+                this.props.student.studentId
               )
             }
-            className="fas fa-info-circle"
-          />
+            className="editScore badge badge-primary badge-pill align-self-center"
+            style={{ backgroundColor: this.props.result.badgeStyle }}
+            ref={this.myRef}
+          >
+            {this.props.result.gradeUniStyle}
+          </div>
+          <div className="d-flex">
+            <div>
+              <span
+                onClick={() =>
+                  this.props.handleOpenInfoModal(
+                    this.props.result.testId,
+                    this.props.student.studentId
+                  )
+                }
+                className="fas fa-info-circle"
+              />
+            </div>
+            <div>
+              <span
+                onClick={() =>
+                  this.props.handleOpenEditModal(
+                    this.props.result.testId,
+                    this.props.student.studentId
+                  )
+                }
+                className="far fa-edit ml-4"
+              />
+            </div>
+            <div>
+              <span
+                onClick={() =>
+                  this.props.handleDeleteSingleTest(
+                    this.props.result.testId,
+                    this.props.student.studentId
+                  )
+                }
+                className="fas fa-trash-alt ml-4"
+              />
+            </div>
+          </div>
         </div>
-        <div>
-          <span
-            onClick={() =>
-              props.handleOpenEditModal(
-                props.result.testId,
-                props.student.studentId
-              )
-            }
-            className="far fa-edit ml-4"
-          />
-        </div>
-        <div>
-          <span
-            onClick={() =>
-              props.handleDeleteSingleTest(
-                props.result.testId,
-                props.student.studentId
-              )
-            }
-            className="fas fa-trash-alt ml-4"
-          />
-        </div>
-      </div>
-    </div>
-  </li>
-);
+      </li>
+    );
+  }
+}
 
 const EditModal = props => (
   <Modal
