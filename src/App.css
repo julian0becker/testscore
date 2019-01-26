@@ -31,8 +31,17 @@ body {
 }
 
 .editScore:hover {
-  transform: scale(1.5);
   cursor: pointer;
+}
+
+#input-single-score {
+  border-radius: 1rem;
+  width: 2rem;
+  border: 1px solid black;
+}
+
+#button-single-score {
+  color: black;
 }
 
 .ReactModalPortal > div {

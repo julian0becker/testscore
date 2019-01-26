@@ -182,13 +182,15 @@ class App extends Component {
               <input
                 className="btn btn-sm mr-1"
                 type="submit"
-                value="change :"
+                value="change"
+                id="button-single-score"
               />
               <input
                 name="editInputSingleScore"
                 type="number"
                 className="form-control col form-control-sm"
-                placeholder="new name"
+                placeholder="Pts."
+                id="input-single-score"
               />
             </div>
           </fieldset>
