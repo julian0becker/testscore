@@ -718,7 +718,14 @@ class ModalDisplayForEditInput extends Component {
                   <tr className="table-active">
                     <td>
                       <p className="small mb-0 mt-0">Test Name</p>
-                      <input type="text" name="editNameSingle" />
+                      <input
+                        type="text"
+                        name="editNameSingle"
+                        defaultValue={
+                          this.props.students[studentIndex].results[testIndex]
+                            .testName
+                        }
+                      />
                     </td>
                   </tr>
                   <tr className="table-active">
