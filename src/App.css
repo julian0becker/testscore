@@ -30,6 +30,11 @@ body {
   cursor: pointer;
 }
 
+.editScore:hover {
+  transform: scale(1.5);
+  cursor: pointer;
+}
+
 .ReactModalPortal > div {
   opacity: 0;
 }

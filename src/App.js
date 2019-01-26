@@ -12,6 +12,19 @@ class CreateStudent {
   }
 }
 
+class CreateTestAll {
+  constructor(testName, maxPoints, passMark) {
+    this.testName = testName;
+    this.maxPoints = maxPoints;
+    this.passMark = passMark;
+    this.reachedPoints = "Please Edit";
+    this.grade = null;
+    this.gradeUniStyle = "edit";
+    this.testId = uuid.v4();
+    this.badgeStyle = null;
+  }
+}
+
 class App extends Component {
   state = {
     students: [
@@ -82,15 +95,13 @@ class App extends Component {
     } else {
       const students = [...this.state.students];
       const index = utils.findIndexStudent(students, idStudent);
-      students[index].results.push({
-        testName: event.target.inputField.value,
-        maxPoints: null,
-        passMark: null,
-        reachedPoints: "Please Edit",
-        grade: null,
-        gradeUniStyle: null,
-        testId: uuid.v4()
-      });
+      students[index].results.push(
+        new CreateTestAll(
+          event.target.inputField.value,
+          "Please Edit",
+          "Please Edit"
+        )
+      );
       this.setState({
         students: students
       });
@@ -155,6 +166,56 @@ class App extends Component {
     }
   };
 
+  handleEditSingleScore = (idTest, idStudent) => {
+    const students = [...this.state.students];
+    const indexStudent = utils.findIndexStudent(students, idStudent);
+    const indexTest = utils.findIndexTest(students, indexStudent, idTest);
+    students[indexStudent].results[indexTest].gradeUniStyle = (
+      <form
+        onSubmit={event =>
+          this.handleEditCurrentSingleScore(event, idTest, idStudent)
+        }
+      >
+        <div className="form-group mb-0">
+          <fieldset className="container-fluid">
+            <div className="row">
+              <input
+                className="btn btn-sm mr-1"
+                type="submit"
+                value="change :"
+              />
+              <input
+                name="editInputSingleScore"
+                className="form-control col form-control-sm"
+                placeholder="new name"
+              />
+            </div>
+          </fieldset>
+        </div>
+      </form>
+    );
+    this.setState({ students: students });
+  };
+
+  handleEditCurrentSingleScore = (event, idTest, idStudent) => {
+    event.preventDefault();
+
+    if (!event.target.editInputField.value.trim()) {
+      alert("enter a name");
+    } else {
+      const students = [...this.state.students];
+      const indexStudent = utils.findIndexStudent(students, idStudent);
+      const indexTest = utils.findIndexTest(students, indexStudent, idTest);
+
+      students[indexStudent].results[indexTest].reachedPoints =
+        event.target.editInputSingleScore.value;
+
+      this.setState({
+        students: students
+      });
+    }
+  };
+
   handleAddStudent = event => {
     event.preventDefault();
     if (!event.target.addStudent.value.trim()) {
@@ -175,6 +236,22 @@ class App extends Component {
     this.setState({ students: students });
   };
 
+  handleAddTestAll = event => {
+    event.preventDefault();
+    const students = [...this.state.students];
+    students.map(student =>
+      student.results.push(
+        new CreateTestAll(
+          event.target.editNameAll.value,
+          event.target.editMaxPointsAll.value,
+          event.target.editPassMark.value
+        )
+      )
+    );
+    this.setState({ students: students });
+    console.log(this.state.students[0].results);
+  };
+
   handleOpenEditModal = (idTest, idStudent) => {
     this.setState({
       isModalOn: true,
@@ -191,6 +268,10 @@ class App extends Component {
       forModalTestId: idTest,
       forModalStudentId: idStudent
     });
+  };
+
+  handleOpenAddTestAllModal = () => {
+    this.setState({ isModalOn: true, typeOfModal: "addTestAll" });
   };
 
   handleCloseModal = () => {
@@ -361,8 +442,12 @@ class App extends Component {
           handleOpenEditModal={this.handleOpenEditModal}
           handleOpenInfoModal={this.handleOpenInfoModal}
           handleDeleteStudent={this.handleDeleteStudent}
+          handleEditSingleScore={this.handleEditSingleScore}
         />
-        <ControlForm handleAddStudent={this.handleAddStudent} />
+        <ControlForm
+          handleAddStudent={this.handleAddStudent}
+          handleOpenAddTestAllModal={this.handleOpenAddTestAllModal}
+        />
         <EditModal
           students={this.state.students}
           isModalOn={this.state.isModalOn}
@@ -371,6 +456,7 @@ class App extends Component {
           forModalTestId={this.state.forModalTestId}
           forModalStudentId={this.state.forModalStudentId}
           handleTestEditMulti={this.handleTestEditMulti}
+          handleAddTestAll={this.handleAddTestAll}
         />
       </div>
     );
@@ -394,6 +480,7 @@ const Display = props => (
         handleOpenEditModal={props.handleOpenEditModal}
         handleOpenInfoModal={props.handleOpenInfoModal}
         handleDeleteStudent={props.handleDeleteStudent}
+        handleEditSingleScore={props.handleEditSingleScore}
       />
     ))}
   </div>
@@ -423,6 +510,7 @@ const Student = props => (
               handleEditSingleTest={props.handleEditSingleTest}
               handleOpenEditModal={props.handleOpenEditModal}
               handleOpenInfoModal={props.handleOpenInfoModal}
+              handleEditSingleScore={props.handleEditSingleScore}
             />
           ))}
         </ul>
@@ -467,7 +555,13 @@ const Result = props => (
     </div>
     <div className="d-flex justify-content-between icon-container">
       <div
-        className="badge badge-primary badge-pill align-self-center"
+        onClick={() =>
+          props.handleEditSingleScore(
+            props.result.testId,
+            props.student.studentId
+          )
+        }
+        className="editScore badge badge-primary badge-pill align-self-center"
         style={{ backgroundColor: props.result.badgeStyle }}
       >
         {props.result.gradeUniStyle}
@@ -527,12 +621,14 @@ const EditModal = props => (
           forModalStudentId={props.forModalStudentId}
           students={props.students}
         />
-      ) : (
+      ) : props.typeOfModal === "info" ? (
         <ModalDisplayForTestInfo
           students={props.students}
           forModalTestId={props.forModalTestId}
           forModalStudentId={props.forModalStudentId}
         />
+      ) : (
+        <ModalDisplayForAddTestAll handleAddTestAll={props.handleAddTestAll} />
       )}
     </div>
   </Modal>
@@ -727,17 +823,92 @@ class ModalDisplayForTestInfo extends Component {
   }
 }
 
-class ControlForm extends Component {
+class ModalDisplayForAddTestAll extends Component {
   render() {
     return (
-      <form onSubmit={event => this.props.handleAddStudent(event)}>
-        <input
-          placeholder="enter new student's name"
-          type="text"
-          name="addStudent"
-        />
-        <input type="submit" value="New Student" />
-      </form>
+      <div
+        className="card text-white bg-primary "
+        style={{ maxWidth: "20rem" }}
+      >
+        <div className="card-header">DaF 187</div>
+        <div className="card-body">
+          <h4 className="card-title">{"Add New Test "}</h4>
+          <div className="card-text">
+            <form onSubmit={event => this.props.handleAddTestAll(event)}>
+              <table className="table table-hover m-0">
+                <tbody>
+                  <tr className="table-active">
+                    <td>
+                      <p className="small mb-0 mt-0">Test Name</p>
+                      <input type="text" name="editNameAll" required />
+                    </td>
+                  </tr>
+
+                  <tr className="table-active">
+                    <td>
+                      <p className="small mb-0 mt-0">Max Points</p>
+                      <input type="number" name="editMaxPointsAll" required />
+                    </td>
+                  </tr>
+                  <tr className="table-active">
+                    <td>
+                      <fieldset>
+                        <p className="small mb-0 mt-0">Passmark</p>
+                        <div className="d-flex">
+                          <div className="form-check">
+                            <label className="form-check-label">
+                              <input
+                                type="radio"
+                                className="form-check-input"
+                                name="editPassMark"
+                                id="optionsRadios1"
+                                value="50%"
+                                checked
+                                readOnly={true}
+                              />
+                              50%
+                            </label>
+                          </div>
+                          <div className="form-check ml-2">
+                            <label className="form-check-label">
+                              <input
+                                type="radio"
+                                className="form-check-input"
+                                name="editPassMark"
+                                id="optionsRadios2"
+                                value="60%"
+                              />
+                              60%
+                            </label>
+                          </div>
+                        </div>
+                      </fieldset>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <input
+                type="submit"
+                className="btn btn-sm btn-outline-secondary mt-3"
+              />
+            </form>
+          </div>
+        </div>
+      </div>
     );
   }
 }
+
+const ControlForm = props => (
+  <div>
+    <form onSubmit={event => props.handleAddStudent(event)}>
+      <input
+        placeholder="enter new student's name"
+        type="text"
+        name="addStudent"
+      />
+      <input type="submit" value="New Student" />
+    </form>
+    <button onClick={props.handleOpenAddTestAllModal}> Add New Test </button>
+  </div>
+);
