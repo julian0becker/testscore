@@ -122,38 +122,6 @@ class App extends Component {
     this.setState({ students: students });
   };
 
-  handleEditSingleTest = (idTest, idStudent) => {
-    const students = [...this.state.students];
-    const indexStudent = utils.findIndexStudent(students, idStudent);
-    const indexTest = utils.findIndexTest(students, indexStudent, idTest);
-
-    students[indexStudent].results[indexTest].testName = (
-      <form
-        onSubmit={event =>
-          this.handleEditCurrentSingleTest(event, idTest, idStudent)
-        }
-      >
-        <div className="form-group mb-0">
-          <fieldset className="container-fluid">
-            <div className="row">
-              <input
-                className="btn btn-sm mr-1"
-                type="submit"
-                value="change :"
-              />
-              <input
-                name="editInputField"
-                className="form-control col form-control-sm"
-                placeholder="new name"
-              />
-            </div>
-          </fieldset>
-        </div>
-      </form>
-    );
-    this.setState({ students: students });
-  };
-
   handleEditCurrentSingleTest = (event, idTest, idStudent) => {
     event.preventDefault();
 
@@ -465,7 +433,6 @@ class App extends Component {
         <Display
           students={this.state.students}
           handleAddTest={this.handleAddTest}
-          handleDeleteSingleTest={this.handleDeleteSingleTest}
           handleEditSingleTest={this.handleEditSingleTest}
           handleOpenEditModal={this.handleOpenEditModal}
           handleOpenInfoModal={this.handleOpenInfoModal}
@@ -504,7 +471,6 @@ const Display = props => (
         student={student}
         handleAddTest={props.handleAddTest}
         handleDeleteSingleTest={props.handleDeleteSingleTest}
-        handleEditSingleTest={props.handleEditSingleTest}
         handleOpenEditModal={props.handleOpenEditModal}
         handleOpenInfoModal={props.handleOpenInfoModal}
         handleDeleteStudent={props.handleDeleteStudent}
@@ -535,7 +501,6 @@ const Student = props => (
               student={props.student}
               result={result}
               handleDeleteSingleTest={props.handleDeleteSingleTest}
-              handleEditSingleTest={props.handleEditSingleTest}
               handleOpenEditModal={props.handleOpenEditModal}
               handleOpenInfoModal={props.handleOpenInfoModal}
               handleEditSingleScore={props.handleEditSingleScore}
@@ -576,17 +541,7 @@ class Result extends Component {
         style={{ color: "black" }}
         className="list-group-item d-flex justify-content-between align-items-center "
       >
-        <div
-          id="editName"
-          onClick={() =>
-            this.props.handleEditSingleTest(
-              this.props.result.testId,
-              this.props.student.studentId
-            )
-          }
-        >
-          {this.props.result.testName}
-        </div>
+        <div id="editName">{this.props.result.testName}</div>
         <div
           className="d-flex justify-content-between icon-container"
           style={
@@ -739,6 +694,7 @@ class ModalDisplayForEditInput extends Component {
                           this.props.students[studentIndex].results[testIndex]
                             .testName
                         }
+                        required
                       />
                     </td>
                   </tr>
@@ -752,6 +708,7 @@ class ModalDisplayForEditInput extends Component {
                           this.props.students[studentIndex].results[testIndex]
                             .reachedPoints
                         }
+                        required
                       />
                     </td>
                   </tr>
@@ -765,6 +722,7 @@ class ModalDisplayForEditInput extends Component {
                           this.props.students[studentIndex].results[testIndex]
                             .maxPoints
                         }
+                        required
                       />
                     </td>
                   </tr>

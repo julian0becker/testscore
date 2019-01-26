@@ -25,11 +25,6 @@ body {
   width: 50%;
 }
 
-#editName:hover {
-  color: #238823;
-  cursor: pointer;
-}
-
 .editScore:hover {
   cursor: pointer;
 }
