@@ -195,7 +195,9 @@ class App extends Component {
                 name="editInputSingleScore"
                 type="number"
                 className="form-control col form-control-sm"
-                placeholder="Pts."
+                placeholder={
+                  "Pts. / " + students[indexStudent].results[indexTest].maxPoints
+                }
                 id="input-single-score"
                 required
               />
