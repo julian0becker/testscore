@@ -433,10 +433,25 @@ class App extends Component {
     }
   };
 
+  componentDidMount() {
+    const json = localStorage.getItem("students");
+    const students = JSON.parse(json);
+    if (!!students) {
+      this.setState({ students: students });
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const json = JSON.stringify(this.state.students);
+    localStorage.setItem("students", json);
+  }
+
   render() {
     return (
       <div>
-        <div>navigation</div>
+        <h1 className="d-flex justify-content-center text-secondary">
+          Testify
+        </h1>
         <ControlForm
           handleAddStudent={this.handleAddStudent}
           handleOpenAddTestAllModal={this.handleOpenAddTestAllModal}
