@@ -89,14 +89,19 @@ class App extends Component {
     isModalOn: null,
     typeOfModal: null,
     forModalTestId: null,
-    forModalStudentId: null
+    forModalStudentId: null,
+    forModalMessage: null
   };
 
   handleAddTest = (event, idStudent) => {
     event.preventDefault();
 
     if (!event.target.inputField.value.trim()) {
-      alert("enter a name");
+      this.setState({
+        isModalOn: true,
+        typeOfModal: "alert",
+        forModalMessage: "Enter a name."
+      });
     } else {
       const students = [...this.state.students];
       const index = utils.findIndexStudent(students, idStudent);
@@ -166,7 +171,11 @@ class App extends Component {
       parseInt(event.target.editInputSingleScore.value) >
       this.state.students[indexStudent].results[indexTest].maxPoints
     ) {
-      alert("achieved points must be lower than max points");
+      this.setState({
+        isModalOn: true,
+        typeOfModal: "alert",
+        forModalMessage: "Achieved points must be lower than max. points."
+      });
     } else {
       students[indexStudent].results[indexTest].reachedPoints = parseInt(
         event.target.editInputSingleScore.value
@@ -190,7 +199,11 @@ class App extends Component {
   handleAddStudent = event => {
     event.preventDefault();
     if (!event.target.addStudent.value.trim()) {
-      alert("enter a name");
+      this.setState({
+        isModalOn: true,
+        typeOfModal: "alert",
+        forModalMessage: "Enter a name."
+      });
     } else {
       const student = new CreateStudent(event.target.addStudent.value.trim());
       const students = [...this.state.students];
@@ -263,7 +276,11 @@ class App extends Component {
       parseInt(event.target.editPointsSingle.value) >
       parseInt(event.target.editMaxPointsSingle.value)
     ) {
-      alert("achieved points must be lower than max points");
+      this.setState({
+        isModalOn: true,
+        typeOfModal: "alert",
+        forModalMessage: "Achieved points must be lower than max. points."
+      });
     } else {
       const students = [...this.state.students];
       const indexStudent = utils.findIndexStudent(students, idStudent);
@@ -444,6 +461,7 @@ class App extends Component {
           handleTestEditMulti={this.handleTestEditMulti}
           handleAddTestAll={this.handleAddTestAll}
           handleDeleteStudent={this.handleDeleteStudent}
+          forModalMessage={this.state.forModalMessage}
         />
       </div>
     );
@@ -638,11 +656,16 @@ const EditModal = props => (
           handleAddTestAll={props.handleAddTestAll}
           handleCloseModal={props.handleCloseModal}
         />
-      ) : (
+      ) : props.typeOfModal === "delete" ? (
         <ModalDelete
           handleDeleteStudent={props.handleDeleteStudent}
           forModalStudentId={props.forModalStudentId}
           students={props.students}
+          handleCloseModal={props.handleCloseModal}
+        />
+      ) : (
+        <ModalAlert
+          forModalMessage={props.forModalMessage}
           handleCloseModal={props.handleCloseModal}
         />
       )}
@@ -951,18 +974,37 @@ class ModalDisplayForAddTestAll extends Component {
 }
 
 const ModalDelete = props => (
-  <div>
-    <h5 className="text-danger ml-2 mr-2">Do you want to delete?</h5>
-    <div className="d-flex justify-content-around w-100">
+  <div style={{ backgroundColor: "#1a1a1a" }}>
+    <h5 className="text-danger ml-2 mr-2 mb-0 p-3 ">Do you want to delete?</h5>
+    <div className="d-flex justify-content-around w-100 p-3">
       <button
-        className="btn btn-secondary"
+        className="btn btn-outline-secondary"
         onClick={() => props.handleDeleteStudent(props.forModalStudentId)}
       >
         Yes
       </button>
-      <button className="btn btn-secondary" onClick={props.handleCloseModal}>
+      <button
+        className="btn btn-outline-secondary"
+        onClick={props.handleCloseModal}
+      >
         No
       </button>
+    </div>
+  </div>
+);
+
+const ModalAlert = props => (
+  <div
+    className="card text-white bg-primary  h-100"
+    style={{ maxWidth: "20rem" }}
+  >
+    <div className="card-header p-1 mr-2">
+      <div className="d-flex justify-content-end">
+        <i onClick={props.handleCloseModal} className="fas fa-times" />
+      </div>
+    </div>
+    <div className="card-body">
+      <h4 className="card-title">{props.forModalMessage}</h4>
     </div>
   </div>
 );

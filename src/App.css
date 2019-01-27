@@ -62,7 +62,7 @@ body {
 #modalForm {
   background-color: black;
   min-width: 200px;
-  min-height: 200px;
+
   display: flex;
   align-items: center;
   border: 2px solid whitesmoke;
