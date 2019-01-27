@@ -420,6 +420,10 @@ class App extends Component {
     return (
       <div>
         <div>navigation</div>
+        <ControlForm
+          handleAddStudent={this.handleAddStudent}
+          handleOpenAddTestAllModal={this.handleOpenAddTestAllModal}
+        />
         <Display
           students={this.state.students}
           handleAddTest={this.handleAddTest}
@@ -429,10 +433,7 @@ class App extends Component {
           handleDeleteSingleTest={this.handleDeleteSingleTest}
           handleEditSingleScore={this.handleEditSingleScore}
         />
-        <ControlForm
-          handleAddStudent={this.handleAddStudent}
-          handleOpenAddTestAllModal={this.handleOpenAddTestAllModal}
-        />
+
         <EditModal
           students={this.state.students}
           isModalOn={this.state.isModalOn}
@@ -592,7 +593,7 @@ class Result extends Component {
             </div>
             <div>
               <span
-                onClick={() =>
+                onDoubleClick={() =>
                   this.props.handleDeleteSingleTest(
                     this.props.result.testId,
                     this.props.student.studentId
@@ -967,15 +968,37 @@ const ModalDelete = props => (
 );
 
 const ControlForm = props => (
+  <div className="d-flex justify-content-center pb-3">
+    <AddNewTestAll
+      handleOpenAddTestAllModal={props.handleOpenAddTestAllModal}
+    />
+    <AddNewStudentForm handleAddStudent={props.handleAddStudent} />
+  </div>
+);
+
+const AddNewStudentForm = props => (
+  <form className="d-flex" onSubmit={event => props.handleAddStudent(event)}>
+    <input
+      className="form-control form-control-sm"
+      placeholder="enter new student's name"
+      type="text"
+      name="addStudent"
+    />
+    <input
+      className="btn btn-outline-secondary btn-sm"
+      type="submit"
+      value="New Student"
+    />
+  </form>
+);
+
+const AddNewTestAll = props => (
   <div>
-    <form onSubmit={event => props.handleAddStudent(event)}>
-      <input
-        placeholder="enter new student's name"
-        type="text"
-        name="addStudent"
-      />
-      <input type="submit" value="New Student" />
-    </form>
-    <button onClick={props.handleOpenAddTestAllModal}> Add New Test </button>
+    <button
+      className="btn btn-outline-secondary btn-sm"
+      onClick={props.handleOpenAddTestAllModal}
+    >
+      Add New Test
+    </button>
   </div>
 );
