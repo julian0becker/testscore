@@ -1,3 +1,10 @@
+a,
+a:hover,
+a:focus {
+  text-decoration: none;
+  color: #919aa1;
+}
+
 body {
   background-color: #222;
 }

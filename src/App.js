@@ -64,22 +64,22 @@ class App extends Component {
             testName: "JavaScript",
             maxPoints: 100,
             passMark: "50%",
-            reachedPoints: 50,
-            grade: 0.5,
-            gradeUniStyle: "4,0",
+            reachedPoints: 80,
+            grade: 0.8,
+            gradeUniStyle: "2,0",
             testId: uuid.v4(),
-            badgeStyle: "#EEB462",
+            badgeStyle: "#238823",
             isEditingPoints: null
           },
           {
             testName: "React.js",
             maxPoints: 100,
             passMark: "50%",
-            reachedPoints: 1,
-            grade: 0.01,
-            gradeUniStyle: "5,0",
+            reachedPoints: 79,
+            grade: 0.79,
+            gradeUniStyle: "2,3",
             testId: uuid.v4(),
-            badgeStyle: "#D2222D",
+            badgeStyle: "#238823",
             isEditingPoints: null
           }
         ],
@@ -465,7 +465,12 @@ class App extends Component {
           handleDeleteSingleTest={this.handleDeleteSingleTest}
           handleEditSingleScore={this.handleEditSingleScore}
         />
-
+        <div className="d-flex justify-content-center">
+          <i class="d-flex align-items-center fab fa-github" />
+          <a href="https://github.com/julian0becker" target="_blank" rel="noopener noreferrer">
+            julian0becker
+          </a>
+        </div>
         <EditModal
           students={this.state.students}
           isModalOn={this.state.isModalOn}
