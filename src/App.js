@@ -1063,7 +1063,8 @@ const AddNewTestAll = props => (
 
 const Footer = props => (
   <div className="p-5">
-    <form action="POST" data-netlify="true" className="container-fluid w-50">
+    <form action="POST" className="container-fluid w-50">
+      <input type="hidden" name="form-name" value="contact" />
       <div className="form-group">
         <label for="inputName">Name</label>
         <input
