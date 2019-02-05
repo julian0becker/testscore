@@ -1064,25 +1064,27 @@ const AddNewTestAll = props => (
 const Footer = props => (
   <div className="p-5">
     <form action="POST" className="container-fluid w-50">
-      <input type="hidden" name="form-name" value="contact" />
-      <div className="form-group">
-        <label for="inputName">Name</label>
-        <input
-          type="text"
-          class="form-control form-control-sm"
-          name="inputName"
-        />
+      <div className="d-flex ">
+        <input type="hidden" name="form-name" value="contact" />
+        <div className="form-group flex-fill">
+          <label for="inputName">Name</label>
+          <input
+            type="text"
+            class="form-control form-control-sm"
+            name="inputName"
+          />
+        </div>
+        <div className="form-group ml-3 flex-fill">
+          <label for="email">Email address</label>
+          <input
+            type="email"
+            className="form-control form-control-sm"
+            name="email"
+            aria-describedby="emailHelp"
+          />
+        </div>
       </div>
-      <div className="form-group">
-        <label for="email">Email address</label>
-        <input
-          type="email"
-          className="form-control form-control-sm"
-          name="email"
-          aria-describedby="emailHelp"
-        />
-      </div>
-      <div className="form-group">
+      <div className="form-group ">
         <label for="inputMessage">Message</label>
         <textarea
           class="form-control form-control-sm"
@@ -1091,10 +1093,11 @@ const Footer = props => (
         />
       </div>
       <div data-netlify-recaptcha />
-
-      <button type="submit" className="btn btn-primary">
-        Submit
-      </button>
+      <div className="d-flex justify-content-center mb-2">
+        <button type="submit" className="btn btn-primary">
+          Submit
+        </button>
+      </div>
     </form>
     <div className="d-flex justify-content-center">
       <i className="d-flex align-items-center fab fa-github" />
