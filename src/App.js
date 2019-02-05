@@ -465,12 +465,8 @@ class App extends Component {
           handleDeleteSingleTest={this.handleDeleteSingleTest}
           handleEditSingleScore={this.handleEditSingleScore}
         />
-        <div className="d-flex justify-content-center">
-          <i class="d-flex align-items-center fab fa-github" />
-          <a href="https://github.com/julian0becker" target="_blank" rel="noopener noreferrer">
-            julian0becker
-          </a>
-        </div>
+        <Footer />
+
         <EditModal
           students={this.state.students}
           isModalOn={this.state.isModalOn}
@@ -1062,5 +1058,52 @@ const AddNewTestAll = props => (
     >
       Add New Test
     </button>
+  </div>
+);
+
+const Footer = props => (
+  <div className="p-5">
+    <form action="POST" data-netlify="true" className="container-fluid w-50">
+      <div className="form-group">
+        <label for="inputName">Name</label>
+        <input
+          type="text"
+          class="form-control form-control-sm"
+          name="inputName"
+        />
+      </div>
+      <div className="form-group">
+        <label for="email">Email address</label>
+        <input
+          type="email"
+          className="form-control form-control-sm"
+          name="email"
+          aria-describedby="emailHelp"
+        />
+      </div>
+      <div className="form-group">
+        <label for="inputMessage">Message</label>
+        <textarea
+          class="form-control form-control-sm"
+          name="inputMessage"
+          rows="3"
+        />
+      </div>
+      <div data-netlify-recaptcha />
+
+      <button type="submit" className="btn btn-primary">
+        Submit
+      </button>
+    </form>
+    <div className="d-flex justify-content-center">
+      <i className="d-flex align-items-center fab fa-github" />
+      <a
+        href="https://github.com/julian0becker"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        julian0becker
+      </a>
+    </div>
   </div>
 );
