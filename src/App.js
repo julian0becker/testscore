@@ -1063,7 +1063,7 @@ const AddNewTestAll = props => (
 
 const Footer = props => (
   <div className="p-5">
-    <form action="POST" className="container-fluid w-50">
+    <form action="POST" className="container-fluid  " id="contact-form">
       <div className="d-flex ">
         <input type="hidden" name="form-name" value="contact" />
         <div className="form-group flex-fill">
