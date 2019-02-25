@@ -1,5 +1,6 @@
 import React from "react";
 import Student from "./Student";
+import { connect } from "react-redux";
 
 const Display = props => (
   <div
@@ -21,4 +22,10 @@ const Display = props => (
   </div>
 );
 
-export default Display;
+const mapStateToProps = state => {
+  return {
+    students: state.students
+  };
+};
+
+export default connect(mapStateToProps)(Display);

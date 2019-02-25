@@ -6,6 +6,7 @@ import Display from "./Display";
 import EditModal from "./EditModal";
 import ControlForm from "./ControlForm";
 import Footer from "./Footer";
+import { connect } from "react-redux";
 
 class CreateStudent {
   constructor(name = "Edit Name", results = []) {
@@ -30,72 +31,6 @@ class CreateTestAll {
 }
 
 class App extends Component {
-  state = {
-    students: [
-      {
-        name: "Julian",
-        results: [
-          {
-            testName: "test 1",
-            maxPoints: 100,
-            passMark: "50%",
-            reachedPoints: 80,
-            grade: 0.8,
-            gradeUniStyle: "2,0",
-            testId: uuid.v4(),
-            badgeStyle: "#238823",
-            isEditingPoints: null
-          },
-          {
-            testName: "test 2",
-            maxPoints: 100,
-            passMark: "60%",
-            reachedPoints: 95,
-            grade: 0.95,
-            gradeUniStyle: "1,3",
-            testId: uuid.v4(),
-            badgeStyle: "#20B2AA",
-            isEditingPoints: null
-          }
-        ],
-        studentId: uuid.v4()
-      },
-      {
-        name: "Claudio",
-        results: [
-          {
-            testName: "JavaScript",
-            maxPoints: 100,
-            passMark: "50%",
-            reachedPoints: 80,
-            grade: 0.8,
-            gradeUniStyle: "2,0",
-            testId: uuid.v4(),
-            badgeStyle: "#238823",
-            isEditingPoints: null
-          },
-          {
-            testName: "React.js",
-            maxPoints: 100,
-            passMark: "50%",
-            reachedPoints: 79,
-            grade: 0.79,
-            gradeUniStyle: "2,3",
-            testId: uuid.v4(),
-            badgeStyle: "#238823",
-            isEditingPoints: null
-          }
-        ],
-        studentId: uuid.v4()
-      }
-    ],
-    isModalOn: null,
-    typeOfModal: null,
-    forModalTestId: null,
-    forModalStudentId: null,
-    forModalMessage: null
-  };
-
   handleAddTest = (event, idStudent) => {
     event.preventDefault();
 
@@ -196,23 +131,6 @@ class App extends Component {
       this.setState({
         students: students
       });
-    }
-  };
-
-  handleAddStudent = event => {
-    event.preventDefault();
-    if (!event.target.addStudent.value.trim()) {
-      this.setState({
-        isModalOn: true,
-        typeOfModal: "alert",
-        forModalMessage: "Enter a name."
-      });
-    } else {
-      const student = new CreateStudent(event.target.addStudent.value.trim());
-      const students = [...this.state.students];
-      students.push(student);
-      this.setState({ students: students });
-      event.target.addStudent.value = "";
     }
   };
 
@@ -460,7 +378,6 @@ class App extends Component {
           handleOpenAddTestAllModal={this.handleOpenAddTestAllModal}
         />
         <Display
-          students={this.state.students}
           handleAddTest={this.handleAddTest}
           handleOpenEditModal={this.handleOpenEditModal}
           handleOpenInfoModal={this.handleOpenInfoModal}
@@ -471,20 +388,20 @@ class App extends Component {
         <Footer />
 
         <EditModal
-          students={this.state.students}
-          isModalOn={this.state.isModalOn}
-          typeOfModal={this.state.typeOfModal}
           handleCloseModal={this.handleCloseModal}
-          forModalTestId={this.state.forModalTestId}
-          forModalStudentId={this.state.forModalStudentId}
           handleTestEditMulti={this.handleTestEditMulti}
           handleAddTestAll={this.handleAddTestAll}
           handleDeleteStudent={this.handleDeleteStudent}
-          forModalMessage={this.state.forModalMessage}
         />
       </div>
     );
   }
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    students: state.students
+  };
+};
+
+export default connect(mapStateToProps)(App);

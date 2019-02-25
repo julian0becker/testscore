@@ -5,6 +5,7 @@ import ModalDisplayForTestInfo from "./ModalDisplayForTestInfo";
 import ModalDisplayForAddTestAll from "./ModalDisplayForAddTestAll";
 import ModalDelete from "./ModalDelete";
 import ModalAlert from "./ModalAlert";
+import { connect } from "react-redux";
 
 const EditModal = props => (
   <Modal
@@ -52,4 +53,15 @@ const EditModal = props => (
   </Modal>
 );
 
-export default EditModal;
+const mapStateToProps = state => {
+  return {
+    isModalOn: state.isModalOn,
+    typeOfModal: state.typeOfModal,
+    forModalTestId: state.forModalTestId,
+    forModalStudentId: state.forModalStudentId,
+    forModalMessage: state.forModalMessage,
+    students: state.students
+  };
+};
+
+export default connect(mapStateToProps)(EditModal);
