@@ -97,9 +97,13 @@ const rootReducer = (state = initState, action) => {
     case "ADD_TEST_ALL": {
       return {
         ...state,
-        students: state.students.map(student =>
-          student.results.concat(action.test)
-        ),
+        students: [
+          ...state.students,
+          state.students.map(student => ({
+            ...student,
+            ...{ results: [...student.results, action.test] }
+          }))
+        ],
         isModalOn: false
       };
     }

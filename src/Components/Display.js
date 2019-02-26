@@ -7,6 +7,7 @@ const Display = props => (
     className="d-flex flex-wrap justify-content-center"
     style={{ backgroundColor: "#DDDDDD" }}
   >
+    {console.log(props.students[0])}
     {props.students.map(student => (
       <Student
         key={student.studentId}

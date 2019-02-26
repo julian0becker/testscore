@@ -2,15 +2,28 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { handleAddTestAll } from "../modules/actions";
 import CreateTestAll from "../classes/CreateTestAll";
+import uuid from "uuid";
 
 class ModalDisplayForAddTestAll extends Component {
   handleClick = event => {
     event.preventDefault();
-    const test = new CreateTestAll(
-      event.target.editNameAll.value,
-      event.target.editMaxPointsAll.value,
-      event.target.editPassMark.value
-    );
+    // const test = new CreateTestAll(
+    //   event.target.editNameAll.value,
+    //   event.target.editMaxPointsAll.value,
+    //   event.target.editPassMark.value
+    // );
+
+    const test = {
+      testName: event.target.editNameAll.value,
+      maxPoints: event.target.editMaxPointsAll.value,
+      passMark: event.target.editPassMark.value,
+      reachedPoints: "Please Edit",
+      grade: null,
+      gradeUniStyle: "edit",
+      testId: uuid.v4(),
+      badgeStyle: null,
+      isEditingPoints: null
+    };
     console.log(test);
     this.props.handleAddTestAll(test);
   };
