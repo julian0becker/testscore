@@ -4,7 +4,7 @@ import Result from "./Result";
 const Student = props => (
   <div className="card text-white bg-primary mb-3 m-2">
     <div className="card-header d-flex justify-content-between">
-      <div>DaF 187</div>
+      <div>DaF 187 {console.log(props)}</div>
       <div>
         <i
           onClick={() => props.handleOpenDeleteModal(props.student.studentId)}

@@ -6,6 +6,7 @@ import ModalDisplayForAddTestAll from "./ModalDisplayForAddTestAll";
 import ModalDelete from "./ModalDelete";
 import ModalAlert from "./ModalAlert";
 import { connect } from "react-redux";
+import { handleCloseModal } from "../modules/actions";
 
 const EditModal = props => (
   <Modal
@@ -64,4 +65,11 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(EditModal);
+const mapDispatchToProps = {
+  handleCloseModal
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(EditModal);

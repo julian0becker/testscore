@@ -88,6 +88,21 @@ const rootReducer = (state = initState, action) => {
         typeOfModal: "addTestAll"
       };
     }
+    case "CLOSE_MODAL": {
+      return {
+        ...state,
+        isModalOn: false
+      };
+    }
+    case "ADD_TEST_ALL": {
+      return {
+        ...state,
+        students: state.students.map(student =>
+          student.results.concat(action.test)
+        ),
+        isModalOn: false
+      };
+    }
 
     default:
       return state;

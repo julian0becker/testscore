@@ -16,3 +16,16 @@ export function handleOpenAddTestAllModal() {
     type: "OPEN_MODAL_TEST_FOR_ALL"
   };
 }
+
+export function handleCloseModal() {
+  return {
+    type: "CLOSE_MODAL"
+  };
+}
+
+export function handleAddTestAll(test) {
+  return {
+    type: "ADD_TEST_ALL",
+    test
+  };
+}

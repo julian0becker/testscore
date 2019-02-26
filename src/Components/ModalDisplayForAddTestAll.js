@@ -1,6 +1,36 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { handleAddTestAll } from "../modules/actions";
+import CreateTestAll from "../classes/CreateTestAll";
 
 class ModalDisplayForAddTestAll extends Component {
+  handleClick = event => {
+    event.preventDefault();
+    const test = new CreateTestAll(
+      event.target.editNameAll.value,
+      event.target.editMaxPointsAll.value,
+      event.target.editPassMark.value
+    );
+    console.log(test);
+    this.props.handleAddTestAll(test);
+  };
+
+  // handleAddTestAll = event => {
+  //   event.preventDefault();
+
+  //   const students = [...this.state.students];
+  //   students.map(student =>
+  //     student.results.push(
+  //       new CreateTestAll(
+  //         event.target.editNameAll.value,
+  //         event.target.editMaxPointsAll.value,
+  //         event.target.editPassMark.value
+  //       )
+  //     )
+  //   );
+  //   this.setState({ students: students, isModalOn: false });
+  // };
+
   render() {
     return (
       <div
@@ -16,7 +46,7 @@ class ModalDisplayForAddTestAll extends Component {
         <div className="card-body">
           <h4 className="card-title">{"Add New Test "}</h4>
           <div className="card-text">
-            <form onSubmit={event => this.props.handleAddTestAll(event)}>
+            <form onSubmit={event => this.handleClick(event)}>
               <table className="table table-hover m-0">
                 <tbody>
                   <tr className="table-active">
@@ -81,4 +111,11 @@ class ModalDisplayForAddTestAll extends Component {
   }
 }
 
-export default ModalDisplayForAddTestAll;
+const mapDispatchToProps = {
+  handleAddTestAll
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(ModalDisplayForAddTestAll);

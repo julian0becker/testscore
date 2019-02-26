@@ -1,15 +1,7 @@
 import React, { Component } from "react";
-import uuid from "uuid";
+import CreateStudent from "../classes/CreateStudent";
 import { connect } from "react-redux";
 import { handleAddStudent, handleEnterName } from "../modules/actions";
-
-class CreateStudent {
-  constructor(name = "Edit Name", results = []) {
-    this.name = name;
-    this.results = results;
-    this.studentId = uuid.v4();
-  }
-}
 
 class AddNewStudentForm extends Component {
   handleClick = event => {

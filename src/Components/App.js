@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import uuid from "uuid";
+import CreateTestAll from "../classes/CreateTestAll";
 import "../App.css";
 import * as utils from "../utils";
 import Display from "./Display";
@@ -7,20 +7,6 @@ import EditModal from "./EditModal";
 import ControlForm from "./ControlForm";
 import Footer from "./Footer";
 import { connect } from "react-redux";
-
-class CreateTestAll {
-  constructor(testName, maxPoints, passMark) {
-    this.testName = testName;
-    this.maxPoints = maxPoints;
-    this.passMark = passMark;
-    this.reachedPoints = "Please Edit";
-    this.grade = null;
-    this.gradeUniStyle = "edit";
-    this.testId = uuid.v4();
-    this.badgeStyle = null;
-    this.isEditingPoints = null;
-  }
-}
 
 class App extends Component {
   handleAddTest = (event, idStudent) => {
@@ -133,20 +119,20 @@ class App extends Component {
     this.setState({ students: students, isModalOn: false });
   };
 
-  handleAddTestAll = event => {
-    event.preventDefault();
-    const students = [...this.state.students];
-    students.map(student =>
-      student.results.push(
-        new CreateTestAll(
-          event.target.editNameAll.value,
-          event.target.editMaxPointsAll.value,
-          event.target.editPassMark.value
-        )
-      )
-    );
-    this.setState({ students: students, isModalOn: false });
-  };
+  // handleAddTestAll = event => {
+  //   event.preventDefault();
+  //   const students = [...this.state.students];
+  //   students.map(student =>
+  //     student.results.push(
+  //       new CreateTestAll(
+  //         event.target.editNameAll.value,
+  //         event.target.editMaxPointsAll.value,
+  //         event.target.editPassMark.value
+  //       )
+  //     )
+  //   );
+  //   this.setState({ students: students, isModalOn: false });
+  // };
 
   handleOpenEditModal = (idTest, idStudent) => {
     this.setState({
@@ -172,10 +158,6 @@ class App extends Component {
       typeOfModal: "delete",
       forModalStudentId: idStudent
     });
-  };
-
-  handleCloseModal = () => {
-    this.setState({ isModalOn: false });
   };
 
   handleTestEditMulti = (event, idTest, idStudent) => {
@@ -361,10 +343,7 @@ class App extends Component {
         <h1 className="d-flex justify-content-center text-secondary">
           Testify
         </h1>
-        <ControlForm
-          handleAddStudent={this.handleAddStudent}
-          handleOpenAddTestAllModal={this.handleOpenAddTestAllModal}
-        />
+        <ControlForm />
         <Display
           handleAddTest={this.handleAddTest}
           handleOpenEditModal={this.handleOpenEditModal}
@@ -376,7 +355,6 @@ class App extends Component {
         <Footer />
 
         <EditModal
-          handleCloseModal={this.handleCloseModal}
           handleTestEditMulti={this.handleTestEditMulti}
           handleAddTestAll={this.handleAddTestAll}
           handleDeleteStudent={this.handleDeleteStudent}
