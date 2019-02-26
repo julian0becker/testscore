@@ -8,14 +8,6 @@ import ControlForm from "./ControlForm";
 import Footer from "./Footer";
 import { connect } from "react-redux";
 
-class CreateStudent {
-  constructor(name = "Edit Name", results = []) {
-    this.name = name;
-    this.results = results;
-    this.studentId = uuid.v4();
-  }
-}
-
 class CreateTestAll {
   constructor(testName, maxPoints, passMark) {
     this.testName = testName;
@@ -180,10 +172,6 @@ class App extends Component {
       typeOfModal: "delete",
       forModalStudentId: idStudent
     });
-  };
-
-  handleOpenAddTestAllModal = () => {
-    this.setState({ isModalOn: true, typeOfModal: "addTestAll" });
   };
 
   handleCloseModal = () => {

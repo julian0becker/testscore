@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import uuid from "uuid";
 import { connect } from "react-redux";
+import { handleAddStudent, handleEnterName } from "../modules/actions";
 
 class CreateStudent {
   constructor(name = "Edit Name", results = []) {
@@ -13,23 +14,15 @@ class CreateStudent {
 class AddNewStudentForm extends Component {
   handleClick = event => {
     event.preventDefault();
-    this.props.handleAddStudent(
-      new CreateStudent(event.target.addStudent.value.trim())
-    );
 
-    // if (!event.target.addStudent.value.trim()) {
-    //   this.setState({
-    //     isModalOn: true,
-    //     typeOfModal: "alert",
-    //     forModalMessage: "Enter a name."
-    //   });
-    // } else {
-    //   const student = new CreateStudent(event.target.addStudent.value.trim());
-    //   const students = [...this.state.students];
-    //   students.push(student);
-    //   this.setState({ students: students });
-    //   event.target.addStudent.value = "";
-    // }
+    if (!event.target.addStudent.value.trim()) {
+      this.props.handleEnterName();
+    } else {
+      this.props.handleAddStudent(
+        new CreateStudent(event.target.addStudent.value.trim())
+      );
+      event.target.addStudent.value = "";
+    }
   };
 
   render() {
@@ -51,17 +44,12 @@ class AddNewStudentForm extends Component {
   }
 }
 
-const mapStateToProps = () => {};
-
-const mapDispatchToProps = dispatch => {
-  return {
-    handleAddStudent: studentData => {
-      dispatch({ type: "ADD_STUDENT", student: studentData });
-    }
-  };
+const mapDispatchToProps = {
+  handleAddStudent,
+  handleEnterName
 };
 
 export default connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
 )(AddNewStudentForm);

@@ -71,10 +71,24 @@ const rootReducer = (state = initState, action) => {
 
   switch (action.type) {
     case "ADD_STUDENT": {
+      return { ...state, students: [...state.students.concat(action.student)] };
+    }
+    case "OPEN_MODAL_ALERT_ENTER_NAME": {
       return {
-        students: [...state.students.concat(action.student)]
+        ...state,
+        isModalOn: true,
+        typeOfModal: "alert",
+        forModalMessage: "Enter a name."
       };
     }
+    case "OPEN_MODAL_TEST_FOR_ALL": {
+      return {
+        ...state,
+        isModalOn: true,
+        typeOfModal: "addTestAll"
+      };
+    }
+
     default:
       return state;
   }

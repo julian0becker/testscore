@@ -1,4 +1,7 @@
 import React from "react";
+import { connect } from "react-redux";
+import { handleOpenAddTestAllModal } from "../modules/actions";
+
 const AddNewTestAll = props => (
   <div>
     <button
@@ -10,4 +13,11 @@ const AddNewTestAll = props => (
   </div>
 );
 
-export default AddNewTestAll;
+const mapDispatchToProps = {
+  handleOpenAddTestAllModal
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(AddNewTestAll);
