@@ -15,8 +15,8 @@ const AddTestAll = () => {
       reachedPoints: "Please Edit",
       testId: uuid.v4(),
       grade: {
-        decimal: "edit",
-        uni: "Please Edit",
+        decimal: "Please Edit",
+        uni: "edit",
         badgeColor: "#000"
       }
     };
