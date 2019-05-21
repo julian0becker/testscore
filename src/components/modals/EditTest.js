@@ -5,25 +5,27 @@ import { toggleModalAction, editTestAction } from "../../redux/actions";
 
 const EditModal = () => {
   const dispatch = useDispatch();
-  const toggleModal = () => dispatch(toggleModalAction());
-
   const students = useSelector(state => state.students);
   const modal = useSelector(state => state.modal);
 
-  let testIndex;
   const indexStudent = findIndexStudent(students, modal.forModalStudentId);
-  modal.modalType === "edit"
-    ? (testIndex = findIndexTest(students, indexStudent, modal.forModalTestId))
-    : (testIndex = null);
+  const testIndex = findIndexTest(students, indexStudent, modal.forModalTestId);
 
   const handleEditTest = (event, testId) => {
     event.preventDefault();
+
+    if (
+      parseInt(event.target.editPointsSingle.value) >
+      parseInt(event.target.editMaxPointsSingle.value)
+    ) {
+      return; //reached points must be greater than max points
+    }
+
     const grade = calculateGrade(
       event.target.editPointsSingle.value /
         event.target.editMaxPointsSingle.value,
       event.target.editPassMark.value
     );
-    console.log(testId);
 
     const updatedTest = {
       testName: event.target.editNameSingle.value,
@@ -40,22 +42,24 @@ const EditModal = () => {
       }
     };
     dispatch(editTestAction(updatedTest, testId));
-    toggleModal();
+    dispatch(toggleModalAction());
   };
 
   return (
     <div className="card text-white bg-primary " style={{ maxWidth: "20rem" }}>
       <div className="card-header d-flex justify-content-between">
-        <div>{modal.modalType === "edit" && students[indexStudent].name}</div>
+        <div>{students[indexStudent].name}</div>
         <div>
-          <i onClick={() => toggleModal()} className="fas fa-times" />
+          <i
+            onClick={() => dispatch(toggleModalAction())}
+            className="fas fa-times"
+          />
         </div>
       </div>
       <div className="card-body">
         <h4 className="card-title">
           {"Edit "}
-          {modal.modalType === "edit" &&
-            students[indexStudent].tests[testIndex].testName}
+          {students[indexStudent].tests[testIndex].testName}
         </h4>
         <div className="card-text">
           <form
@@ -75,7 +79,6 @@ const EditModal = () => {
                       type="text"
                       name="editNameSingle"
                       defaultValue={
-                        modal.modalType === "edit" &&
                         students[indexStudent].tests[testIndex].testName
                       }
                       required
@@ -89,7 +92,6 @@ const EditModal = () => {
                       type="number"
                       name="editPointsSingle"
                       defaultValue={
-                        modal.modalType === "edit" &&
                         students[indexStudent].tests[testIndex].reachedPoints
                       }
                       required
@@ -103,7 +105,6 @@ const EditModal = () => {
                       type="number"
                       name="editMaxPointsSingle"
                       defaultValue={
-                        modal.modalType === "edit" &&
                         students[indexStudent].tests[testIndex].maxPoints
                       }
                       required

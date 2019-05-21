@@ -23,14 +23,13 @@ const customStyles = {
 export default function Modal() {
   const modal = useSelector(state => state.modal);
   const dispatch = useDispatch();
-  const toggleModal = () => dispatch(toggleModalAction());
 
   return (
     <ReactModal
       isOpen={modal.isModalOpen}
       contentLabel="Modal different Options"
       style={customStyles}
-      onRequestClose={() => toggleModal()}
+      onRequestClose={() => dispatch(toggleModalAction())}
     >
       {modal.modalType === "delete" ? (
         <DeleteModal />

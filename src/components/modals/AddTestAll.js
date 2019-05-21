@@ -13,7 +13,7 @@ const AddTestAll = () => {
       maxPoints: event.target.editMaxPointsAll.value,
       passMark: event.target.editPassMark.value,
       reachedPoints: "Please Edit",
-      testId: "hello",
+      testId: uuid.v4(),
       grade: {
         decimal: "Please Edit",
         uni: "edit",

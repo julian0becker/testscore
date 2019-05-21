@@ -8,17 +8,7 @@ import {
 
 export default function Results({ test, studentId }) {
   const dispatch = useDispatch();
-  console.log(test);
 
-  const handleOpenInfoModal = testId => {
-    dispatch(openInfoModalAction(testId, studentId));
-  };
-  const handleOpenEditModal = testId => {
-    dispatch(openEditModalAction(testId, studentId));
-  };
-  const handleDeleteSingleTest = testId => {
-    dispatch(deleteSingleTestAction(testId));
-  };
   return (
     <li
       style={{ color: "black" }}
@@ -35,19 +25,23 @@ export default function Results({ test, studentId }) {
         <div className="d-flex">
           <div>
             <span
-              onClick={() => handleOpenInfoModal(test.testId)}
+              onClick={() =>
+                dispatch(openInfoModalAction(test.testId, studentId))
+              }
               className="fas fa-info-circle"
             />
           </div>
           <div>
             <span
-              onClick={() => handleOpenEditModal(test.testId)}
+              onClick={() =>
+                dispatch(openEditModalAction(test.testId, studentId))
+              }
               className="far fa-edit ml-4"
             />
           </div>
           <div>
             <span
-              onClick={() => handleDeleteSingleTest(test.testId)}
+              onClick={() => dispatch(deleteSingleTestAction(test.testId))}
               className="fas fa-trash-alt ml-4"
             />
           </div>

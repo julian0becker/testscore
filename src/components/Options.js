@@ -6,10 +6,13 @@ import uuid from "uuid";
 export default function Options() {
   const [student, setStudent] = useState("");
   const dispatch = useDispatch();
+
   const addStudent = student => dispatch(addStudentAction(student));
+
   const onChange = event => {
     setStudent(event.target.value);
   };
+
   const onSubmit = event => {
     event.preventDefault();
     if (student.trim() === "") return;
@@ -21,12 +24,10 @@ export default function Options() {
     setStudent("");
   };
 
-  const addNewTests = () => dispatch(openAddTestAllModalAction());
-
   return (
     <div className="d-flex justify-content-center pb-3">
       <button
-        onClick={() => addNewTests()}
+        onClick={() => dispatch(openAddTestAllModalAction())}
         className="btn btn-outline-secondary btn-sm"
       >
         Add New Tests

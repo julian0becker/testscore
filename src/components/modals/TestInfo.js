@@ -9,49 +9,36 @@ const TestInfo = () => {
   const students = useSelector(state => state.students);
   const toggleModal = () => dispatch(toggleModalAction());
 
-  let testIndexForInfo;
   const indexStudentForInfo = findIndexStudent(
     students,
     modal.forModalStudentId
   );
-  modal.modalType === "info"
-    ? (testIndexForInfo = findIndexTest(
-        students,
-        indexStudentForInfo,
-        modal.forModalTestId
-      ))
-    : (testIndexForInfo = null);
 
-  let percentRounded;
-  modal.modalType === "info"
-    ? (percentRounded = Math.round(
-        students[indexStudentForInfo].tests[testIndexForInfo].grade.decimal *
-          100
-      ))
-    : (percentRounded = null);
+  const testIndexForInfo = findIndexTest(
+    students,
+    indexStudentForInfo,
+    modal.forModalTestId
+  );
 
-  let percentNotRounded;
-  modal.modalType === "info"
-    ? (percentNotRounded = (
-        students[indexStudentForInfo].tests[testIndexForInfo].grade.decimal *
-        100
-      ).toFixed(2))
-    : (percentNotRounded = null);
+  const percentRounded = Math.round(
+    students[indexStudentForInfo].tests[testIndexForInfo].grade.decimal * 100
+  );
+
+  const percentNotRounded = (
+    students[indexStudentForInfo].tests[testIndexForInfo].grade.decimal * 100
+  ).toFixed(2);
 
   return (
     <div className="card text-white bg-primary " style={{ maxWidth: "20rem" }}>
       <div className="card-header d-flex justify-content-between">
-        <div>
-          {modal.modalType === "info" && students[indexStudentForInfo].name}
-        </div>
+        <div>{students[indexStudentForInfo].name}</div>
         <div>
           <i onClick={() => toggleModal()} className="fas fa-times" />
         </div>
       </div>
       <div className="card-body">
         <h4 className="card-title">
-          {modal.modalType === "info" &&
-            students[indexStudentForInfo].tests[testIndexForInfo].testName}
+          {students[indexStudentForInfo].tests[testIndexForInfo].testName}
         </h4>
         <div className="card-text">
           <table className="table table-hover">
@@ -59,28 +46,30 @@ const TestInfo = () => {
               <tr className="table-active">
                 <th scope="row">Points</th>
                 <td>
-                  {modal.modalType === "info" &&
+                  {
                     students[indexStudentForInfo].tests[testIndexForInfo]
-                      .reachedPoints}{" "}
+                      .reachedPoints
+                  }{" "}
                   /{" "}
-                  {modal.modalType === "info" &&
+                  {
                     students[indexStudentForInfo].tests[testIndexForInfo]
-                      .maxPoints}
+                      .maxPoints
+                  }
                 </td>
               </tr>
               <tr className="table-active">
                 <th scope="row">Passmark</th>
                 <td>
-                  {modal.modalType === "info" &&
+                  {
                     students[indexStudentForInfo].tests[testIndexForInfo]
-                      .passMark}
+                      .passMark
+                  }
                 </td>
               </tr>
               <tr className="table-active">
                 <th scope="row">Percent</th>
                 <td>
-                  {modal.modalType === "info" &&
-                  students[indexStudentForInfo].tests[testIndexForInfo]
+                  {students[indexStudentForInfo].tests[testIndexForInfo]
                     .reachedPoints === "Please Edit"
                     ? "Please Edit"
                     : percentRounded + "% (" + percentNotRounded + "%)"}
@@ -89,9 +78,10 @@ const TestInfo = () => {
               <tr className="table-active">
                 <th scope="row">Grade</th>
                 <td>
-                  {modal.modalType === "info" &&
+                  {
                     students[indexStudentForInfo].tests[testIndexForInfo].grade
-                      .uni}
+                      .uni
+                  }
                 </td>
               </tr>
             </tbody>

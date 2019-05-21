@@ -6,9 +6,9 @@ import uuid from "uuid";
 
 export default function Student({ student }) {
   const dispatch = useDispatch();
-  const toggleModal = studentId => dispatch(toggleModalAction(studentId));
+  const toggleModal = () => dispatch(toggleModalAction(student.studentId));
 
-  const handleAddSingleTest = studentId => {
+  const handleAddSingleTest = () => {
     const newTest = {
       testName: "Please edit",
       maxPoints: "Please Edit",
@@ -21,7 +21,7 @@ export default function Student({ student }) {
         badgeColor: "#000"
       }
     };
-    dispatch(addSingleTestAction(studentId, newTest));
+    dispatch(addSingleTestAction(student.studentId, newTest));
   };
 
   return (
@@ -29,17 +29,14 @@ export default function Student({ student }) {
       <div className="card-header d-flex justify-content-between">
         <div>DaF 187</div>
         <div>
-          <i
-            onClick={() => toggleModal(student.studentId)}
-            className="fas fa-times"
-          />
+          <i onClick={() => toggleModal()} className="fas fa-times" />
         </div>
       </div>
       <div className="card-body d-flex flex-column ">
         <div className="d-flex justify-content-between">
           <h4 className="card-title">{student.name}</h4>
           <button
-            onClick={() => handleAddSingleTest(student.studentId)}
+            onClick={() => handleAddSingleTest()}
             className="btn btn-outline-secondary btn-sm mb-2"
           >
             Add Test
