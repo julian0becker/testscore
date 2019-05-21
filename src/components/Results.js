@@ -8,6 +8,7 @@ import {
 
 export default function Results({ test, studentId }) {
   const dispatch = useDispatch();
+  console.log(test);
 
   const handleOpenInfoModal = testId => {
     dispatch(openInfoModalAction(testId, studentId));

@@ -23,6 +23,7 @@ const EditModal = () => {
         event.target.editMaxPointsSingle.value,
       event.target.editPassMark.value
     );
+    console.log(testId);
 
     const updatedTest = {
       testName: event.target.editNameSingle.value,

@@ -103,7 +103,9 @@ function studentReducer(
         ...state,
         students: state.students.map(student => ({
           ...student,
-          tests: [...student.tests, payload]
+          tests: [...student.tests, payload].map(test => {
+            return { ...test, testId: uuid.v4() };
+          })
         }))
       };
     case "OPEN_TEST_ALL_MODAL":
