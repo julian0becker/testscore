@@ -17,7 +17,7 @@ export default function Student({ student }) {
       testId: uuid.v4(),
       grade: {
         decimal: "Please Edit",
-        uni: "Please Edit",
+        uni: "edit",
         badgeColor: "#000"
       }
     };
