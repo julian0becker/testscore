@@ -1,0 +1,62 @@
+import React from "react";
+import Results from "./Results";
+import { useDispatch } from "react-redux";
+import { toggleModalAction, addSingleTestAction } from "../redux/actions";
+import uuid from "uuid";
+
+export default function Student({ student }) {
+  const dispatch = useDispatch();
+  const toggleModal = studentId => dispatch(toggleModalAction(studentId));
+
+  const handleAddSingleTest = studentId => {
+    const newTest = {
+      testName: "Please edit",
+      maxPoints: "Please Edit",
+      passMark: "Please Edit",
+      reachedPoints: "Please Edit",
+      testId: uuid.v4(),
+      grade: {
+        decimal: "Please Edit",
+        uni: "Please Edit",
+        badgeColor: "#000"
+      }
+    };
+    dispatch(addSingleTestAction(studentId, newTest));
+  };
+
+  return (
+    <div className="student-container card text-white bg-primary mb-3 m-2">
+      <div className="card-header d-flex justify-content-between">
+        <div>DaF 187</div>
+        <div>
+          <i
+            onClick={() => toggleModal(student.studentId)}
+            className="fas fa-times"
+          />
+        </div>
+      </div>
+      <div className="card-body d-flex flex-column ">
+        <div className="d-flex justify-content-between">
+          <h4 className="card-title">{student.name}</h4>
+          <button
+            onClick={() => handleAddSingleTest(student.studentId)}
+            className="btn btn-outline-secondary btn-sm mb-2"
+          >
+            Add Test
+          </button>
+        </div>
+        <div className="card-text">
+          <ul className="list-group">
+            {student.tests.map(test => (
+              <Results
+                key={test.testId}
+                test={test}
+                studentId={student.studentId}
+              />
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  );
+}

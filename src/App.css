@@ -1,3 +1,20 @@
+:root {
+  --secondary-color: #238823;
+}
+
+.title {
+  text-align: center;
+  color: var(--secondary-color);
+}
+
+.classroom {
+  background-color: var(--secondary-color);
+}
+
+.student-container {
+  min-width: 27rem;
+}
+
 a,
 a:hover,
 a:focus {
@@ -30,59 +47,4 @@ body {
 
 .icon-container {
   width: 50%;
-}
-
-.editScore:hover {
-  cursor: pointer;
-}
-
-#input-single-score {
-  width: 6.3rem;
-}
-
-#button-single-score {
-  width: 3rem;
-}
-.ReactModalPortal > div {
-  opacity: 0;
-}
-
-.ReactModalPortal .ReactModal__Overlay {
-  transition: opacity 200ms ease-in-out;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.ReactModalPortal .ReactModal__Overlay--after-open {
-  opacity: 1;
-}
-
-.ReactModalPortal .ReactModal__Overlay--before-close {
-  opacity: 0;
-}
-
-.modalStyle {
-  /* stays empty */
-}
-
-#modalForm {
-  background-color: black;
-  min-width: 200px;
-
-  display: flex;
-  align-items: center;
-  border: 2px solid whitesmoke;
-}
-
-#modalForm form {
-  display: flex;
-  flex-direction: column;
-  padding: 1rem;
-}
-
-@media only screen and (min-width: 801px) {
-  #contact-form {
-    width: 50%;
-  }
 }
