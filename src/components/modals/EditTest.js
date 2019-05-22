@@ -18,7 +18,7 @@ const EditModal = () => {
       parseInt(event.target.editPointsSingle.value) >
       parseInt(event.target.editMaxPointsSingle.value)
     ) {
-      return; //reached points must be greater than max points
+      return; //reached points must be greater than max points //todo warning modal
     }
 
     const grade = calculateGrade(
@@ -58,7 +58,6 @@ const EditModal = () => {
       </div>
       <div className="card-body">
         <h4 className="card-title">
-          {"Edit "}
           {students[indexStudent].tests[testIndex].testName}
         </h4>
         <div className="card-text">

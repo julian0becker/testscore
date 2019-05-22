@@ -6,7 +6,6 @@ import uuid from "uuid";
 
 export default function Student({ student }) {
   const dispatch = useDispatch();
-  const toggleModal = () => dispatch(toggleModalAction(student.studentId));
 
   const handleAddSingleTest = () => {
     const newTest = {
@@ -29,7 +28,10 @@ export default function Student({ student }) {
       <div className="card-header d-flex justify-content-between">
         <div>DaF 187</div>
         <div>
-          <i onClick={() => toggleModal()} className="fas fa-times" />
+          <i
+            onClick={() => dispatch(toggleModalAction(student.studentId))}
+            className="fas fa-times"
+          />
         </div>
       </div>
       <div className="card-body d-flex flex-column ">
