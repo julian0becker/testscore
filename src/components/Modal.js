@@ -21,8 +21,7 @@ const customStyles = {
   }
 };
 
-export default function Modal() {
-  const modal = useSelector(state => state.modal);
+export default function Modal({ modal }) {
   const dispatch = useDispatch();
 
   return (

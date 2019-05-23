@@ -1,6 +1,7 @@
-export const addStudentAction = student => ({
+export const addStudentAction = (student, classroomId) => ({
   type: "ADD_STUDENT",
-  payload: student
+  payload: student,
+  classroomId
 });
 
 export const deleteStudentAction = studentId => ({

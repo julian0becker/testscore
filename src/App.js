@@ -2,22 +2,21 @@ import React from "react";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { store, persistor } from "./redux/store";
-import Options from "./components/Options";
-import Classroom from "./components/Classroom";
-import Modal from "./components/Modal";
-import Footer from "./components/Footer";
-
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Classrooms from "./components/Classrooms";
+import LandingPage from "./components/LandingPage";
 import "./App.css";
 
 function App() {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <h1 className="title">Testify</h1>
-        <Options />
-        <Classroom />
-        <Modal />
-        <Footer />
+        <Router>
+          <Switch>
+            <Route path="/" exact component={LandingPage} />
+            <Route path="/classroom/:id" component={Classrooms} />
+          </Switch>
+        </Router>
       </PersistGate>
     </Provider>
   );

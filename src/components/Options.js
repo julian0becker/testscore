@@ -3,11 +3,12 @@ import { useDispatch } from "react-redux";
 import { addStudentAction, openAddTestAllModalAction } from "../redux/actions";
 import uuid from "uuid";
 
-export default function Options() {
+export default function Options({ classroomId }) {
   const [student, setStudent] = useState("");
   const dispatch = useDispatch();
 
-  const addStudent = student => dispatch(addStudentAction(student));
+  const addStudent = student =>
+    dispatch(addStudentAction(student, classroomId));
 
   const onChange = event => {
     setStudent(event.target.value);
