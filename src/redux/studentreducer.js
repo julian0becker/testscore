@@ -168,9 +168,18 @@ function studentReducer(state = initialState, action) {
     case "DELETE_STUDENT":
       return {
         ...state,
-        students: state.students.filter(
-          student => student.studentId !== action.payload
-        )
+        classrooms: state.classrooms.map(classroom => {
+          if (classroom.id === action.classroomId) {
+            return {
+              ...classroom,
+              students: classroom.students.filter(
+                student => student.studentId !== action.studentId
+              )
+            };
+          } else {
+            return { ...classroom };
+          }
+        })
       };
     case "TOGGLE_DELETE_MODAL":
       return {

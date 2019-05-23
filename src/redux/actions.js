@@ -6,8 +6,8 @@ export const addStudentAction = (student, classroomId) => ({
 
 export const deleteStudentAction = (studentId, classroomId) => ({
   type: "DELETE_STUDENT",
-  payload: studentId,
-  classroomId
+  studentId: studentId,
+  classroomId: classroomId
 });
 
 export const toggleModalAction = (classroomId, studentId) => ({
