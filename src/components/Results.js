@@ -26,7 +26,9 @@ export default function Results({ test, studentId, classroomId }) {
           <div>
             <span
               onClick={() =>
-                dispatch(openInfoModalAction(test.testId, studentId))
+                dispatch(
+                  openInfoModalAction(test.testId, studentId, classroomId)
+                )
               }
               className="fas fa-info-circle"
             />
@@ -43,7 +45,9 @@ export default function Results({ test, studentId, classroomId }) {
           </div>
           <div>
             <span
-              onClick={() => dispatch(deleteSingleTestAction(test.testId))}
+              onClick={() =>
+                dispatch(deleteSingleTestAction(test.testId, classroomId))
+              }
               className="fas fa-trash-alt ml-4"
             />
           </div>

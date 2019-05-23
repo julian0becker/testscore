@@ -27,15 +27,17 @@ export const openAddTestAllModalAction = classroomId => ({
   classroomId: classroomId
 });
 
-export const addSingleTestAction = (studentId, newTest) => ({
+export const addSingleTestAction = (studentId, newTest, classroomId) => ({
   type: "ADD_SINGLE_TEST",
-  payload: studentId,
-  newTest: newTest
+  studentId: studentId,
+  newTest: newTest,
+  classroomId: classroomId
 });
 
-export const deleteSingleTestAction = testId => ({
+export const deleteSingleTestAction = (testId, classroomId) => ({
   type: "DELETE_SINGLE_TEST",
-  payload: testId
+  testId: testId,
+  classroomId: classroomId
 });
 
 export const openEditModalAction = (testId, studentId, classroomId) => ({
@@ -45,14 +47,16 @@ export const openEditModalAction = (testId, studentId, classroomId) => ({
   classroomId: classroomId
 });
 
-export const editTestAction = (updatedTest, testId) => ({
+export const editTestAction = (updatedTest, testId, classroomId) => ({
   type: "EDIT_TEST",
-  payload: updatedTest,
-  testId: testId
+  updatedTest: updatedTest,
+  testId: testId,
+  classroomId: classroomId
 });
 
-export const openInfoModalAction = (testId, studentId) => ({
+export const openInfoModalAction = (testId, studentId, classroomId) => ({
   type: "OPEN_INFO_MODAL",
-  payload: testId,
-  studentId: studentId
+  testId: testId,
+  studentId: studentId,
+  classroomId: classroomId
 });

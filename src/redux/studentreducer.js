@@ -261,55 +261,96 @@ function studentReducer(state = initialState, action) {
     case "OPEN_INFO_MODAL":
       return {
         ...state,
-        modal: {
-          ...state.modal,
-          isModalOpen: true,
-          forModalTestId: action.payload,
-          forModalStudentId: action.studentId,
-          modalType: "info"
-        }
+        classrooms: state.classrooms.map(classroom => {
+          if (classroom.id === action.classroomId) {
+            return {
+              ...classroom,
+              modal: {
+                ...classroom.modal,
+                isModalOpen: true,
+                forModalTestId: action.testId,
+                forModalStudentId: action.studentId,
+                modalType: "info"
+              }
+            };
+          } else {
+            return { ...classroom };
+          }
+        })
       };
+
     case "ADD_SINGLE_TEST":
       return {
         ...state,
-        students: state.students.map(student => {
-          if (student.studentId === action.payload) {
-            return { ...student, tests: [...student.tests, action.newTest] };
+        classrooms: state.classrooms.map(classroom => {
+          if (classroom.id === action.classroomId) {
+            return {
+              ...classroom,
+              students: classroom.students.map(student => {
+                if (student.studentId === action.studentId) {
+                  return {
+                    ...student,
+                    tests: [...student.tests, action.newTest]
+                  };
+                } else {
+                  return { ...student };
+                }
+              })
+            };
           } else {
-            return { ...student };
+            return { ...classroom };
           }
         })
       };
     case "DELETE_SINGLE_TEST":
       return {
         ...state,
-        students: state.students.map(student => {
-          if (student.tests.some(test => test.testId === action.payload)) {
+        classrooms: state.classrooms.map(classroom => {
+          if (classroom.id === action.classroomId) {
             return {
-              ...student,
-              tests: student.tests.filter(
-                test => test.testId !== action.payload
-              )
+              ...classroom,
+              students: classroom.students.map(student => {
+                if (student.tests.some(test => test.testId === action.testId)) {
+                  return {
+                    ...student,
+                    tests: student.tests.filter(
+                      test => test.testId !== action.testId
+                    )
+                  };
+                } else {
+                  return { ...student };
+                }
+              })
             };
           } else {
-            return { ...student };
+            return { ...classroom };
           }
         })
       };
+
     case "EDIT_TEST":
       return {
         ...state,
-        students: state.students.map(student => {
-          return {
-            ...student,
-            tests: student.tests.map(test => {
-              if (test.testId === action.testId) {
-                return action.payload;
-              } else {
-                return { ...test };
-              }
-            })
-          };
+        classrooms: state.classrooms.map(classroom => {
+          if (classroom.id === action.classroomId) {
+            return {
+              ...classroom,
+              students: classroom.students.map(student => {
+                return {
+                  ...student,
+                  tests: student.tests.map(test => {
+                    if (test.testId === action.testId) {
+                      return action.updatedTest;
+                    } else {
+                      return { ...test };
+                    }
+                  })
+                };
+              })
+            };
+          } else {
+            return { ...classroom };
+          }
         })
       };
     default:

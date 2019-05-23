@@ -19,7 +19,7 @@ export default function Student({ student, classroomId }) {
         badgeColor: "#000"
       }
     };
-    dispatch(addSingleTestAction(student.studentId, newTest));
+    dispatch(addSingleTestAction(student.studentId, newTest, classroomId));
   };
 
   return (

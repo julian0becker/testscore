@@ -3,10 +3,21 @@ import { useSelector, useDispatch } from "react-redux";
 import { findIndexStudent, findIndexTest } from "../../helpers";
 import { toggleModalAction } from "../../redux/actions";
 
-const TestInfo = () => {
+const TestInfo = ({ classroomId }) => {
   const dispatch = useDispatch();
-  const modal = useSelector(state => state.modal);
-  const students = useSelector(state => state.students);
+  const modal = useSelector(state => {
+    const classroom = state.classrooms.filter(
+      classroom => classroom.id === classroomId
+    );
+    return classroom[0].modal;
+  });
+
+  const students = useSelector(state => {
+    const classroom = state.classrooms.filter(
+      classroom => classroom.id === classroomId
+    );
+    return classroom[0].students;
+  });
   const toggleModal = () => dispatch(toggleModalAction());
 
   const indexStudentForInfo = findIndexStudent(
