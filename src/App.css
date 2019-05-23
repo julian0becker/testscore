@@ -4,10 +4,18 @@
 
 .title {
   color: var(--secondary-color);
+  text-align: center;
 }
 
 .classroom {
   background-color: var(--secondary-color);
+}
+
+.classroom-name {
+  color: white;
+}
+.classroom-link:hover .classroom-name {
+  color: var(--secondary-color);
 }
 
 .student-container {

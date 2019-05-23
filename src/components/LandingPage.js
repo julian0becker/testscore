@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { addClassroomAction } from "../redux/actions";
+import { addClassroomAction, deleteClassroomAction } from "../redux/actions";
+import Footer from "./Footer";
 import uuid from "uuid";
 
 export default function LandingPage() {
@@ -38,7 +39,7 @@ export default function LandingPage() {
     <div>
       <h1 className="title">Testify</h1>
 
-      <div className="d-flex justify-content-center pb-3">
+      <div className="d-flex justify-content-center pb-3 mb-3">
         <form className="d-flex" onSubmit={onSubmit}>
           <input
             className="form-control form-control-sm"
@@ -54,11 +55,43 @@ export default function LandingPage() {
           />
         </form>
       </div>
-      {classrooms.map(classroom => (
-        <Link to={`/classroom/${classroom.id}`}>
-          <button>{classroom.name}</button>
-        </Link>
-      ))}
+      <div className="d-flex flex-wrap justify-content-center classroom">
+        {classrooms.map(classroom => (
+          <div className="student-container card text-white bg-primary mb-3 m-2">
+            <div className="card-header d-flex justify-content-between">
+              <div />
+              <div>
+                <i
+                  onDoubleClick={() =>
+                    dispatch(deleteClassroomAction(classroom.id))
+                  }
+                  className="fas fa-times"
+                />
+              </div>
+            </div>
+            <Link to={`/classroom/${classroom.id}`}>
+              <div className="card-body d-flex flex-column classroom-link">
+                <div className="d-flex justify-content-between">
+                  <h3 className=" mb-2 classroom-name">{classroom.name}</h3>
+                </div>
+                <div className="card-text">
+                  <ul className="list-group mb-3">
+                    <li
+                      style={{ color: "black" }}
+                      className="list-group-item d-flex justify-content-between align-items-center mt-1 mb-1 pt-1 pb-1 "
+                    >
+                      {classroom.students.length === 1
+                        ? `${classroom.students.length} Student`
+                        : `${classroom.students.length} Students`}
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </Link>
+          </div>
+        ))}
+      </div>
+      <Footer />
     </div>
   );
 }

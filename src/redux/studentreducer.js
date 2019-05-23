@@ -357,6 +357,15 @@ function studentReducer(state = initialState, action) {
         ...state,
         classrooms: [...state.classrooms, action.newClassroom]
       };
+
+    case "DELETE_CLASSROOM":
+      return {
+        ...state,
+        classrooms: state.classrooms.filter(
+          classroom => classroom.id !== action.classroomId
+        )
+      };
+
     default:
       return { ...state };
   }
