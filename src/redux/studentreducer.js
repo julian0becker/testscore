@@ -1,5 +1,4 @@
 import uuid from "uuid";
-import { classPrivateProperty } from "@babel/types";
 
 const initialState = {
   classrooms: [
@@ -352,6 +351,11 @@ function studentReducer(state = initialState, action) {
             return { ...classroom };
           }
         })
+      };
+    case "ADD_CLASSROOM":
+      return {
+        ...state,
+        classrooms: [...state.classrooms, action.newClassroom]
       };
     default:
       return { ...state };

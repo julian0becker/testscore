@@ -60,3 +60,8 @@ export const openInfoModalAction = (testId, studentId, classroomId) => ({
   studentId: studentId,
   classroomId: classroomId
 });
+
+export const addClassroomAction = newClassroom => ({
+  type: "ADD_CLASSROOM",
+  newClassroom: newClassroom
+});

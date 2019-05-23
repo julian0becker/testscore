@@ -14,6 +14,8 @@ export default function Options({ classroomId }) {
     setStudent(event.target.value);
   };
 
+  console.log(student);
+
   const onSubmit = event => {
     event.preventDefault();
     if (student.trim() === "") return;

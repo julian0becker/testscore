@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { toggleModalAction, addSingleTestAction } from "../redux/actions";
 import uuid from "uuid";
 
-export default function Student({ student, classroomId }) {
+export default function Student({ student, classroomId, title }) {
   const dispatch = useDispatch();
   const handleAddSingleTest = () => {
     const newTest = {
@@ -25,7 +25,7 @@ export default function Student({ student, classroomId }) {
   return (
     <div className="student-container card text-white bg-primary mb-3 m-2">
       <div className="card-header d-flex justify-content-between">
-        <div>DaF 187</div>
+        <div>{title}</div>
         <div>
           <i
             onClick={() =>

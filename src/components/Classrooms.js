@@ -26,7 +26,11 @@ export default function Classroom(props) {
     <React.Fragment>
       <Header title={classroom.name} />
       <Options classroomId={classroomId} />
-      <Body students={classroom.students} classroomId={classroomId} />
+      <Body
+        students={classroom.students}
+        classroomId={classroomId}
+        title={classroom.name}
+      />
       <Modal modal={modal} classroomId={classroomId} />
       <Footer />
     </React.Fragment>
