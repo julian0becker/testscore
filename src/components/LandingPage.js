@@ -39,7 +39,7 @@ export default function LandingPage() {
     <div>
       <h1 className="title">Testify</h1>
 
-      <div className="d-flex justify-content-center pb-3 mb-3">
+      <div className="d-flex justify-content-center pb-2 mb-2">
         <form className="d-flex" onSubmit={onSubmit}>
           <input
             className="form-control form-control-sm"

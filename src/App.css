@@ -18,6 +18,10 @@
   color: var(--secondary-color);
 }
 
+.fa-chevron-left:hover {
+  transform: scale(1.5);
+}
+
 .student-container {
   min-width: 20rem;
 }
