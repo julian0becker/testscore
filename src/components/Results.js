@@ -6,7 +6,7 @@ import {
   openInfoModalAction
 } from "../redux/actions";
 
-export default function Results({ test, studentId }) {
+export default function Results({ test, studentId, classroomId }) {
   const dispatch = useDispatch();
 
   return (
@@ -34,7 +34,9 @@ export default function Results({ test, studentId }) {
           <div>
             <span
               onClick={() =>
-                dispatch(openEditModalAction(test.testId, studentId))
+                dispatch(
+                  openEditModalAction(test.testId, studentId, classroomId)
+                )
               }
               className="far fa-edit ml-4"
             />

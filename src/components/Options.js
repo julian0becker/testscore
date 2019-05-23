@@ -28,7 +28,7 @@ export default function Options({ classroomId }) {
   return (
     <div className="d-flex justify-content-center pb-3">
       <button
-        onClick={() => dispatch(openAddTestAllModalAction())}
+        onClick={() => dispatch(openAddTestAllModalAction(classroomId))}
         className="btn btn-outline-secondary btn-sm"
       >
         Add New Tests

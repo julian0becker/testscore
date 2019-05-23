@@ -1,4 +1,5 @@
 import uuid from "uuid";
+import { classPrivateProperty } from "@babel/types";
 
 const initialState = {
   classrooms: [
@@ -203,28 +204,59 @@ function studentReducer(state = initialState, action) {
     case "ADD_TEST_ALL":
       return {
         ...state,
-        students: state.students.map(student => ({
-          ...student,
-          tests: [...student.tests, action.payload].map(test => {
-            return { ...test, testId: uuid.v4() };
-          })
-        }))
+        classrooms: state.classrooms.map(classroom => {
+          if (classroom.id === action.classroomId) {
+            return {
+              ...classroom,
+              students: classroom.students.map(student => ({
+                ...student,
+                tests: [...student.tests, action.test].map(test => {
+                  return { ...test, testId: uuid.v4() };
+                })
+              }))
+            };
+          } else {
+            return { ...classroom };
+          }
+        })
       };
     case "OPEN_TEST_ALL_MODAL":
       return {
         ...state,
-        modal: { ...state.modal, isModalOpen: true, modalType: "newTestAll" }
+        classrooms: state.classrooms.map(classroom => {
+          if (classroom.id === action.classroomId) {
+            return {
+              ...classroom,
+              modal: {
+                ...classroom.modal,
+                isModalOpen: true,
+                modalType: "newTestAll"
+              }
+            };
+          } else {
+            return { ...classroom };
+          }
+        })
       };
     case "OPEN_EDIT_MODAL":
       return {
         ...state,
-        modal: {
-          ...state.modal,
-          isModalOpen: true,
-          forModalTestId: action.payload,
-          forModalStudentId: action.studentId,
-          modalType: "edit"
-        }
+        classrooms: state.classrooms.map(classroom => {
+          if (classroom.id === action.classroomId) {
+            return {
+              ...classroom,
+              modal: {
+                ...classroom.modal,
+                isModalOpen: true,
+                forModalTestId: action.testId,
+                forModalStudentId: action.studentId,
+                modalType: "edit"
+              }
+            };
+          } else {
+            return { ...classroom };
+          }
+        })
       };
     case "OPEN_INFO_MODAL":
       return {

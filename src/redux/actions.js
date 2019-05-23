@@ -16,13 +16,15 @@ export const toggleModalAction = (classroomId, studentId) => ({
   studentId: studentId
 });
 
-export const addTestAllAction = test => ({
+export const addTestAllAction = (test, classroomId) => ({
   type: "ADD_TEST_ALL",
-  payload: test
+  test: test,
+  classroomId: classroomId
 });
 
-export const openAddTestAllModalAction = () => ({
-  type: "OPEN_TEST_ALL_MODAL"
+export const openAddTestAllModalAction = classroomId => ({
+  type: "OPEN_TEST_ALL_MODAL",
+  classroomId: classroomId
 });
 
 export const addSingleTestAction = (studentId, newTest) => ({
@@ -36,10 +38,11 @@ export const deleteSingleTestAction = testId => ({
   payload: testId
 });
 
-export const openEditModalAction = (testId, studentId) => ({
+export const openEditModalAction = (testId, studentId, classroomId) => ({
   type: "OPEN_EDIT_MODAL",
-  payload: testId,
-  studentId: studentId
+  testId: testId,
+  studentId: studentId,
+  classroomId: classroomId
 });
 
 export const editTestAction = (updatedTest, testId) => ({

@@ -3,9 +3,10 @@ import { useDispatch } from "react-redux";
 import uuid from "uuid";
 import { addTestAllAction, toggleModalAction } from "../../redux/actions";
 
-const AddTestAll = () => {
+const AddTestAll = ({ classroomId }) => {
   const dispatch = useDispatch();
-  const toggleModal = () => dispatch(toggleModalAction());
+  console.log("clasroom id from add test all ", classroomId);
+  const toggleModal = () => dispatch(toggleModalAction(classroomId));
   const handleTestAll = event => {
     event.preventDefault();
     const test = {
@@ -20,7 +21,7 @@ const AddTestAll = () => {
         badgeColor: "#000"
       }
     };
-    dispatch(addTestAllAction(test));
+    dispatch(addTestAllAction(test, classroomId));
     toggleModal();
   };
 

@@ -52,6 +52,7 @@ export default function Student({ student, classroomId }) {
                 key={test.testId}
                 test={test}
                 studentId={student.studentId}
+                classroomId={classroomId}
               />
             ))}
           </ul>

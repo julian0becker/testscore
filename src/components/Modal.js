@@ -21,7 +21,7 @@ const customStyles = {
   }
 };
 
-export default function Modal({ modal, classroomId, students }) {
+export default function Modal({ modal, classroomId }) {
   const dispatch = useDispatch();
 
   return (
@@ -35,11 +35,11 @@ export default function Modal({ modal, classroomId, students }) {
       {modal.modalType === "delete" ? (
         <DeleteModal classroomId={classroomId} />
       ) : modal.modalType === "edit" ? (
-        <EditModal />
+        <EditModal classroomId={classroomId} />
       ) : modal.modalType === "info" ? (
-        <TestInfo />
+        <TestInfo classroomId={classroomId} />
       ) : (
-        <AddTestAll />
+        <AddTestAll classroomId={classroomId} />
       )}
     </ReactModal>
   );

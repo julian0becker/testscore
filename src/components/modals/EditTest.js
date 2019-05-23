@@ -3,10 +3,22 @@ import { useSelector, useDispatch } from "react-redux";
 import { findIndexStudent, findIndexTest, calculateGrade } from "../../helpers";
 import { toggleModalAction, editTestAction } from "../../redux/actions";
 
-const EditModal = () => {
+const EditModal = ({ classroomId }) => {
   const dispatch = useDispatch();
-  const students = useSelector(state => state.students);
-  const modal = useSelector(state => state.modal);
+
+  const modal = useSelector(state => {
+    const classroom = state.classrooms.filter(
+      classroom => classroom.id === classroomId
+    );
+    return classroom[0].modal;
+  });
+
+  const students = useSelector(state => {
+    const classroom = state.classrooms.filter(
+      classroom => classroom.id === classroomId
+    );
+    return classroom[0].students;
+  });
 
   const indexStudent = findIndexStudent(students, modal.forModalStudentId);
   const testIndex = findIndexTest(students, indexStudent, modal.forModalTestId);
@@ -41,8 +53,8 @@ const EditModal = () => {
         badgeColor: grade.badgeColor
       }
     };
-    dispatch(editTestAction(updatedTest, testId));
-    dispatch(toggleModalAction());
+    dispatch(editTestAction(updatedTest, testId, classroomId));
+    dispatch(toggleModalAction(classroomId));
   };
 
   return (
@@ -51,7 +63,7 @@ const EditModal = () => {
         <div>{students[indexStudent].name}</div>
         <div>
           <i
-            onClick={() => dispatch(toggleModalAction())}
+            onClick={() => dispatch(toggleModalAction(classroomId))}
             className="fas fa-times"
           />
         </div>
