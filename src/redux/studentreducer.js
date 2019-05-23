@@ -175,12 +175,21 @@ function studentReducer(state = initialState, action) {
     case "TOGGLE_DELETE_MODAL":
       return {
         ...state,
-        modal: {
-          ...state.modal,
-          isModalOpen: !state.modal.isModalOpen,
-          forModalStudentId: action.payload,
-          modalType: "delete"
-        }
+        classrooms: state.classrooms.map(classroom => {
+          if (classroom.id === action.classroomId) {
+            return {
+              ...classroom,
+              modal: {
+                ...classroom.modal,
+                isModalOpen: !classroom.modal.isModalOpen,
+                forModalStudentId: action.studentId,
+                modalType: "delete"
+              }
+            };
+          } else {
+            return { ...classroom };
+          }
+        })
       };
     case "ADD_TEST_ALL":
       return {

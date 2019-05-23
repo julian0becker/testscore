@@ -22,13 +22,12 @@ export default function Classroom(props) {
     return classroom[0].modal;
   });
 
-  console.log("class----", classroom);
   return (
     <React.Fragment>
       <Header title={classroom.name} />
       <Options classroomId={classroomId} />
-      <Body students={classroom.students} />
-      <Modal modal={modal} />
+      <Body students={classroom.students} classroomId={classroomId} />
+      <Modal modal={modal} classroomId={classroomId} />
       <Footer />
     </React.Fragment>
   );

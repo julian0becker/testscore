@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 
 export default function LandingPage() {
   const classrooms = useSelector(state => state.classrooms);
-  console.log(classrooms);
+
   return (
     <div>
       <h1 className="title">Testify</h1>

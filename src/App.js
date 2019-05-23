@@ -7,17 +7,16 @@ import Classrooms from "./components/Classrooms";
 import LandingPage from "./components/LandingPage";
 import "./App.css";
 
+// <PersistGate loading={null} persistor={persistor}></PersistGate>
 function App() {
   return (
     <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <Router>
-          <Switch>
-            <Route path="/" exact component={LandingPage} />
-            <Route path="/classroom/:id" component={Classrooms} />
-          </Switch>
-        </Router>
-      </PersistGate>
+      <Router>
+        <Switch>
+          <Route path="/" exact component={LandingPage} />
+          <Route path="/classroom/:id" component={Classrooms} />
+        </Switch>
+      </Router>
     </Provider>
   );
 }

@@ -4,14 +4,16 @@ export const addStudentAction = (student, classroomId) => ({
   classroomId
 });
 
-export const deleteStudentAction = studentId => ({
+export const deleteStudentAction = (studentId, classroomId) => ({
   type: "DELETE_STUDENT",
-  payload: studentId
+  payload: studentId,
+  classroomId
 });
 
-export const toggleModalAction = studentId => ({
+export const toggleModalAction = (classroomId, studentId) => ({
   type: "TOGGLE_DELETE_MODAL",
-  payload: studentId
+  classroomId: classroomId,
+  studentId: studentId
 });
 
 export const addTestAllAction = test => ({

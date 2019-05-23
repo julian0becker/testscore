@@ -4,9 +4,8 @@ import { useDispatch } from "react-redux";
 import { toggleModalAction, addSingleTestAction } from "../redux/actions";
 import uuid from "uuid";
 
-export default function Student({ student }) {
+export default function Student({ student, classroomId }) {
   const dispatch = useDispatch();
-
   const handleAddSingleTest = () => {
     const newTest = {
       testName: "Please edit",
@@ -29,7 +28,9 @@ export default function Student({ student }) {
         <div>DaF 187</div>
         <div>
           <i
-            onClick={() => dispatch(toggleModalAction(student.studentId))}
+            onClick={() =>
+              dispatch(toggleModalAction(classroomId, student.studentId))
+            }
             className="fas fa-times"
           />
         </div>

@@ -10,7 +10,7 @@ const persistConfig = {
 
 const persistRed = persistReducer(persistConfig, studentReducer);
 
-const store = createStore(persistRed);
+const store = createStore(studentReducer);
 const persistor = persistStore(store);
 
 export { store, persistor };

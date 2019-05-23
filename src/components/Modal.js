@@ -21,7 +21,7 @@ const customStyles = {
   }
 };
 
-export default function Modal({ modal }) {
+export default function Modal({ modal, classroomId, students }) {
   const dispatch = useDispatch();
 
   return (
@@ -29,11 +29,11 @@ export default function Modal({ modal }) {
       isOpen={modal.isModalOpen}
       contentLabel="Modal different Options"
       style={customStyles}
-      onRequestClose={() => dispatch(toggleModalAction())}
+      onRequestClose={() => dispatch(toggleModalAction(classroomId))}
       overlayClassName="Overlay"
     >
       {modal.modalType === "delete" ? (
-        <DeleteModal />
+        <DeleteModal classroomId={classroomId} />
       ) : modal.modalType === "edit" ? (
         <EditModal />
       ) : modal.modalType === "info" ? (

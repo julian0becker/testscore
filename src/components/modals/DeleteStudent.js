@@ -2,12 +2,17 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleModalAction, deleteStudentAction } from "../../redux/actions";
 
-const DeleteModal = () => {
+const DeleteModal = ({ classroomId }) => {
   const dispatch = useDispatch();
-  const studentId = useSelector(state => state.modal.forModalStudentId);
-  const toggleModal = () => dispatch(toggleModalAction());
+  const studentId = useSelector(state => {
+    const classroom = state.classrooms.filter(
+      classroom => classroom.id === classroomId
+    );
+    return classroom[0].modal.forModalStudentId;
+  });
+  const toggleModal = () => dispatch(toggleModalAction(classroomId));
   const handleDeleteStudent = studentId => {
-    dispatch(deleteStudentAction(studentId));
+    dispatch(deleteStudentAction(studentId, classroomId));
     toggleModal();
   };
 
