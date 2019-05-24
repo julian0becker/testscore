@@ -43,7 +43,7 @@ export default function LandingPage() {
         <form className="d-flex" onSubmit={onSubmit}>
           <input
             className="form-control form-control-sm"
-            placeholder="enter new student's name"
+            placeholder="new classroom name"
             type="text"
             value={classroom}
             onChange={onChange}
