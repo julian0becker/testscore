@@ -18,7 +18,7 @@ const TestInfo = ({ classroomId }) => {
     );
     return classroom[0].students;
   });
-  const toggleModal = () => dispatch(toggleModalAction());
+  const toggleModal = () => dispatch(toggleModalAction(classroomId));
 
   const indexStudentForInfo = findIndexStudent(
     students,
