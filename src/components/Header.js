@@ -7,7 +7,7 @@ export default function Header({ title }) {
       <Link to={"/"}>
         <i class="fas fa-chevron-left fa-2x title ml-4" />
       </Link>
-      <h1 className="title d-flex justify-content-center mr-4">{title}</h1>
+      <h1 className="title d-flex justify-content-center mr-3">{title}</h1>
       <div />
     </div>
   );

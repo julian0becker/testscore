@@ -365,7 +365,20 @@ function studentReducer(state = initialState, action) {
           classroom => classroom.id !== action.classroomId
         )
       };
-
+    case "EDIT_CLASSROOM_NAME":
+      return {
+        ...state,
+        classrooms: state.classrooms.map(classroom => {
+          if (classroom.id === action.classroomId) {
+            return {
+              ...classroom,
+              name: action.newName
+            };
+          } else {
+            return { ...classroom };
+          }
+        })
+      };
     default:
       return { ...state };
   }

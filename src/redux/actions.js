@@ -70,3 +70,9 @@ export const deleteClassroomAction = classroomId => ({
   type: "DELETE_CLASSROOM",
   classroomId: classroomId
 });
+
+export const editClassroomNameAction = (newName, classroomId) => ({
+  type: "EDIT_CLASSROOM_NAME",
+  newName: newName,
+  classroomId: classroomId
+});

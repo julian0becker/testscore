@@ -1,5 +1,5 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import ReactModal from "react-modal";
 import { toggleModalAction } from "../redux/actions";
 import TestInfo from "./modals/TestInfo";
