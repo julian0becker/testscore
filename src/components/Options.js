@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useDispatch } from "react-redux";
 import { addStudentAction, openAddTestAllModalAction } from "../redux/actions";
 import uuid from "uuid";
+import { ClassroomContext } from "./Classrooms";
 
-export default function Options({ classroomId }) {
+export default function Options() {
   const [student, setStudent] = useState("");
   const dispatch = useDispatch();
+
+  const { classroomId } = useContext(ClassroomContext);
 
   const addStudent = student =>
     dispatch(addStudentAction(student, classroomId));
@@ -13,8 +16,6 @@ export default function Options({ classroomId }) {
   const onChange = event => {
     setStudent(event.target.value);
   };
-
-  console.log(student);
 
   const onSubmit = event => {
     event.preventDefault();

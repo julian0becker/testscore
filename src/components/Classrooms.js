@@ -6,33 +6,32 @@ import Footer from "./Footer";
 import Header from "./Header";
 import { useSelector } from "react-redux";
 
-export default function Classroom(props) {
-  const classroomId = props.match.params.id;
+export const ClassroomContext = React.createContext();
 
-  const classroom = useSelector(state => {
+export default function Classroom(props) {
+  const classroomIdContext = props.match.params.id;
+
+  const classroomContext = useSelector(state => {
     const classroom = state.classrooms.filter(
-      classroom => classroom.id === classroomId
+      classroom => classroom.id === classroomIdContext
     );
     return classroom[0];
   });
-  const modal = useSelector(state => {
-    const classroom = state.classrooms.filter(
-      classroom => classroom.id === classroomId
-    );
-    return classroom[0].modal;
-  });
+
+  const value = {
+    classroomId: classroomIdContext,
+    classroom: classroomContext
+  };
 
   return (
-    <React.Fragment>
-      <Header title={classroom.name} />
-      <Options classroomId={classroomId} />
-      <Body
-        students={classroom.students}
-        classroomId={classroomId}
-        title={classroom.name}
-      />
-      <Modal modal={modal} classroomId={classroomId} />
-      <Footer />
-    </React.Fragment>
+    <ClassroomContext.Provider value={value}>
+      <React.Fragment>
+        <Header />
+        <Options />
+        <Body />
+        <Modal />
+        <Footer />
+      </React.Fragment>
+    </ClassroomContext.Provider>
   );
 }

@@ -5,7 +5,6 @@ import { addTestAllAction, toggleModalAction } from "../../redux/actions";
 
 const AddTestAll = ({ classroomId }) => {
   const dispatch = useDispatch();
-  console.log("clasroom id from add test all ", classroomId);
   const toggleModal = () => dispatch(toggleModalAction(classroomId));
   const handleTestAll = event => {
     event.preventDefault();

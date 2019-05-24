@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import Results from "./Results";
 import { useDispatch } from "react-redux";
 import { toggleModalAction, addSingleTestAction } from "../redux/actions";
 import uuid from "uuid";
+import { ClassroomContext } from "./Classrooms";
 
-export default function Student({ student, classroomId, title }) {
+export default function Student({ student }) {
+  const { classroomId, classroom } = useContext(ClassroomContext);
   const dispatch = useDispatch();
   const handleAddSingleTest = () => {
     const newTest = {
@@ -25,7 +27,7 @@ export default function Student({ student, classroomId, title }) {
   return (
     <div className="student-container card text-white bg-primary mb-3 m-2">
       <div className="card-header d-flex justify-content-between">
-        <div>{title}</div>
+        <div>{classroom.name}</div>
         <div>
           <i
             onClick={() =>
@@ -52,7 +54,6 @@ export default function Student({ student, classroomId, title }) {
                 key={test.testId}
                 test={test}
                 studentId={student.studentId}
-                classroomId={classroomId}
               />
             ))}
           </ul>

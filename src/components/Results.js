@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useDispatch } from "react-redux";
 import {
   deleteSingleTestAction,
   openEditModalAction,
   openInfoModalAction
 } from "../redux/actions";
+import { ClassroomContext } from "./Classrooms";
 
-export default function Results({ test, studentId, classroomId }) {
+export default function Results({ test, studentId }) {
   const dispatch = useDispatch();
+  const { classroomId } = useContext(ClassroomContext);
 
   return (
     <li

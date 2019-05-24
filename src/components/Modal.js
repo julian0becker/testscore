@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useDispatch } from "react-redux";
 import ReactModal from "react-modal";
 import { toggleModalAction } from "../redux/actions";
@@ -6,6 +6,7 @@ import TestInfo from "./modals/TestInfo";
 import DeleteModal from "./modals/DeleteStudent";
 import EditModal from "./modals/EditTest";
 import AddTestAll from "./modals/AddTestAll";
+import { ClassroomContext } from "./Classrooms";
 
 ReactModal.setAppElement("#root");
 
@@ -21,22 +22,23 @@ const customStyles = {
   }
 };
 
-export default function Modal({ modal, classroomId }) {
+export default function Modal() {
   const dispatch = useDispatch();
+  const { classroomId, classroom } = useContext(ClassroomContext);
 
   return (
     <ReactModal
-      isOpen={modal.isModalOpen}
+      isOpen={classroom.modal.isModalOpen}
       contentLabel="Modal different Options"
       style={customStyles}
       onRequestClose={() => dispatch(toggleModalAction(classroomId))}
       overlayClassName="Overlay"
     >
-      {modal.modalType === "delete" ? (
+      {classroom.modal.modalType === "delete" ? (
         <DeleteModal classroomId={classroomId} />
-      ) : modal.modalType === "edit" ? (
+      ) : classroom.modal.modalType === "edit" ? (
         <EditModal classroomId={classroomId} />
-      ) : modal.modalType === "info" ? (
+      ) : classroom.modal.modalType === "info" ? (
         <TestInfo classroomId={classroomId} />
       ) : (
         <AddTestAll classroomId={classroomId} />
