@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import ReactModal from "react-modal";
+import { Link } from "react-router-dom";
 import Footer from "./Footer";
 import EditClassroom from "./modals/EditClassroom";
 import LandingPageBody from "./LandingPageBody";
@@ -22,7 +23,14 @@ export default function LandingPage() {
 
   return (
     <div>
-      <h1 className="title">Testify</h1>
+      <div className="d-flex justify-content-between align-items-center">
+        <div />
+        <h1 className="title ml-5">Testify</h1>
+        <Link to={"/about"}>
+          <div className="mr-5">About</div>
+        </Link>
+      </div>
+
       <LandingPageBody
         setClassroomId={setClassroomId}
         setIsEditModalOpen={setIsEditModalOpen}

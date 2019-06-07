@@ -158,7 +158,7 @@ function studentReducer(state = initialState, action) {
           if (classroom.id === action.classroomId) {
             return {
               ...classroom,
-              students: [...classroom.students, action.payload]
+              students: [...classroom.students, action.student]
             };
           } else {
             return { ...classroom };
@@ -326,7 +326,6 @@ function studentReducer(state = initialState, action) {
           }
         })
       };
-
     case "EDIT_TEST":
       return {
         ...state,
@@ -373,6 +372,71 @@ function studentReducer(state = initialState, action) {
             return {
               ...classroom,
               name: action.newName
+            };
+          } else {
+            return { ...classroom };
+          }
+        })
+      };
+    case "OPEN_QUICK_EDIT":
+      return {
+        ...state,
+        classrooms: state.classrooms.map(classroom => {
+          if (classroom.id === action.classroomId) {
+            return {
+              ...classroom,
+              students: classroom.students.map(student => {
+                return {
+                  ...student,
+                  tests: student.tests.map(test => {
+                    if (test.testId === action.testId) {
+                      return {
+                        ...test,
+                        grade: {
+                          ...test.grade,
+                          uni: action.jsx
+                        }
+                      };
+                    } else {
+                      return { ...test };
+                    }
+                  })
+                };
+              })
+            };
+          } else {
+            return { ...classroom };
+          }
+        })
+      };
+    case "QUICK_EDIT":
+      return {
+        ...state,
+        classrooms: state.classrooms.map(classroom => {
+          if (classroom.id === action.classroomId) {
+            return {
+              ...classroom,
+              students: classroom.students.map(student => {
+                return {
+                  ...student,
+                  tests: student.tests.map(test => {
+                    if (test.testId === action.testId) {
+                      return {
+                        ...test,
+                        reachedPoints: action.points,
+                        grade: {
+                          ...test.grade,
+                          uni: action.grade.uni,
+                          decimal: action.grade.decimal,
+                          badgeColor: action.grade.badgeColor
+                        }
+                      };
+                    } else {
+                      return { ...test };
+                    }
+                  })
+                };
+              })
             };
           } else {
             return { ...classroom };

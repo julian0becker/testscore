@@ -5,8 +5,7 @@ import Modal from "./Modal";
 import Footer from "./Footer";
 import Header from "./Header";
 import { useSelector } from "react-redux";
-
-export const ClassroomContext = React.createContext();
+import ClassroomContext from "../context/ClassroomContext";
 
 export default function Classroom(props) {
   const classroomIdContext = props.match.params.id;

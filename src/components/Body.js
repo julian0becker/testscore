@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import Student from "./Student";
-import { ClassroomContext } from "./Classrooms";
+import ClassroomContext from "../context/ClassroomContext";
 
 export default function Body() {
   const { classroom } = useContext(ClassroomContext);

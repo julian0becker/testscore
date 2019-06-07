@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { useDispatch } from "react-redux";
 import { addStudentAction, openAddTestAllModalAction } from "../redux/actions";
 import uuid from "uuid";
-import { ClassroomContext } from "./Classrooms";
+import ClassroomContext from "../context/ClassroomContext";
 
 export default function Options() {
   const [student, setStudent] = useState("");

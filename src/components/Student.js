@@ -3,7 +3,7 @@ import Results from "./Results";
 import { useDispatch } from "react-redux";
 import { toggleModalAction, addSingleTestAction } from "../redux/actions";
 import uuid from "uuid";
-import { ClassroomContext } from "./Classrooms";
+import ClassroomContext from "../context/ClassroomContext";
 
 export default function Student({ student }) {
   const { classroomId, classroom } = useContext(ClassroomContext);

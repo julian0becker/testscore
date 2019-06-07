@@ -26,6 +26,9 @@
   min-width: 20rem;
 }
 
+#quick-edit {
+}
+
 a,
 a:hover,
 a:focus {
@@ -67,4 +70,29 @@ body {
   right: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.75);
+}
+
+.score-tables {
+  display: flex;
+  justify-content: space-around;
+}
+
+.score-tables {
+  display: flex;
+  justify-content: space-around;
+}
+
+.table {
+  text-align: center;
+}
+@media (max-width: 950px) {
+  .score-tables {
+    display: block;
+    width: 80%;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .table-words {
+    display: none;
+  }
 }

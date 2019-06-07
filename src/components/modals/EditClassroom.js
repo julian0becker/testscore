@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { editClassroomNameAction } from "../../redux/actions";
-import { isConditionalExpression } from "@babel/types";
 
 export default function EditClassroom({ setIsEditModalOpen, classroomId }) {
   const [classroomName, setClassroomName] = useState("");

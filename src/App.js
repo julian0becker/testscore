@@ -5,6 +5,7 @@ import { store, persistor } from "./redux/store";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Classrooms from "./components/Classrooms";
 import LandingPage from "./components/LandingPage";
+import About from "./components/About";
 import "./App.css";
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
           <Switch>
             <Route path="/" exact component={LandingPage} />
             <Route path="/classroom/:id" component={Classrooms} />
+            <Route path="/about" component={About} />
           </Switch>
         </Router>
       </PersistGate>

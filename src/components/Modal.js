@@ -6,7 +6,7 @@ import TestInfo from "./modals/TestInfo";
 import DeleteModal from "./modals/DeleteStudent";
 import EditModal from "./modals/EditTest";
 import AddTestAll from "./modals/AddTestAll";
-import { ClassroomContext } from "./Classrooms";
+import ClassroomContext from "../context/ClassroomContext";
 
 ReactModal.setAppElement("#root");
 
