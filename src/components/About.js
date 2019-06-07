@@ -13,7 +13,7 @@ function About() {
         <div />
       </div>
       <div className="d-flex justify-content-center">
-        <ul className="list-group w-50 mt-3">
+        <ul className="list-group about-list mt-3">
           <li className="list-group-item">
             Hi, welcome to Testify. This is an Web Application for teachers to
             keep track of their students' test results. On the landing page

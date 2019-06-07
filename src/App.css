@@ -85,6 +85,10 @@ body {
 .table {
   text-align: center;
 }
+
+.about-list {
+  width: 50%;
+}
 @media (max-width: 950px) {
   .score-tables {
     display: block;
@@ -94,5 +98,8 @@ body {
   }
   .table-words {
     display: none;
+  }
+  .about-list {
+    width: 90%;
   }
 }
