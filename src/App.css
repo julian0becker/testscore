@@ -94,6 +94,12 @@ body {
   flex-basis: 33.333%;
   display: flex;
 }
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 @media (max-width: 950px) {
   .score-tables {
     display: block;
@@ -106,5 +112,27 @@ body {
   }
   .about-list {
     width: 90%;
+  }
+}
+
+@media (max-width: 650px) {
+  .header-container {
+    display: grid;
+    grid-template-columns: 33.3% 33.3% 33.3%;
+    grid-template-rows: auto;
+    grid-template-areas:
+      "back  title . "
+      "select select select";
+  }
+
+  .grid-item-a {
+    grid-area: back;
+  }
+  .grid-item-b {
+    grid-area: title;
+  }
+  .grid-item-c {
+    grid-area: select;
+    justify-self: center;
   }
 }

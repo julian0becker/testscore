@@ -15,18 +15,18 @@ export default function Header() {
   };
 
   return (
-    <div className="d-flex justify-content-between align-items-center">
-      <div className="header-item justify-content-start">
+    <div className="header-container">
+      <div className="header-item grid-item-a justify-content-start">
         <Link to={"/"}>
           <i className="fas fa-chevron-left fa-2x title pl-3" />
         </Link>
       </div>
-      <div className="header-item justify-content-center">
+      <div className="header-item  grid-item-b justify-content-center">
         <h1 className="title d-flex justify-content-center">
           {classroom.name}
         </h1>
       </div>
-      <div className="header-item justify-content-end pt-1">
+      <div className="header-item  grid-item-c justify-content-end pt-1">
         <form
           className="form-group pr-3"
           onSubmit={event => handleSwitchSystem(event)}
