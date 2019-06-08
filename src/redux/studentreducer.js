@@ -5,6 +5,7 @@ const initialState = {
     {
       name: "DaF187",
       id: uuid.v4(),
+      defaultSystem: "uni",
       modal: {
         isModalOpen: false,
         forModalStudentId: null,
@@ -23,6 +24,7 @@ const initialState = {
               testId: uuid.v4(),
               grade: {
                 decimal: 0.8,
+                american: "B",
                 uni: "2,0",
                 badgeColor: "#238823"
               }
@@ -35,6 +37,7 @@ const initialState = {
               testId: uuid.v4(),
               grade: {
                 decimal: 0.81,
+                american: "B",
                 uni: "2,0",
                 badgeColor: "#238823"
               }
@@ -53,6 +56,7 @@ const initialState = {
               testId: uuid.v4(),
               grade: {
                 decimal: 0.82,
+                american: "B",
                 uni: "2,0",
                 badgeColor: "#238823"
               }
@@ -65,6 +69,7 @@ const initialState = {
               testId: uuid.v4(),
               grade: {
                 decimal: 0.83,
+                american: "B",
                 uni: "2,0",
                 badgeColor: "#238823"
               }
@@ -83,6 +88,7 @@ const initialState = {
         forModalTestId: null,
         modalType: null
       },
+      defaultSystem: "uni",
       students: [
         {
           name: "Marcel",
@@ -95,6 +101,7 @@ const initialState = {
               testId: uuid.v4(),
               grade: {
                 decimal: 0.8,
+                american: "B",
                 uni: "2,0",
                 badgeColor: "#238823"
               }
@@ -107,6 +114,7 @@ const initialState = {
               testId: uuid.v4(),
               grade: {
                 decimal: 0.81,
+                american: "B",
                 uni: "2,0",
                 badgeColor: "#238823"
               }
@@ -125,6 +133,7 @@ const initialState = {
               testId: uuid.v4(),
               grade: {
                 decimal: 0.82,
+                american: "B",
                 uni: "2,0",
                 badgeColor: "#238823"
               }
@@ -138,6 +147,7 @@ const initialState = {
               grade: {
                 decimal: 0.83,
                 uni: "2,0",
+                american: "B",
                 badgeColor: "#238823"
               }
             }
@@ -437,6 +447,20 @@ function studentReducer(state = initialState, action) {
                   })
                 };
               })
+            };
+          } else {
+            return { ...classroom };
+          }
+        })
+      };
+    case "SET_DEFAULT_SYSTEM":
+      return {
+        ...state,
+        classrooms: state.classrooms.map(classroom => {
+          if (classroom.id === action.classroomId) {
+            return {
+              ...classroom,
+              defaultSystem: action.system
             };
           } else {
             return { ...classroom };

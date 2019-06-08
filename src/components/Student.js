@@ -18,6 +18,7 @@ export default function Student({ student }) {
       testId: uuid.v4(),
       grade: {
         decimal: "Please Edit",
+        american: "edit",
         uni: "edit",
         badgeColor: "#000"
       }
@@ -28,6 +29,7 @@ export default function Student({ student }) {
     const validTests = student.tests.filter(
       test => test.grade.decimal !== "Please Edit"
     );
+
     let accumulatedUniGrade = 0;
     for (let test of validTests) {
       accumulatedUniGrade += parseFloat(test.grade.uni.replace(",", "."));
@@ -35,8 +37,7 @@ export default function Student({ student }) {
     const averageUniGrade = accumulatedUniGrade / validTests.length;
     return displayAverageUniversityGrade(averageUniGrade);
   };
-
-  const average = getAverageGrade();
+  let average = getAverageGrade();
 
   return (
     <div className="student-container card text-white bg-primary mb-3 m-2">

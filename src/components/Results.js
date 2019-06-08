@@ -9,7 +9,7 @@ import ClassroomContext from "../context/ClassroomContext";
 
 export default function Results({ test, studentId }) {
   const dispatch = useDispatch();
-  const { classroomId } = useContext(ClassroomContext);
+  const { classroomId, gradeSystem } = useContext(ClassroomContext);
 
   return (
     <li
@@ -22,7 +22,7 @@ export default function Results({ test, studentId }) {
           style={{ backgroundColor: test.grade.badgeColor }}
           className="editScore badge badge-primary badge-pill align-self-center"
         >
-          {test.grade.uni}
+          {gradeSystem === "uni" ? test.grade.uni : test.grade.american}
         </div>
         <div className="d-flex">
           <div>

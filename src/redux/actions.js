@@ -91,3 +91,9 @@ export const quickEditAction = (points, grade, decimal) => ({
   grade,
   decimal
 });
+
+export const setDefaultSystemAction = (system, classroomId) => ({
+  type: "SET_DEFAULT_SYSTEM",
+  system,
+  classroomId
+});

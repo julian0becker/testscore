@@ -1,11 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { findIndexStudent, findIndexTest, calculateGrade } from "../../helpers";
+import {
+  findIndexStudent,
+  findIndexTest,
+  calculateGrade,
+  calculateAmericanGrade
+} from "../../helpers";
 import { toggleModalAction, editTestAction } from "../../redux/actions";
+import ClassroomContext from "../../context/ClassroomContext";
 
 const EditModal = ({ classroomId }) => {
   const dispatch = useDispatch();
-
+  const { gradeSystem } = useContext(ClassroomContext);
   const modal = useSelector(state => {
     const classroom = state.classrooms.filter(
       classroom => classroom.id === classroomId
@@ -23,7 +29,7 @@ const EditModal = ({ classroomId }) => {
   const indexStudent = findIndexStudent(students, modal.forModalStudentId);
   const testIndex = findIndexTest(students, indexStudent, modal.forModalTestId);
 
-  const handleEditTest = (event, testId) => {
+  const handleEditTest = (event, testId, oldPassMark) => {
     event.preventDefault();
 
     if (
@@ -33,16 +39,39 @@ const EditModal = ({ classroomId }) => {
       return; //reached points must be greater than max points //todo warning modal
     }
 
-    const grade = calculateGrade(
-      event.target.editPointsSingle.value /
-        event.target.editMaxPointsSingle.value,
-      event.target.editPassMark.value
-    );
+    let grade;
+    let passMark;
+    if (gradeSystem === "uni") {
+      passMark = event.target.editPassMark.value;
+      grade = calculateGrade(
+        event.target.editPointsSingle.value /
+          event.target.editMaxPointsSingle.value,
+        passMark
+      );
+      let americanGrade = calculateAmericanGrade(
+        event.target.editPointsSingle.value /
+          event.target.editMaxPointsSingle.value
+      );
+      grade.american = americanGrade.american;
+    } else {
+      passMark = oldPassMark;
+      grade = calculateAmericanGrade(
+        event.target.editPointsSingle.value /
+          event.target.editMaxPointsSingle.value
+      );
+      let universityGrade = calculateGrade(
+        event.target.editPointsSingle.value /
+          event.target.editMaxPointsSingle.value,
+        passMark
+      );
+
+      grade.uni = universityGrade.uni;
+    }
 
     const updatedTest = {
       testName: event.target.editNameSingle.value,
       maxPoints: event.target.editMaxPointsSingle.value,
-      passMark: event.target.editPassMark.value,
+      passMark: passMark,
       reachedPoints: event.target.editPointsSingle.value,
       testId: testId,
       grade: {
@@ -50,6 +79,7 @@ const EditModal = ({ classroomId }) => {
           event.target.editPointsSingle.value /
           event.target.editMaxPointsSingle.value,
         uni: grade.uni,
+        american: grade.american,
         badgeColor: grade.badgeColor
       }
     };
@@ -77,7 +107,8 @@ const EditModal = ({ classroomId }) => {
             onSubmit={event =>
               handleEditTest(
                 event,
-                students[indexStudent].tests[testIndex].testId
+                students[indexStudent].tests[testIndex].testId,
+                students[indexStudent].tests[testIndex].passMark
               )
             }
           >
@@ -122,41 +153,43 @@ const EditModal = ({ classroomId }) => {
                     />
                   </td>
                 </tr>
-                <tr className="table-active">
-                  <td>
-                    <fieldset>
-                      <p className="small mb-0 mt-0">Passmark</p>
-                      <div className="d-flex">
-                        <div className="form-check">
-                          <label className="form-check-label">
-                            <input
-                              type="radio"
-                              className="form-check-input"
-                              name="editPassMark"
-                              id="optionsRadios1"
-                              value="50%"
-                              checked
-                              readOnly={true}
-                            />
-                            50%
-                          </label>
+                {gradeSystem === "uni" ? (
+                  <tr className="table-active">
+                    <td>
+                      <fieldset>
+                        <p className="small mb-0 mt-0">Passmark</p>
+                        <div className="d-flex">
+                          <div className="form-check">
+                            <label className="form-check-label">
+                              <input
+                                type="radio"
+                                className="form-check-input"
+                                name="editPassMark"
+                                id="optionsRadios1"
+                                value="50%"
+                                checked
+                                readOnly={true}
+                              />
+                              50%
+                            </label>
+                          </div>
+                          <div className="form-check ml-2">
+                            <label className="form-check-label">
+                              <input
+                                type="radio"
+                                className="form-check-input"
+                                name="editPassMark"
+                                id="optionsRadios2"
+                                value="60%"
+                              />
+                              60%
+                            </label>
+                          </div>
                         </div>
-                        <div className="form-check ml-2">
-                          <label className="form-check-label">
-                            <input
-                              type="radio"
-                              className="form-check-input"
-                              name="editPassMark"
-                              id="optionsRadios2"
-                              value="60%"
-                            />
-                            60%
-                          </label>
-                        </div>
-                      </div>
-                    </fieldset>
-                  </td>
-                </tr>
+                      </fieldset>
+                    </td>
+                  </tr>
+                ) : null}
               </tbody>
             </table>
             <input

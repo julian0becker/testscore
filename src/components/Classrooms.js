@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Options from "./Options";
 import Body from "./Body";
 import Modal from "./Modal";
@@ -17,9 +17,16 @@ export default function Classroom(props) {
     return classroom[0];
   });
 
+  const [system, setSystem] = useState(classroomContext.defaultSystem);
+  const switchSystem = selectedSystem => {
+    setSystem(selectedSystem);
+  };
+
   const value = {
     classroomId: classroomIdContext,
-    classroom: classroomContext
+    classroom: classroomContext,
+    gradeSystem: system,
+    switchSystem: switchSystem
   };
 
   return (

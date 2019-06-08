@@ -97,3 +97,21 @@ export const displayAverageUniversityGrade = averageUniversityGrade => {
       break;
   }
 };
+
+export const calculateAmericanGrade = decimal => {
+  const x = decimal;
+
+  switch (true) {
+    case x < 0.7:
+      return { american: "F", badgeColor: "#D2222D" };
+    case x < 0.74:
+      return { american: "D", badgeColor: "#EEB462" };
+    case x < 0.8:
+      return { american: "C", badgeColor: "#FFBF00" };
+    case x < 0.9:
+      return { american: "B", badgeColor: "#238823" };
+    case x <= 1:
+      return { american: "A", badgeColor: "#20B2AA" };
+    default:
+  }
+};

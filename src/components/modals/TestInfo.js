@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { findIndexStudent, findIndexTest } from "../../helpers";
 import { toggleModalAction } from "../../redux/actions";
+import ClassroomContext from "../../context/ClassroomContext";
 
 const TestInfo = ({ classroomId }) => {
+  const { gradeSystem } = useContext(ClassroomContext);
   const dispatch = useDispatch();
   const modal = useSelector(state => {
     const classroom = state.classrooms.filter(
@@ -68,15 +70,17 @@ const TestInfo = ({ classroomId }) => {
                   }
                 </td>
               </tr>
-              <tr className="table-active">
-                <th scope="row">Passmark</th>
-                <td>
-                  {
-                    students[indexStudentForInfo].tests[testIndexForInfo]
-                      .passMark
-                  }
-                </td>
-              </tr>
+              {gradeSystem === "uni" ? (
+                <tr className="table-active">
+                  <th scope="row">Passmark</th>
+                  <td>
+                    {
+                      students[indexStudentForInfo].tests[testIndexForInfo]
+                        .passMark
+                    }
+                  </td>
+                </tr>
+              ) : null}
               <tr className="table-active">
                 <th scope="row">Percent</th>
                 <td>
@@ -89,10 +93,11 @@ const TestInfo = ({ classroomId }) => {
               <tr className="table-active">
                 <th scope="row">Grade</th>
                 <td>
-                  {
-                    students[indexStudentForInfo].tests[testIndexForInfo].grade
-                      .uni
-                  }
+                  {gradeSystem === "uni"
+                    ? students[indexStudentForInfo].tests[testIndexForInfo]
+                        .grade.uni
+                    : students[indexStudentForInfo].tests[testIndexForInfo]
+                        .grade.american}
                 </td>
               </tr>
             </tbody>
