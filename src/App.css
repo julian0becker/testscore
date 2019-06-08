@@ -130,7 +130,7 @@ body {
   }
   .grid-item-b {
     grid-area: title;
-    justify-self: center;
+    justify-self: start;
   }
   .grid-item-c {
     grid-area: select;

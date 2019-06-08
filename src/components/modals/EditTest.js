@@ -6,7 +6,11 @@ import {
   calculateGrade,
   calculateAmericanGrade
 } from "../../helpers";
-import { toggleModalAction, editTestAction } from "../../redux/actions";
+import {
+  toggleModalAction,
+  editTestAction,
+  deleteSingleTestAction
+} from "../../redux/actions";
 import ClassroomContext from "../../context/ClassroomContext";
 
 const EditModal = ({ classroomId }) => {
@@ -28,6 +32,11 @@ const EditModal = ({ classroomId }) => {
 
   const indexStudent = findIndexStudent(students, modal.forModalStudentId);
   const testIndex = findIndexTest(students, indexStudent, modal.forModalTestId);
+
+  const handleDeleteSingleTest = (idTest, idClassroom) => {
+    dispatch(toggleModalAction(idClassroom));
+    dispatch(deleteSingleTestAction(idTest, idClassroom));
+  };
 
   const handleEditTest = (event, testId, oldPassMark) => {
     event.preventDefault();
@@ -196,10 +205,23 @@ const EditModal = ({ classroomId }) => {
                 ) : null}
               </tbody>
             </table>
-            <input
-              type="submit"
-              className="btn btn-sm btn-outline-secondary mt-3"
-            />
+            <div className="d-flex justify-content-between">
+              <input
+                type="submit"
+                className="btn btn-sm btn-outline-secondary mt-3"
+              />
+              <div className="d-flex align-items-end">
+                <span
+                  onClick={() =>
+                    handleDeleteSingleTest(
+                      students[indexStudent].tests[testIndex].testId,
+                      classroomId
+                    )
+                  }
+                  className="fas fa-trash-alt ml-4 mb-2"
+                />
+              </div>
+            </div>
           </form>
         </div>
       </div>

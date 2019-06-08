@@ -1,10 +1,6 @@
 import React, { useContext } from "react";
 import { useDispatch } from "react-redux";
-import {
-  deleteSingleTestAction,
-  openEditModalAction,
-  openInfoModalAction
-} from "../redux/actions";
+import { openEditModalAction, openInfoModalAction } from "../redux/actions";
 import ClassroomContext from "../context/ClassroomContext";
 
 export default function Results({ test, studentId }) {
@@ -47,14 +43,6 @@ export default function Results({ test, studentId }) {
                 )
               }
               className="far fa-edit ml-4"
-            />
-          </div>
-          <div>
-            <span
-              onClick={() =>
-                dispatch(deleteSingleTestAction(test.testId, classroomId))
-              }
-              className="fas fa-trash-alt ml-4"
             />
           </div>
         </div>
