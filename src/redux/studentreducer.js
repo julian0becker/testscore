@@ -26,7 +26,8 @@ const initialState = {
                 decimal: 0.8,
                 american: "B",
                 uni: "2,0",
-                badgeColor: "#238823"
+                badgeColor: "#238823",
+                americanBadgeColor: "#238823"
               }
             },
             {
@@ -39,7 +40,8 @@ const initialState = {
                 decimal: 0.81,
                 american: "B",
                 uni: "2,0",
-                badgeColor: "#238823"
+                badgeColor: "#238823",
+                americanBadgeColor: "#238823"
               }
             }
           ],
@@ -58,7 +60,8 @@ const initialState = {
                 decimal: 0.82,
                 american: "B",
                 uni: "2,0",
-                badgeColor: "#238823"
+                badgeColor: "#238823",
+                americanBadgeColor: "#238823"
               }
             },
             {
@@ -71,7 +74,8 @@ const initialState = {
                 decimal: 0.83,
                 american: "B",
                 uni: "2,0",
-                badgeColor: "#238823"
+                badgeColor: "#238823",
+                americanBadgeColor: "#238823"
               }
             }
           ],
@@ -103,7 +107,8 @@ const initialState = {
                 decimal: 0.8,
                 american: "B",
                 uni: "2,0",
-                badgeColor: "#238823"
+                badgeColor: "#238823",
+                americanBadgeColor: "#238823"
               }
             },
             {
@@ -116,7 +121,8 @@ const initialState = {
                 decimal: 0.81,
                 american: "B",
                 uni: "2,0",
-                badgeColor: "#238823"
+                badgeColor: "#238823",
+                americanBadgeColor: "#238823"
               }
             }
           ],
@@ -135,7 +141,8 @@ const initialState = {
                 decimal: 0.82,
                 american: "B",
                 uni: "2,0",
-                badgeColor: "#238823"
+                badgeColor: "#238823",
+                americanBadgeColor: "#238823"
               }
             },
             {
@@ -148,7 +155,8 @@ const initialState = {
                 decimal: 0.83,
                 uni: "2,0",
                 american: "B",
-                badgeColor: "#238823"
+                badgeColor: "#238823",
+                americanBadgeColor: "#238823"
               }
             }
           ],

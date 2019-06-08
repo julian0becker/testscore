@@ -4,10 +4,10 @@ import { useDispatch } from "react-redux";
 import { toggleModalAction, addSingleTestAction } from "../redux/actions";
 import uuid from "uuid";
 import ClassroomContext from "../context/ClassroomContext";
-import { displayAverageUniversityGrade } from "../helpers";
+import { getAverageGrade, getAverageAmericanGrade } from "../helpers";
 
 export default function Student({ student }) {
-  const { classroomId, classroom } = useContext(ClassroomContext);
+  const { classroomId, classroom, gradeSystem } = useContext(ClassroomContext);
   const dispatch = useDispatch();
   const handleAddSingleTest = () => {
     const newTest = {
@@ -20,24 +20,15 @@ export default function Student({ student }) {
         decimal: "Please Edit",
         american: "edit",
         uni: "edit",
-        badgeColor: "#000"
+        badgeColor: "#000",
+        americanBadgeColor: "#000"
       }
     };
     dispatch(addSingleTestAction(student.studentId, newTest, classroomId));
   };
-  const getAverageGrade = () => {
-    const validTests = student.tests.filter(
-      test => test.grade.decimal !== "Please Edit"
-    );
 
-    let accumulatedUniGrade = 0;
-    for (let test of validTests) {
-      accumulatedUniGrade += parseFloat(test.grade.uni.replace(",", "."));
-    }
-    const averageUniGrade = accumulatedUniGrade / validTests.length;
-    return displayAverageUniversityGrade(averageUniGrade);
-  };
-  let average = getAverageGrade();
+  const average = getAverageGrade(student);
+  const averageAmericanGrade = getAverageAmericanGrade(student);
 
   return (
     <div className="student-container card text-white bg-primary mb-3 m-2">
@@ -79,10 +70,16 @@ export default function Student({ student }) {
             >
               <div>Average:</div>
               <div
-                style={{ backgroundColor: average.badgeColor }}
+                style={
+                  gradeSystem === "uni"
+                    ? { backgroundColor: average.badgeColor }
+                    : { backgroundColor: averageAmericanGrade.badgeColor }
+                }
                 className="editScore badge badge-primary badge-pill align-self-center"
               >
-                {average.uni}
+                {gradeSystem === "uni"
+                  ? average.uni
+                  : averageAmericanGrade.american}
               </div>
             </li>
           )}

@@ -53,6 +53,7 @@ const EditModal = ({ classroomId }) => {
           event.target.editMaxPointsSingle.value
       );
       grade.american = americanGrade.american;
+      grade.americanBadgeColor = americanGrade.badgeColor;
     } else {
       passMark = oldPassMark;
       grade = calculateAmericanGrade(
@@ -66,6 +67,8 @@ const EditModal = ({ classroomId }) => {
       );
 
       grade.uni = universityGrade.uni;
+      grade.badgeColor = universityGrade.badgeColor;
+      grade.americanBadgeColor = grade.badgeColor;
     }
 
     const updatedTest = {
@@ -80,7 +83,8 @@ const EditModal = ({ classroomId }) => {
           event.target.editMaxPointsSingle.value,
         uni: grade.uni,
         american: grade.american,
-        badgeColor: grade.badgeColor
+        badgeColor: grade.badgeColor,
+        americanBadgeColor: grade.americanBadgeColor
       }
     };
     dispatch(editTestAction(updatedTest, testId, classroomId));

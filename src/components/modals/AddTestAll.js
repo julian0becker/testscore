@@ -27,7 +27,8 @@ const AddTestAll = ({ classroomId }) => {
         decimal: "Please Edit",
         american: "edit",
         uni: "edit",
-        badgeColor: "#000"
+        badgeColor: "#000",
+        americanBadgeColor: "#000"
       }
     };
     dispatch(addTestAllAction(test, classroomId));

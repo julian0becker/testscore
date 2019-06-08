@@ -115,3 +115,28 @@ export const calculateAmericanGrade = decimal => {
     default:
   }
 };
+
+export const getAverageGrade = student => {
+  const validTests = student.tests.filter(
+    test => test.grade.decimal !== "Please Edit"
+  );
+
+  let accumulatedUniGrade = 0;
+  for (let test of validTests) {
+    accumulatedUniGrade += parseFloat(test.grade.uni.replace(",", "."));
+  }
+  const averageUniGrade = accumulatedUniGrade / validTests.length;
+  return displayAverageUniversityGrade(averageUniGrade);
+};
+
+export const getAverageAmericanGrade = student => {
+  const validTests = student.tests.filter(
+    test => test.grade.decimal !== "Please Edit"
+  );
+  let accumulatedDecimal = 0;
+  for (let test of validTests) {
+    accumulatedDecimal += test.grade.decimal;
+  }
+  const averageDecimal = accumulatedDecimal / validTests.length;
+  return calculateAmericanGrade(averageDecimal);
+};

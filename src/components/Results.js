@@ -19,7 +19,11 @@ export default function Results({ test, studentId }) {
       <div>{test.testName}</div>
       <div className="d-flex justify-content-between icon-container">
         <div
-          style={{ backgroundColor: test.grade.badgeColor }}
+          style={
+            gradeSystem === "uni"
+              ? { backgroundColor: test.grade.badgeColor }
+              : { backgroundColor: test.grade.americanBadgeColor }
+          }
           className="editScore badge badge-primary badge-pill align-self-center"
         >
           {gradeSystem === "uni" ? test.grade.uni : test.grade.american}
