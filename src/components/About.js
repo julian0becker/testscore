@@ -32,7 +32,7 @@ function About() {
             University scale is used: <br />
             {"x = score in percent [(reached points / total points) * 100]"}
             <div className=" mt-3 score-tables">
-              <div className="table">
+              <div className="table-about">
                 <h6>Passmark 50%</h6>
                 <ul className="list-unstyled">
                   <li>{"95% ≤ x ≤ 100% = 1,0"}</li>
@@ -70,7 +70,7 @@ function About() {
                   <li className="d-flex justify-content-center">{"fail"}</li>
                 </ul>
               </div>
-              <div className="table">
+              <div className="table-about">
                 <h6>Passmark 60%</h6>
                 <ul className="list-unstyled">
                   <li>{"96% ≤ x ≤ 100% = 1,0"}</li>

@@ -66,3 +66,34 @@ export const findIndexTest = (studentArray, indexStudent, idTest) => {
     test => test.testId === idTest
   );
 };
+
+export const displayAverageUniversityGrade = averageUniversityGrade => {
+  const x = averageUniversityGrade;
+
+  switch (true) {
+    case x <= 1.15:
+      return { uni: "1,0", badgeColor: "#20B2AA" };
+    case x <= 1.5:
+      return { uni: "1,3", badgeColor: "#20B2AA" };
+    case x <= 1.85:
+      return { uni: "1,7", badgeColor: "#238823" };
+    case x <= 2.15:
+      return { uni: "2,0", badgeColor: "#238823" };
+    case x <= 2.5:
+      return { uni: "2,3", badgeColor: "#238823" };
+    case x <= 2.85:
+      return { uni: "2,7", badgeColor: "#FFBF00" };
+    case x <= 3.15:
+      return { uni: "3,0", badgeColor: "#FFBF00" };
+    case x <= 3.5:
+      return { uni: "3,3", badgeColor: "#FFBF00" };
+    case x <= 3.85:
+      return { uni: "3,7", badgeColor: "#EEB462" };
+    case x <= 4.0:
+      return { uni: "4,0", badgeColor: "#EEB462" };
+    case x > 4.0:
+      return { uni: "5,0", badgeColor: "#D2222D" };
+    default:
+      break;
+  }
+};

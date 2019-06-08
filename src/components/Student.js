@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { toggleModalAction, addSingleTestAction } from "../redux/actions";
 import uuid from "uuid";
 import ClassroomContext from "../context/ClassroomContext";
+import { displayAverageUniversityGrade } from "../helpers";
 
 export default function Student({ student }) {
   const { classroomId, classroom } = useContext(ClassroomContext);
@@ -23,6 +24,19 @@ export default function Student({ student }) {
     };
     dispatch(addSingleTestAction(student.studentId, newTest, classroomId));
   };
+  const getAverageGrade = () => {
+    const validTests = student.tests.filter(
+      test => test.grade.decimal !== "Please Edit"
+    );
+    let accumulatedUniGrade = 0;
+    for (let test of validTests) {
+      accumulatedUniGrade += parseFloat(test.grade.uni.replace(",", "."));
+    }
+    const averageUniGrade = accumulatedUniGrade / validTests.length;
+    return displayAverageUniversityGrade(averageUniGrade);
+  };
+
+  const average = getAverageGrade();
 
   return (
     <div className="student-container card text-white bg-primary mb-3 m-2">
@@ -47,8 +61,8 @@ export default function Student({ student }) {
             Add Test
           </button>
         </div>
-        <div className="card-text">
-          <ul className="list-group">
+        <div className="card-text h-100 d-flex flex-column justify-content-between">
+          <ul className="list-group ">
             {student.tests.map(test => (
               <Results
                 key={test.testId}
@@ -57,6 +71,20 @@ export default function Student({ student }) {
               />
             ))}
           </ul>
+          {average && (
+            <li
+              className="list-group-item mt-2 d-flex justify-content-between"
+              style={{ color: "black" }}
+            >
+              <div>Average:</div>
+              <div
+                style={{ backgroundColor: average.badgeColor }}
+                className="editScore badge badge-primary badge-pill align-self-center"
+              >
+                {average.uni}
+              </div>
+            </li>
+          )}
         </div>
       </div>
     </div>
