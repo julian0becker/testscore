@@ -121,7 +121,7 @@ body {
     grid-template-columns: 33.3% 33.3% 33.3%;
     grid-template-rows: auto;
     grid-template-areas:
-      "back  title . "
+      "back  title title "
       "select select select";
   }
 
@@ -130,6 +130,7 @@ body {
   }
   .grid-item-b {
     grid-area: title;
+    justify-self: center;
   }
   .grid-item-c {
     grid-area: select;
