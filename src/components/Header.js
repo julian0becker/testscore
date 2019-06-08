@@ -16,19 +16,28 @@ export default function Header() {
 
   return (
     <div className="d-flex justify-content-between align-items-center">
-      <Link to={"/"}>
-        <i className="fas fa-chevron-left fa-2x title ml-4" />
-      </Link>
-      <h1 className="title d-flex justify-content-center mr-3">
-        {classroom.name}
-      </h1>
-      <form onSubmit={event => handleSwitchSystem(event)}>
-        <select name="system">
-          <option value="uni">German Uni</option>
-          <option value="american">American</option>
-        </select>
-        <input type="submit" />
-      </form>
+      <div className="header-item justify-content-start">
+        <Link to={"/"}>
+          <i className="fas fa-chevron-left fa-2x title pl-3" />
+        </Link>
+      </div>
+      <div className="header-item justify-content-center">
+        <h1 className="title d-flex justify-content-center">
+          {classroom.name}
+        </h1>
+      </div>
+      <div className="header-item justify-content-end pt-1">
+        <form
+          className="form-group pr-3"
+          onSubmit={event => handleSwitchSystem(event)}
+        >
+          <select className="custom-select-sm bg-light" name="system">
+            <option value="uni">German Uni</option>
+            <option value="american">American</option>
+          </select>
+          <input className="btn btn-primary btn-sm" type="submit" />
+        </form>
+      </div>
     </div>
   );
 }

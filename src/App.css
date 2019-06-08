@@ -89,6 +89,11 @@ body {
 .about-list {
   width: 50%;
 }
+
+.header-item {
+  flex-basis: 33.333%;
+  display: flex;
+}
 @media (max-width: 950px) {
   .score-tables {
     display: block;
