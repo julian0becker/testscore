@@ -97,3 +97,8 @@ export const setDefaultSystemAction = (system, classroomId) => ({
   system,
   classroomId
 });
+
+export const openSettingsModalAction = classroomId => ({
+  type: "OPEN_SETTINGS_MODAL",
+  classroomId
+});

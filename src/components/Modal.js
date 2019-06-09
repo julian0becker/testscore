@@ -7,6 +7,7 @@ import DeleteModal from "./modals/DeleteStudent";
 import EditModal from "./modals/EditTest";
 import AddTestAll from "./modals/AddTestAll";
 import ClassroomContext from "../context/ClassroomContext";
+import SettingsModal from "./modals/SettingsModal";
 
 ReactModal.setAppElement("#root");
 
@@ -24,7 +25,7 @@ const customStyles = {
 
 export default function Modal() {
   const dispatch = useDispatch();
-  const { classroomId, classroom } = useContext(ClassroomContext);
+  const { classroomId, classroom, switchSystem } = useContext(ClassroomContext);
 
   return (
     <ReactModal
@@ -40,6 +41,8 @@ export default function Modal() {
         <EditModal classroomId={classroomId} />
       ) : classroom.modal.modalType === "info" ? (
         <TestInfo classroomId={classroomId} />
+      ) : classroom.modal.modalType === "settings" ? (
+        <SettingsModal classroomId={classroomId} switchSystem={switchSystem} />
       ) : (
         <AddTestAll classroomId={classroomId} />
       )}

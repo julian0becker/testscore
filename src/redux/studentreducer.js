@@ -295,7 +295,6 @@ function studentReducer(state = initialState, action) {
           }
         })
       };
-
     case "ADD_SINGLE_TEST":
       return {
         ...state,
@@ -396,65 +395,18 @@ function studentReducer(state = initialState, action) {
           }
         })
       };
-    case "OPEN_QUICK_EDIT":
+    case "OPEN_SETTINGS_MODAL":
       return {
         ...state,
         classrooms: state.classrooms.map(classroom => {
           if (classroom.id === action.classroomId) {
             return {
               ...classroom,
-              students: classroom.students.map(student => {
-                return {
-                  ...student,
-                  tests: student.tests.map(test => {
-                    if (test.testId === action.testId) {
-                      return {
-                        ...test,
-                        grade: {
-                          ...test.grade,
-                          uni: action.jsx
-                        }
-                      };
-                    } else {
-                      return { ...test };
-                    }
-                  })
-                };
-              })
-            };
-          } else {
-            return { ...classroom };
-          }
-        })
-      };
-    case "QUICK_EDIT":
-      return {
-        ...state,
-        classrooms: state.classrooms.map(classroom => {
-          if (classroom.id === action.classroomId) {
-            return {
-              ...classroom,
-              students: classroom.students.map(student => {
-                return {
-                  ...student,
-                  tests: student.tests.map(test => {
-                    if (test.testId === action.testId) {
-                      return {
-                        ...test,
-                        reachedPoints: action.points,
-                        grade: {
-                          ...test.grade,
-                          uni: action.grade.uni,
-                          decimal: action.grade.decimal,
-                          badgeColor: action.grade.badgeColor
-                        }
-                      };
-                    } else {
-                      return { ...test };
-                    }
-                  })
-                };
-              })
+              modal: {
+                ...classroom.modal,
+                isModalOpen: true,
+                modalType: "settings"
+              }
             };
           } else {
             return { ...classroom };
