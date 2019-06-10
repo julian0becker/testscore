@@ -48,37 +48,25 @@ const EditModal = ({ classroomId }) => {
       return; //reached points must be greater than max points //todo warning modal
     }
 
-    let grade;
     let passMark;
+
     if (gradeSystem === "uni") {
       passMark = event.target.editPassMark.value;
-      grade = calculateGrade(
-        event.target.editPointsSingle.value /
-          event.target.editMaxPointsSingle.value,
-        passMark
-      );
-      let americanGrade = calculateAmericanGrade(
-        event.target.editPointsSingle.value /
-          event.target.editMaxPointsSingle.value
-      );
-      grade.american = americanGrade.american;
-      grade.americanBadgeColor = americanGrade.badgeColor;
     } else {
       passMark = oldPassMark;
-      grade = calculateAmericanGrade(
-        event.target.editPointsSingle.value /
-          event.target.editMaxPointsSingle.value
-      );
-      let universityGrade = calculateGrade(
-        event.target.editPointsSingle.value /
-          event.target.editMaxPointsSingle.value,
-        passMark
-      );
-
-      grade.uni = universityGrade.uni;
-      grade.badgeColor = universityGrade.badgeColor;
-      grade.americanBadgeColor = grade.badgeColor;
     }
+
+    let grade = calculateGrade(
+      event.target.editPointsSingle.value /
+        event.target.editMaxPointsSingle.value,
+      passMark
+    );
+    let americanGrade = calculateAmericanGrade(
+      event.target.editPointsSingle.value /
+        event.target.editMaxPointsSingle.value
+    );
+
+    americanGrade.americanBadgeColor = americanGrade.badgeColor;
 
     const updatedTest = {
       testName: event.target.editNameSingle.value,
@@ -91,9 +79,9 @@ const EditModal = ({ classroomId }) => {
           event.target.editPointsSingle.value /
           event.target.editMaxPointsSingle.value,
         uni: grade.uni,
-        american: grade.american,
+        american: americanGrade.american,
         badgeColor: grade.badgeColor,
-        americanBadgeColor: grade.americanBadgeColor
+        americanBadgeColor: americanGrade.americanBadgeColor
       }
     };
     dispatch(editTestAction(updatedTest, testId, classroomId));

@@ -15,7 +15,7 @@ const AddTestAll = ({ classroomId }) => {
     if (gradeSystem === "uni") {
       passMark = event.target.editPassMark.value;
     } else {
-      passMark = null;
+      passMark = "50%";
     }
     const test = {
       testName: event.target.editNameAll.value,

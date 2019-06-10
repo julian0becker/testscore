@@ -10,10 +10,16 @@ export default function Student({ student }) {
   const { classroomId, classroom, gradeSystem } = useContext(ClassroomContext);
   const dispatch = useDispatch();
   const handleAddSingleTest = () => {
+    let passMark;
+    if (gradeSystem === "american") {
+      passMark = "50%";
+    } else {
+      passMark = "Please Edit";
+    }
     const newTest = {
       testName: "Please edit",
       maxPoints: "Please Edit",
-      passMark: "Please Edit",
+      passMark: passMark,
       reachedPoints: "Please Edit",
       testId: uuid.v4(),
       grade: {
@@ -29,7 +35,7 @@ export default function Student({ student }) {
 
   const average = getAverageGrade(student);
   const averageAmericanGrade = getAverageAmericanGrade(student);
-
+  console.log(student);
   return (
     <div className="student-container card text-white bg-primary mb-3 m-2">
       <div className="card-header d-flex justify-content-between">
