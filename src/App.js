@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Classrooms from "./components/Classrooms";
 import LandingPage from "./components/LandingPage";
 import About from "./components/About";
+import AboutScales from "./components/AboutScales";
 import "./App.css";
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
             <Route path="/" exact component={LandingPage} />
             <Route path="/classroom/:id" component={Classrooms} />
             <Route path="/about" component={About} />
+            <Route path="/scales" component={AboutScales} />
           </Switch>
         </Router>
       </PersistGate>
