@@ -41,8 +41,11 @@ const TestInfo = ({ classroomId }) => {
     students[indexStudentForInfo].tests[testIndexForInfo].grade.decimal * 100
   ).toFixed(2);
 
+  //styles
+  const width = { maxWidth: "20rem" };
+
   return (
-    <div className="card text-white bg-primary " style={{ maxWidth: "20rem" }}>
+    <div className="card text-white bg-primary " style={width}>
       <div className="card-header d-flex justify-content-between">
         <div>{students[indexStudentForInfo].name}</div>
         <div>

@@ -7,19 +7,20 @@ export default function Results({ test, studentId }) {
   const dispatch = useDispatch();
   const { classroomId, gradeSystem } = useContext(ClassroomContext);
 
+  //styles
+  const listStyle = { color: "black" };
+  const uniStyle = { backgroundColor: test.grade.badgeColor };
+  const americanStyle = { backgroundColor: test.grade.americanBadgeColor };
+
   return (
     <li
-      style={{ color: "black" }}
+      style={listStyle}
       className="list-group-item d-flex justify-content-between align-items-center "
     >
       <div>{test.testName}</div>
       <div className="d-flex justify-content-between icon-container">
         <div
-          style={
-            gradeSystem === "uni"
-              ? { backgroundColor: test.grade.badgeColor }
-              : { backgroundColor: test.grade.americanBadgeColor }
-          }
+          style={gradeSystem === "uni" ? uniStyle : americanStyle}
           className="editScore badge badge-primary badge-pill align-self-center"
         >
           {gradeSystem === "uni" ? test.grade.uni : test.grade.american}

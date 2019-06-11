@@ -20,8 +20,12 @@ export default function EditClassroom({ setIsEditModalOpen, classroomId }) {
     editClassroomName(classroomName);
     setIsEditModalOpen(false);
   };
+
+  //styles
+  const backgroundColor = { backgroundColor: "#1a1a1a" };
+
   return (
-    <div style={{ backgroundColor: "#1a1a1a" }}>
+    <div style={backgroundColor}>
       <h5 className="text-white ml-2 mr-2 mb-0 p-3 ">Edit Classroom Name</h5>
       <div className="d-flex justify-content-around w-100 p-3">
         <form className="d-flex" onSubmit={onSubmit}>

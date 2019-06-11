@@ -16,8 +16,11 @@ const DeleteModal = ({ classroomId }) => {
     toggleModal();
   };
 
+  //styles
+  const backgroundColor = { backgroundColor: "#1a1a1a" };
+
   return (
-    <div style={{ backgroundColor: "#1a1a1a" }}>
+    <div style={backgroundColor}>
       <h5 className="text-danger ml-2 mr-2 mb-0 p-3 ">
         Do you want to delete?
       </h5>

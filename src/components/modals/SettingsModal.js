@@ -13,8 +13,11 @@ export default function SettingsModal(props) {
     dispatch(toggleModalAction(props.classroomId));
   };
 
+  // styles
+  const backgroundColor = { backgroundColor: "#1a1a1a" };
+
   return (
-    <div style={{ backgroundColor: "#1a1a1a" }}>
+    <div style={backgroundColor}>
       <h5 className="text-white ml-2 mr-2 mb-0 p-3 ">
         Select a grading system
       </h5>
